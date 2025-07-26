@@ -8,8 +8,7 @@ export default function Home() {
           {/* Left: Text and Buttons */}
           <div className="flex-1 flex flex-col items-start justify-start min-h-[400px] space-y-6 mt-7">
             <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 leading-tight">
-              Fight Distraction
-              <div className="mt-4 text-[#3566e8]">Build deep focus</div>
+              Boost your <div className="mt-4 text-[#3566e8]">productivity ⚡️</div>
             </h1>
 
             <p className="text-gray-700 text-xl">
@@ -43,7 +42,7 @@ export default function Home() {
           Focus, log, and grow with every session.
         </h2>
         <p className="text-lg text-gray-500 text-center mb-10 max-w-2xl">
-          The gamified time-tracking app that helps you stay focused and get things done, every single day!
+          App helps you stay focused and productive with a simple interface to track your time — whether you're working, studying, or just getting things done.
         </p>
         <div className="w-full max-w-3xl flex justify-center">
           <div className="w-full aspect-video rounded-3xl overflow-hidden shadow-lg bg-black">
@@ -166,7 +165,7 @@ Choose from calming themes like flip clock or blank screen to block distractions
     <div className="bg-gray-50 border border-gray-200 rounded-2xl p-8 shadow-sm">
       <h3 className="text-xl font-semibold text-gray-800 mb-2">Monthly</h3>
       <p className="text-3xl font-bold text-gray-900 mb-1">$1.87/mth</p>
-      <p className="text-sm text-gray-500 mb-6">Billed annually.</p>
+      <p className="text-sm text-gray-500 mb-6">Billed monthly.</p>
       <ul className="space-y-2 text-gray-700 text-sm mb-6">
         <li>✔ Access to all basic features</li>
         <li>✔ Basic reporting and analytics</li>
@@ -213,10 +212,7 @@ Choose from calming themes like flip clock or blank screen to block distractions
       </button>
     </div>
   </div>
-</section>
-
-
-
+ </section>
     </>
   );
 }

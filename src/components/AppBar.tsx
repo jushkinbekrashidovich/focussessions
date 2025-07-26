@@ -8,7 +8,7 @@ export default function AppBar() {
     <header className="w-full px-40 py-4 flex justify-between items-center bg-white">
       <div className="flex items-center gap-10">
         <span className="flex items-center gap-0.5 text-2xl font-bold text-gray-900 select-none mr-8">
-          <Image src="/logo.png" alt="Logo" width={40} height={40} priority />
+          <Image src="/logo.png" alt="Logo" width={43} height={43} priority />
           Focus<span className="text-indigo-600">sessions</span>
         </span>
         <nav className="flex items-center gap-8">
