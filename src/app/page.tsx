@@ -1,5 +1,9 @@
+'use client'
+
+import { useRouter } from 'next/navigation'
 import { signInWithGoogle } from '@/lib/auth'
 export default function Home() {
+   const router = useRouter()
   return (
     <>
       {/* First Section */}
@@ -13,9 +17,16 @@ export default function Home() {
     </p>
 
     <div className="flex justify-center items-center gap-4 pt-6">
-      <button onClick={signInWithGoogle} className="bg-white text-black text-sm font-medium px-6 py-2 rounded-full hover:bg-gray-200 transition">
-        Try Now
-      </button>
+      <button
+  onClick={() => {
+    console.log('Try Now clicked')
+    router.push('/login')
+  }}
+  className="bg-white text-black text-sm font-medium px-6 py-2 rounded-full hover:bg-gray-200 transition"
+>
+  Try Now
+</button>
+
       
     </div>
   </div>
