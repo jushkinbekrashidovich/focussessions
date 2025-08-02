@@ -27,7 +27,7 @@ export default function LoginPage() {
         <button 
         onClick={() => {
           console.log('Google sign-in clicked')
-          // signInWithGoogle() // Temporarily commented out
+           signInWithGoogle() // Temporarily commented out
         }}
         className="flex items-center justify-center w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition">
           <svg
