@@ -5,51 +5,52 @@ import Image from 'next/image'
 
 export default function AppBar() {
   return (
-    <header className="w-full px-40 py-4 flex justify-between items-center bg-white">
-      <div className="flex items-center gap-10">
-        <span className="flex items-center gap-0.5 text-2xl font-bold text-gray-900 select-none mr-8">
-          <Image src="/logo.png" alt="Logo" width={43} height={43} priority />
-          Focus<span className="text-indigo-600">sessions</span>
+    <header className="fixed top-0 left-0 right-0 z-50 w-full px-10 py-6 flex justify-center items-center bg-[#151515]">
+
+      <div className="flex items-center gap-12">
+        {/* Logo */}
+        <span className="flex items-center gap-2 text-lg font-semibold text-gray-400 select-none">
+          <Image src="/logo.png" alt="Logo" width={26} height={26} priority />
+          <span className="text-white ml-2">FocusDot</span>
         </span>
-        <nav className="flex items-center gap-8">
+
+        {/* Navbar Links */}
+        <nav className="flex items-center gap-10">
           <Link
-    href="#"
-    onClick={(e) => {
-      e.preventDefault();
-      document.getElementById("demo")?.scrollIntoView({ behavior: "smooth" });
-    }}
-    className="text-base text-gray-700 hover:text-black font-medium"
-  >
-    Demo
-  </Link>
-            <Link
-    href="#"
-    onClick={(e) => {
-      e.preventDefault();
-      document.getElementById("features")?.scrollIntoView({ behavior: "smooth" });
-    }}
-    className="text-base text-gray-700 hover:text-black font-medium"
-  >
-    Features
-  </Link>
-           <Link
-    href="#"
-    onClick={(e) => {
-      e.preventDefault();
-      document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" });
-    }}
-    className="text-base text-gray-700 hover:text-black font-medium"
-  >
-    Pricing
-  </Link>
+            href="#"
+            onClick={(e) => {
+              e.preventDefault()
+              document.getElementById("demo")?.scrollIntoView({ behavior: "smooth" })
+            }}
+           className="text-[0.94rem] font-bold text-[#5F5F5F] hover:text-white transition"
+
+          >
+            Demo
+          </Link>
+          <Link
+            href="#"
+            onClick={(e) => {
+              e.preventDefault()
+              document.getElementById("features")?.scrollIntoView({ behavior: "smooth" })
+            }}
+           className="text-[0.94rem] font-bold text-[#5F5F5F] hover:text-white transition"
+
+          >
+            Features
+          </Link>
+          <Link
+            href="#"
+            onClick={(e) => {
+              e.preventDefault()
+              document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })
+            }}
+            className="text-[0.94rem] font-bold text-[#5F5F5F] hover:text-white transition"
+
+          >
+            Pricing
+          </Link>
         </nav>
       </div>
-      <Link
-        href="#"
-        className="bg-blue-600 text-white text-base px-6 py-2 rounded-md font-semibold shadow hover:bg-blue-700 transition"
-      >
-        Log in
-      </Link>
     </header>
   )
 }
