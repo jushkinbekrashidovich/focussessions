@@ -10,10 +10,10 @@ export default function Home() {
       <section className="w-full min-h-screen text-white flex flex-col justify-center items-center px-4">
   <div className="max-w-4xl w-full text-center space-y-6">
     <h1 className="text-4xl sm:text-5xl font-semibold leading-tight">
-      Master Deep Work
+      Train Your Focus
     </h1>
     <p className="text-gray-400 text-lg sm:text-xl">
-      FocusDot helps you track your deep work sessions, avoid distractions, and reach flow state consistently.
+      Build discipline, stay consistent, and track your progress visually.
     </p>
 
     <div className="flex justify-center items-center gap-4 pt-6">
@@ -27,6 +27,16 @@ export default function Home() {
   Try Now
 </button>
 
+<button
+  onClick={() => {
+    console.log('Try Now clicked')
+    router.push('/app')
+  }}
+  className="bg-white text-black text-sm font-medium px-6 py-2 rounded-full hover:bg-gray-200 transition"
+>
+  Try Go
+</button>
+
       
     </div>
   </div>
@@ -36,7 +46,7 @@ export default function Home() {
       {/* Second Section */}
       <section id="demo" className="min-h-screen w-full flex flex-col items-center justify-center bg-[#151515] px-4">
         <h2 className="text-3xl md:text-4xl font-extrabold text-white text-center mb-4">
-          Focus, log, and grow with every session.
+          Escape Brain Rot, Train Your Focus.
         </h2>
         <p className="text-lg text-gray-400 text-center mb-10 max-w-2xl">
           App helps you stay focused and productive with a simple interface to track your time — whether you're working, studying, or just getting things done.
@@ -64,11 +74,11 @@ export default function Home() {
           {/* Left: Text */}
           <div className="flex-1">
             <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-6 leading-snug">
-              🎯 Minimal Focus Timer
+              🎯 Focus Timer
             </h2>
             <p className="text-gray-400 text-lg max-w-md">
-              Start deep work with preset timers (25m, 45m, 1h, 2h) or custom durations.
-              Choose from calming themes like flip clock or blank screen to block distractions.
+              Minimal screen, maximum concentration.
+              Pick a duration and enter uninterrupted deep work mode.
 
               <br />
               <br />
@@ -104,10 +114,10 @@ export default function Home() {
           {/* Right: Text */}
           <div className="flex-1">
             <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-6 leading-snug">
-              Daily Grid View
+             Consistency Grid
             </h2>
             <p className="text-gray-400 text-lg max-w-md">
-              See your focus streak grow visually. The more you focus, the darker the grid. A habit built one dot at a time.
+             Each focused day fills your grid — the darker it gets, the more consistent you become.
             </p>
           </div>
         </div>

@@ -5,11 +5,13 @@ import AppBar from './AppBar'
 
 export default function ConditionalAppBar() {
   const pathname = usePathname()
-  const isLoginPage = pathname === '/login'
 
-  if (isLoginPage) {
+  // hide on both /login and /app
+  const hideAppBar = pathname === '/login' || pathname.startsWith('/app')
+
+  if (hideAppBar) {
     return null
   }
 
   return <AppBar />
-} 
+}
