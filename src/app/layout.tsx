@@ -1,5 +1,5 @@
 // src/app/layout.tsx
-import AppBar from '@/components/AppBar'
+import ConditionalAppBar from '@/components/ConditionalAppBar'
 import './globals.css'
 
 import { Inter } from 'next/font/google'
@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AppBar />
+        <ConditionalAppBar />
         <main className="bg-[#151515] p-6">{children}</main>
       </body>
     </html>
