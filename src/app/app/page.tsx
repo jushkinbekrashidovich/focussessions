@@ -1,5 +1,6 @@
 'use client'
-import Timer from '@/components/Timer'
+
+import TimerBox from '@/components/TimerBox'
 export default function AppDashboard() {
   return (
     <div className="min-h-screen bg-[#13133c] text-white flex flex-col">
@@ -26,29 +27,10 @@ export default function AppDashboard() {
       {/* Body */}
       <div className="flex flex-1 p-8 gap-12">
         {/* Left: Timer section */}
-        <div className="w-[330px] bg-[#1d1d4e] rounded-xl p-6">
-          {/* CIRCULAR TIMER (placeholder) */}
-          <div className="w-60 h-60 mx-auto rounded-full border-8 border-[#37378a] flex items-center justify-center text-4xl font-bold">
-            30:00
-          </div>
+        <div className="w-[330px]">
+          <TimerBox />
 
-          {/* Skill dropdown */}
-          <select className="mt-6 w-full bg-[#26265e] p-2 rounded-md">
-            <option>Choose Skill</option>
-            <option>Coding</option>
-            <option>English</option>
-          </select>
-
-          {/* preset buttons */}
-          <div className="flex justify-between mt-6 gap-2">
-            <button className="flex-1 bg-[#37378a] p-2 rounded-md">30m</button>
-            <button className="flex-1 bg-[#37378a] p-2 rounded-md">1h</button>
-            <button className="flex-1 bg-[#37378a] p-2 rounded-md">2h</button>
-          </div>
-
-          <button className="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 transition py-2 rounded-md">
-            Start Timer
-          </button>
+         
         </div>
 
         {/* Right: main dashboard */}
