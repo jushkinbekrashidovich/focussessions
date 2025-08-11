@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ConditionalAppBar />
-        <main className="bg-[#151515] p-6">{children}</main>
+        <main className="bg-[#151515] ">{children}</main>
       </body>
     </html>
   )
