@@ -1,25 +1,23 @@
 'use client'
 
 import TimerBox from '@/components/TimerBox'
-export default function AppDashboard() {
+
+export default function HomePage() {
   return (
     <div className="min-h-screen bg-[#13133c] text-white flex flex-col">
       {/* Header */}
       <header className="flex justify-between items-center px-10 py-4 border-b border-[#2a2a58]">
-        <h1 className="text-2xl font-bold">FocusDot</h1>
-<nav className="flex items-center gap-8 ml-10 text-sm font-medium text-gray-300">
-  <a href="#" className="hover:text-white">Home</a>
-  <a href="#" className="hover:text-white">My activity</a>
-  <a href="#" className="hover:text-white">My workspace</a>
-  <a href="#" className="hover:text-white">Scoreboard</a>
-  <a href="#" className="hover:text-white">Leaderboard</a>
-</nav>
-
-
+        <h1 className="text-2xl font-bold">DeepFocusTimer</h1>
+        <nav className="flex items-center gap-8 ml-10 text-sm font-medium text-gray-300">
+          <a href="/" className="hover:text-white">Home</a>
+          <a href="/activity" className="hover:text-white">My activity</a>
+          
+         
+        </nav>
         <div className="flex items-center gap-4">
           <span className="text-green-400 text-sm">● 01:51:18</span>
           <button className="bg-indigo-600 hover:bg-indigo-700 transition px-4 py-2 rounded-md text-sm font-medium">
-            End My Deep Work Session
+            Profile
           </button>
         </div>
       </header>
@@ -29,8 +27,6 @@ export default function AppDashboard() {
         {/* Left: Timer section */}
         <div className="w-[330px]">
           <TimerBox />
-
-         
         </div>
 
         {/* Right: main dashboard */}
@@ -64,7 +60,6 @@ export default function AppDashboard() {
           <div>
             <h2 className="text-xl mb-4 font-semibold">Your Deep Work</h2>
             <div className="bg-[#1d1d4e] rounded-xl p-6 h-[200px]">
-              {/* you can replace this with real calendar-heatmap later */}
               <div className="text-gray-500 text-center">[Heatmap]</div>
             </div>
           </div>
