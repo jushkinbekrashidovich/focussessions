@@ -11,6 +11,7 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
   const [minutes, setMinutes] = useState(60)
   const [secondsLeft, setSecondsLeft] = useState(minutes * 60)
   const [running, setRunning] = useState(false)
+  const [showFlipMode, setShowFlipMode] = useState(false)
   const [selectedSkill, setSelectedSkill] = useState('')
   const [skills, setSkills] = useState<Skill[]>([])
   const [isLoadingSkills, setIsLoadingSkills] = useState(true)
@@ -46,7 +47,29 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
     // For Long deep work (value 0), start from 00:00, otherwise use the selected duration
     setSecondsLeft(minutes === 0 ? 0 : minutes * 60)
     setRunning(true)
+    setShowFlipMode(true)
   }
+
+  // Update timer display when duration changes
+  useEffect(() => {
+    if (!running) {
+      setSecondsLeft(minutes === 0 ? 0 : minutes * 60)
+    }
+  }, [minutes, running])
+
+  // ESC key to exit flip mode
+  useEffect(() => {
+    const handleEscKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && showFlipMode) {
+        setShowFlipMode(false)
+      }
+    }
+
+    if (showFlipMode) {
+      document.addEventListener('keydown', handleEscKey)
+      return () => document.removeEventListener('keydown', handleEscKey)
+    }
+  }, [showFlipMode])
 
   const handleStop = () => {
     setRunning(false)
@@ -176,7 +199,73 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
             {minutes === 0 ? '⏹ End Long Session' : '⏹ Stop Timer'}
           </button>
         )}
+
       </div>
+
+      {/* Flip Mode Overlay */}
+      {showFlipMode && running && (
+        <div className="fixed inset-0 bg-[#1a1a1a] z-50 flex flex-col items-center justify-center">
+          {/* Flip Clock Display */}
+          <div className="flex items-center space-x-4 mb-12">
+            {/* Hours */}
+            <div className="bg-[#2a2a2a] rounded-lg p-6 shadow-lg">
+              <div className="text-8xl font-bold text-white font-mono">
+                {minutes === 0 
+                  ? Math.floor(secondsLeft / 3600).toString().padStart(2, '0')
+                  : Math.floor(secondsLeft / 3600).toString().padStart(2, '0')
+                }
+              </div>
+            </div>
+            
+            {/* First Colon */}
+            <div className="flex flex-col space-y-2">
+              <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
+              <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
+            </div>
+            
+            {/* Minutes */}
+            <div className="bg-[#2a2a2a] rounded-lg p-6 shadow-lg">
+              <div className="text-8xl font-bold text-white font-mono">
+                {Math.floor((secondsLeft % 3600) / 60).toString().padStart(2, '0')}
+              </div>
+            </div>
+            
+            {/* Second Colon */}
+            <div className="flex flex-col space-y-2">
+              <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
+              <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
+            </div>
+            
+            {/* Seconds */}
+            <div className="bg-[#2a2a2a] rounded-lg p-6 shadow-lg">
+              <div className="text-8xl font-bold text-white font-mono">
+                {(secondsLeft % 60).toString().padStart(2, '0')}
+              </div>
+            </div>
+          </div>
+
+          {/* Instructions */}
+          <div className="text-gray-400 text-lg mb-8">
+            Press ESC to quit flip mode
+          </div>
+
+          {/* Control Buttons */}
+          <div className="flex gap-4">
+            <button
+              onClick={() => setShowFlipMode(false)}
+              className="px-6 py-3 border border-gray-600 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleStop}
+              className="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+            >
+              Stop Session
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Popup */}
       {showPrompt && (
