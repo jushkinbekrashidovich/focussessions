@@ -16,6 +16,9 @@ export interface Session {
   duration_min: number
   note?: string
   created_at: string
+  skills?: {
+    name: string
+  }
 }
 
 // Skills CRUD operations

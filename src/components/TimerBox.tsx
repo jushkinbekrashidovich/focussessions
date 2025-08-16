@@ -3,7 +3,11 @@
 import { useState, useEffect } from 'react'
 import { skillsService, sessionsService, Skill } from '@/lib/skillsService'
 
-export default function TimerBox() {
+interface TimerBoxProps {
+  onSessionCompleted?: () => void
+}
+
+export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
   const [minutes, setMinutes] = useState(60)
   const [secondsLeft, setSecondsLeft] = useState(minutes * 60)
   const [running, setRunning] = useState(false)
@@ -39,7 +43,8 @@ export default function TimerBox() {
   const handleStart = () => {
     if (!selectedSkill) return
     setSessionStart(new Date())
-    setSecondsLeft(minutes * 60)
+    // For Long deep work (value 0), start from 00:00, otherwise use the selected duration
+    setSecondsLeft(minutes === 0 ? 0 : minutes * 60)
     setRunning(true)
   }
 
@@ -62,6 +67,11 @@ export default function TimerBox() {
       setShowPrompt(false)
       setNote('')
       setSessionStart(null)
+      
+      // Notify parent component that a session was completed
+      if (onSessionCompleted) {
+        onSessionCompleted()
+      }
     } catch (error) {
       console.error('Error saving session:', error)
       // You could add a toast notification here
@@ -74,6 +84,12 @@ export default function TimerBox() {
     if (!running) return
     const interval = setInterval(() => {
       setSecondsLeft((prev) => {
+        // For Long deep work (value 0), count up from 00:00
+        if (minutes === 0) {
+          return prev + 1
+        }
+        
+        // For regular timers, count down
         if (prev === 0) {
           clearInterval(interval)
           setRunning(false)
@@ -84,7 +100,7 @@ export default function TimerBox() {
       })
     }, 1000)
     return () => clearInterval(interval)
-  }, [running])
+  }, [running, minutes])
 
   const format = (s: number) => {
     const m = Math.floor(s / 60).toString().padStart(2, '0')
@@ -127,6 +143,7 @@ export default function TimerBox() {
             { label: '30m', val: 30 },
             { label: '1h', val: 60 },
             { label: '2h', val: 120 },
+            { label: 'Long', val: 0 }, // Long deep work - starts from 00:00
           ].map((p) => (
             <button
               key={p.val}
@@ -149,14 +166,14 @@ export default function TimerBox() {
             className="w-full bg-[#5046E5] text-white py-3 rounded-lg text-sm font-semibold disabled:opacity-50"
             disabled={!selectedSkill || skills.length === 0}
           >
-            ▶ Start Timer
+            {minutes === 0 ? '▶ Start Long Session' : '▶ Start Timer'}
           </button>
         ) : (
           <button
             onClick={handleStop}
             className="w-full bg-red-500 text-white py-3 rounded-lg text-sm font-semibold"
           >
-            ⏹ Stop Timer
+            {minutes === 0 ? '⏹ End Long Session' : '⏹ Stop Timer'}
           </button>
         )}
       </div>
@@ -166,7 +183,7 @@ export default function TimerBox() {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40">
           <div className="bg-[#1D1D4E] rounded-xl p-6 w-[400px]">
             <h2 className="text-lg font-semibold mb-4">
-              Session Completed for <span className="font-bold">{skills.find(s => s.id === selectedSkill)?.name || 'Unknown Skill'}</span>
+              {minutes === 0 ? 'Long Session' : 'Session'} Completed for <span className="font-bold">{skills.find(s => s.id === selectedSkill)?.name || 'Unknown Skill'}</span>
             </h2>
             <label className="text-sm">What did you accomplish?</label>
             <textarea
