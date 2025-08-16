@@ -1,13 +1,16 @@
+'use client'
+
 import React from 'react'
 
+import { Skill } from '@/lib/skillsService'
+
 interface SkillCardProps {
-  name: string
-  hours: number
-  goal: number
+  skill: Skill
 }
 
-export default function SkillCard({ name, hours, goal }: SkillCardProps) {
-  const progress = (hours / goal) * 100
+export default function SkillCard({ skill }: SkillCardProps) {
+  // For now, we'll show basic skill info since we don't have hours/goals yet
+  // You can extend this later to include progress tracking
 
   return (
     <div className="bg-[#2A2773] rounded-xl p-5 flex items-center space-x-4 shadow-md">
@@ -16,15 +19,12 @@ export default function SkillCard({ name, hours, goal }: SkillCardProps) {
 
       {/* Skill info */}
       <div className="flex-1">
-        <p className="font-semibold">{name}</p>
-        <div className="w-full h-2 bg-gray-300 rounded-full mt-1 mb-1 overflow-hidden">
-          <div
-            className="h-full bg-green-500"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-        <p className="text-xs text-gray-300">
-          {hours}/{goal} hours
+        <p className="font-semibold text-white">{skill.name}</p>
+        <p className="text-xs text-gray-300 mt-1">
+          Created {new Date(skill.created_at).toLocaleDateString()}
+        </p>
+        <p className="text-xs text-gray-400 mt-2">
+          Click to start a session
         </p>
       </div>
     </div>

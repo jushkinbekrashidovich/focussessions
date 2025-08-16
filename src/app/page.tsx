@@ -2,10 +2,13 @@
 
 import { useRouter } from 'next/navigation'
 import { signInWithGoogle } from '@/lib/auth'
+import LandingNavbar from '@/components/LandingNavbar'
+
 export default function Home() {
    const router = useRouter()
   return (
     <>
+      <LandingNavbar />
       {/* First Section */}
       <section className="w-full min-h-screen text-white flex flex-col justify-center items-center px-4">
   <div className="max-w-4xl w-full text-center space-y-6">

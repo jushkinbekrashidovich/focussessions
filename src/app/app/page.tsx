@@ -1,26 +1,12 @@
 'use client'
 
 import TimerBox from '@/components/TimerBox'
+import AppNavbar from '@/components/AppNavbar'
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-[#13133c] text-white flex flex-col">
-      {/* Header */}
-      <header className="flex justify-between items-center px-10 py-4 border-b border-[#2a2a58]">
-        <h1 className="text-2xl font-bold">DeepFocusTimer</h1>
-        <nav className="flex items-center gap-8 ml-10 text-sm font-medium text-gray-300">
-          <a href="/" className="hover:text-white">Home</a>
-          <a href="/activity" className="hover:text-white">My activity</a>
-          
-         
-        </nav>
-        <div className="flex items-center gap-4">
-          <span className="text-green-400 text-sm">● 01:51:18</span>
-          <button className="bg-indigo-600 hover:bg-indigo-700 transition px-4 py-2 rounded-md text-sm font-medium">
-            Profile
-          </button>
-        </div>
-      </header>
+      <AppNavbar />
 
       {/* Body */}
       <div className="flex flex-1 p-8 gap-12">
