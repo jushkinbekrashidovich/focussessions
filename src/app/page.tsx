@@ -136,7 +136,7 @@ export default function Home() {
             Personal Focus Goals
             </h2>
             <p className="text-gray-400 text-lg max-w-md">
-            Create custom categories like "Math","Writing" or some project you want to work on and track your progress in each area. 
+            Create custom categories like &quot;Math&quot;,&quot;Writing&quot; or some project you want to work on and track your progress in each area. 
             </p>
           </div>
 

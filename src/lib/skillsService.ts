@@ -63,6 +63,23 @@ export const skillsService = {
     return data
   },
 
+  // Update an existing skill
+  async updateSkill(skillId: string, updates: { name?: string; target_hours?: number; description?: string }): Promise<Skill> {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) throw new Error('User not authenticated')
+
+    const { data, error } = await supabase
+      .from('skills')
+      .update(updates)
+      .eq('id', skillId)
+      .eq('user_id', user.id) // Ensure user can only update their own skills
+      .select()
+      .single()
+
+    if (error) throw error
+    return data
+  },
+
   // Get skill progress (completed hours vs target hours)
   async getSkillProgress(skillId: string): Promise<{ completedHours: number; targetHours: number; progressPercentage: number }> {
     const { data: { user } } = await supabase.auth.getUser()

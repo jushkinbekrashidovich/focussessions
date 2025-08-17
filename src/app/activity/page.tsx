@@ -4,12 +4,16 @@ import React, { useState, useEffect } from 'react'
 import SkillCard from '@/components/SkillCard'
 import AppNavbar from '@/components/AppNavbar'
 import AddSkillModal from '@/components/AddSkillModal'
+import EditGoalModal from '@/components/EditGoalModal'
+import DeleteConfirmationModal from '@/components/DeleteConfirmationModal'
 import { skillsService, Skill } from '@/lib/skillsService'
-
 
 export default function ActivityPage() {
   const [skills, setSkills] = useState<Skill[]>([])
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [isLoadingSkills, setIsLoadingSkills] = useState(true)
 
@@ -44,6 +48,48 @@ export default function ActivityPage() {
     }
   }
 
+  const handleEditSkill = (skill: Skill) => {
+    setSelectedSkill(skill)
+    setIsEditModalOpen(true)
+  }
+
+  const handleUpdateSkill = async (skillId: string, name: string, targetHours: number, description: string) => {
+    try {
+      setIsLoading(true)
+      await skillsService.updateSkill(skillId, { name, target_hours: targetHours, description })
+      await fetchSkills() // Refresh the skills list
+      setIsEditModalOpen(false)
+      setSelectedSkill(null)
+    } catch (error) {
+      console.error('Error updating skill:', error)
+      // You could add a toast notification here
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleDeleteSkill = (skill: Skill) => {
+    setSelectedSkill(skill)
+    setIsDeleteModalOpen(true)
+  }
+
+  const handleConfirmDelete = async () => {
+    if (!selectedSkill) return
+    
+    try {
+      setIsLoading(true)
+      await skillsService.deleteSkill(selectedSkill.id)
+      await fetchSkills() // Refresh the skills list
+      setIsDeleteModalOpen(false)
+      setSelectedSkill(null)
+    } catch (error) {
+      console.error('Error deleting skill:', error)
+      // You could add a toast notification here
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-[#191847] text-white flex flex-col">
       <AppNavbar />
@@ -59,7 +105,7 @@ export default function ActivityPage() {
           </button>
         </div>
 
-              {/* Skills Grid */}
+        {/* Skills Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {isLoadingSkills ? (
             <div className="col-span-full text-center text-gray-400 py-8">
@@ -74,17 +120,43 @@ export default function ActivityPage() {
               <SkillCard
                 key={skill.id}
                 skill={skill}
+                onEdit={handleEditSkill}
+                onDelete={handleDeleteSkill}
               />
             ))
           )}
         </div>
       </div>
 
-      {/* Add Skill Modal */}
+      {/* Add Goal Modal */}
       <AddSkillModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onAddSkill={handleAddSkill}
+        isLoading={isLoading}
+      />
+
+      {/* Edit Goal Modal */}
+      <EditGoalModal
+        isOpen={isEditModalOpen}
+        onClose={() => {
+          setIsEditModalOpen(false)
+          setSelectedSkill(null)
+        }}
+        onUpdateGoal={handleUpdateSkill}
+        skill={selectedSkill}
+        isLoading={isLoading}
+      />
+
+      {/* Delete Confirmation Modal */}
+      <DeleteConfirmationModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => {
+          setIsDeleteModalOpen(false)
+          setSelectedSkill(null)
+        }}
+        onConfirm={handleConfirmDelete}
+        goalName={selectedSkill?.name || ''}
         isLoading={isLoading}
       />
     </div>

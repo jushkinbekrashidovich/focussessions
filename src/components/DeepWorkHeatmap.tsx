@@ -74,12 +74,12 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
 
   const getIntensityColor = (intensity: number): string => {
     switch (intensity) {
-      case 0: return 'bg-[#342E5A]' // No sessions - darkest, blends with background
+      case 0: return 'bg-[#33325E]' // No sessions - darkest, blends with background
       case 1: return 'bg-[#9195DE]' // 1 session - light purple
       case 2: return 'bg-[#7A7FD8]' // 2 sessions - medium purple
       case 3: return 'bg-[#6369D2]' // 3 sessions - darker purple
       case 4: return 'bg-[#555AB5]' // 4+ sessions - darkest purple
-      default: return 'bg-[#342E5A]'
+      default: return 'bg-[#33325E]'
     }
   }
 
@@ -168,6 +168,18 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
             ))}
           </div>
         </div>
+
+        {/* Color intensity legend - bottom right */}
+        <div className="flex justify-end items-center space-x-2 mt-4">
+          <span className="text-xs text-gray-400">Less</span>
+          <div className="flex space-x-1">
+            <div className="w-3 h-3 rounded-sm bg-[#9195DE]"></div>
+            <div className="w-3 h-3 rounded-sm bg-[#7A7FD8]"></div>
+            <div className="w-3 h-3 rounded-sm bg-[#6369D2]"></div>
+            <div className="w-3 h-3 rounded-sm bg-[#555AB5]"></div>
+          </div>
+          <span className="text-xs text-gray-400">More</span>
+        </div>
       </div>
     )
   }
@@ -185,18 +197,16 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
     <div>
       <h2 className="text-xl mb-4 font-semibold text-white">Your Deep Work</h2>
       
-             <div className="bg-[#1d1d4e] rounded-xl p-4">
-        {heatmapData.length === 0 ? (
-          <div className="text-gray-500 text-center py-8">
-            <p>No deep work data yet.</p>
-            <p className="text-sm mt-2">Complete your first session to see your activity heatmap!</p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            {renderHeatmapGrid()}
-          </div>
-        )}
-      </div>
+      {heatmapData.length === 0 ? (
+        <div className="text-gray-500 text-center py-8">
+          <p>No deep work data yet.</p>
+          <p className="text-sm mt-2">Complete your first session to see your activity heatmap!</p>
+        </div>
+      ) : (
+        <div className="overflow-x-auto">
+          {renderHeatmapGrid()}
+        </div>
+      )}
     </div>
   )
 }

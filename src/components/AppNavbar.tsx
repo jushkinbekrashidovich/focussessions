@@ -27,9 +27,9 @@ export default function AppNavbar() {
       {/* User Actions */}
       <div className="flex items-center gap-4">
         <span className="text-green-400 text-sm">● 01:51:18</span>
-        <button className="bg-indigo-600 hover:bg-indigo-700 transition px-4 py-2 rounded-md text-sm font-medium text-white">
+        <Link href="/profile" className="bg-indigo-600 hover:bg-indigo-700 transition px-4 py-2 rounded-md text-sm font-medium text-white">
           Profile
-        </button>
+        </Link>
       </div>
     </header>
   )
