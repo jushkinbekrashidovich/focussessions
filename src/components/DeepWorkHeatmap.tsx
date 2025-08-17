@@ -74,12 +74,12 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
 
   const getIntensityColor = (intensity: number): string => {
     switch (intensity) {
-      case 0: return 'bg-[#1a1a2a]' // No sessions - darkest, blends with background
+      case 0: return 'bg-[#342E5A]' // No sessions - darkest, blends with background
       case 1: return 'bg-[#9195DE]' // 1 session - light purple
       case 2: return 'bg-[#7A7FD8]' // 2 sessions - medium purple
       case 3: return 'bg-[#6369D2]' // 3 sessions - darker purple
       case 4: return 'bg-[#555AB5]' // 4+ sessions - darkest purple
-      default: return 'bg-[#1a1a2a]'
+      default: return 'bg-[#342E5A]'
     }
   }
 
@@ -138,16 +138,16 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
         {/* Main grid with day labels */}
         <div className="flex">
           {/* Day labels on the left */}
-          <div className="flex flex-col mr-3 space-y-1">
+          <div className="flex flex-col mr-1 space-y-1">
             {Array.from({ length: 7 }, (_, i) => (
-              <div key={i} className="h-4 text-xs text-gray-400 w-10 text-right leading-none">
+              <div key={i} className="h-4 text-xs text-gray-400 w-4 text-right leading-none">
                 {i === 1 ? 'Tues' : i === 3 ? 'Thurs' : i === 5 ? 'Sat' : ''}
               </div>
             ))}
           </div>
           
           {/* Heatmap grid */}
-          <div className="flex space-x-0.5">
+          <div className="flex space-x-0.5 ml-3.5">
             {Array.from({ length: weeks }, (_, weekIndex) => (
               <div key={weekIndex} className="flex flex-col space-y-0.5">
                 {Array.from({ length: 7 }, (_, dayIndex) => {

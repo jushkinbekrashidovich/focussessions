@@ -9,8 +9,8 @@ export default function AppNavbar() {
       <div className="flex items-center gap-8">
         {/* Logo */}
         <span className="flex items-center gap-2 text-lg font-semibold text-white">
-          <Image src="/logo.png" alt="Logo" width={26} height={26} priority />
-          <span>DeepFocusTimer</span>
+          <Image src="/logo.svg" alt="Logo" width={106} height={106} priority />
+          
         </span>
 
         {/* Navigation */}
@@ -19,7 +19,7 @@ export default function AppNavbar() {
             Dashboard
           </Link>
           <Link href="/activity" className="hover:text-white transition">
-            My Activity
+            Personal Goals
           </Link>
         </nav>
       </div>

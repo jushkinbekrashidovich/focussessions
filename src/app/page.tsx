@@ -49,10 +49,12 @@ export default function Home() {
       {/* Second Section */}
       <section id="demo" className="min-h-screen w-full flex flex-col items-center justify-center bg-[#151515] px-4">
         <h2 className="text-3xl md:text-4xl font-extrabold text-white text-center mb-4">
-          Escape Brain Rot, Train Your Focus.
+        Build  <span className="relative inline-block">
+              <span className="bg-yellow-400 text-black px-1 pt-1 pb-0 -mx-1">  Focus Habits</span> That Sticks
+            </span>
         </h2>
         <p className="text-lg text-gray-400 text-center mb-10 max-w-2xl">
-          App helps you stay focused and productive with a simple interface to track your time — whether you're working, studying, or just getting things done.
+        The gamified time-tracking app with a simple interface that helps you stay focused and productive — whether you're working, studying, or just getting things done, every single day!
         </p>
         <div className="w-full max-w-3xl flex justify-center">
           <div className="w-full aspect-video rounded-3xl overflow-hidden shadow-lg bg-black">
@@ -69,24 +71,22 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+      <h2 className="text-3xl md:text-4xl font-extrabold text-white text-center mb-4">
+        Everything You Need to Build Deep Focus.
+             
+        </h2>
       {/* Features Section */}
       <section id="features" className="w-full flex justify-center px-6 py-40 bg-[#151515]">
+        
         <div className="max-w-6xl w-full flex flex-col md:flex-row items-center md:items-start gap-12">
-          
+        
           {/* Left: Text */}
           <div className="flex-1">
             <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-6 leading-snug">
               🎯 Focus Timer
             </h2>
             <p className="text-gray-400 text-lg max-w-md">
-              Minimal screen, maximum concentration.
-              Pick a duration and enter uninterrupted deep work mode.
-
-              <br />
-              <br />
-              FocusSessions is designed to help you stay focused and productive, with a simple and intuitive interface that lets you track your time effortlessly.
-              Whether you're working on a project, studying for an exam, or just trying to get things done.
+            Start focused work in one click. Choose 30 minutes, 1 hour, 2 hours, or long sessions. The timer automatically enters distraction-free mode to keep you on track.
             </p>
           </div>
 
@@ -117,10 +117,10 @@ export default function Home() {
           {/* Right: Text */}
           <div className="flex-1">
             <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-6 leading-snug">
-             Consistency Grid
+             Deep Work Heatmap
             </h2>
             <p className="text-gray-400 text-lg max-w-md">
-             Each focused day fills your grid — the darker it gets, the more consistent you become.
+            See your entire year of focus activity at a glance. Each day shows your focus intensity, motivating you to maintain consistency and build lasting habits.
             </p>
           </div>
         </div>
@@ -133,10 +133,10 @@ export default function Home() {
           {/* Left: Text */}
           <div className="flex-1">
             <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-6 leading-snug">
-              🧠 Log Your Sessions
+            Personal Focus Goals
             </h2>
             <p className="text-gray-400 text-lg max-w-md">
-              After each session, reflect on what you achieved.
+            Create custom categories like "Math","Writing" or some project you want to work on and track your progress in each area. 
             </p>
           </div>
 

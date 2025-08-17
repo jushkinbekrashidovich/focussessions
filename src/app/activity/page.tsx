@@ -30,10 +30,10 @@ export default function ActivityPage() {
     }
   }
 
-  const handleAddSkill = async (skillName: string) => {
+  const handleAddSkill = async (skillName: string, targetHours: number, description: string) => {
     try {
       setIsLoading(true)
-      await skillsService.createSkill(skillName)
+      await skillsService.createSkill(skillName, targetHours, description)
       await fetchSkills() // Refresh the skills list
       setIsModalOpen(false)
     } catch (error) {
@@ -50,12 +50,12 @@ export default function ActivityPage() {
       <div className="flex-1 px-10 py-8">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl font-bold">My skills</h1>
+          <h1 className="text-2xl font-bold">My Goals</h1>
           <button 
             onClick={() => setIsModalOpen(true)}
             className="bg-[#4A42E4] hover:bg-[#3b35c6] px-5 py-2 rounded-lg text-sm font-semibold"
           >
-            Add new skill
+            Add new goal
           </button>
         </div>
 
@@ -63,11 +63,11 @@ export default function ActivityPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {isLoadingSkills ? (
             <div className="col-span-full text-center text-gray-400 py-8">
-              Loading skills...
+              Loading goals...
             </div>
           ) : skills.length === 0 ? (
             <div className="col-span-full text-center text-gray-400 py-8">
-              No skills yet. Add your first skill to get started!
+              No goals yet. Add your first goal to get started!
             </div>
           ) : (
             skills.map((skill) => (

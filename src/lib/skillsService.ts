@@ -4,6 +4,8 @@ export interface Skill {
   id: string
   user_id: string
   name: string
+  target_hours: number
+  description: string
   created_at: string
 }
 
@@ -39,18 +41,62 @@ export const skillsService = {
   },
 
   // Create a new skill
-  async createSkill(name: string): Promise<Skill> {
+  async createSkill(name: string, targetHours: number, description: string): Promise<Skill> {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) throw new Error('User not authenticated')
 
+    // Use provided description or create a meaningful default
+    const finalDescription = description.trim() || `Master ${name} and achieve ${targetHours} hours of focused practice`
+
     const { data, error } = await supabase
       .from('skills')
-      .insert([{ name, user_id: user.id }])
+      .insert([{ 
+        name, 
+        target_hours: targetHours, 
+        description: finalDescription, 
+        user_id: user.id
+      }])
       .select()
       .single()
 
     if (error) throw error
     return data
+  },
+
+  // Get skill progress (completed hours vs target hours)
+  async getSkillProgress(skillId: string): Promise<{ completedHours: number; targetHours: number; progressPercentage: number }> {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) throw new Error('User not authenticated')
+
+    // Get the skill to get target hours
+    const { data: skill, error: skillError } = await supabase
+      .from('skills')
+      .select('target_hours')
+      .eq('id', skillId)
+      .eq('user_id', user.id)
+      .single()
+
+    if (skillError) throw skillError
+
+    // Get total completed minutes for this skill
+    const { data: sessions, error: sessionsError } = await supabase
+      .from('sessions')
+      .select('duration_min')
+      .eq('user_id', user.id)
+      .eq('skill_id', skillId)
+
+    if (sessionsError) throw sessionsError
+
+    const totalMinutes = sessions.reduce((sum, session) => sum + session.duration_min, 0)
+    const completedHours = totalMinutes / 60
+    const targetHours = skill.target_hours
+    const progressPercentage = Math.min((completedHours / targetHours) * 100, 100)
+
+    return {
+      completedHours: Math.round(completedHours * 100) / 100, // Round to 2 decimal places
+      targetHours,
+      progressPercentage
+    }
   },
 
   // Delete a skill
