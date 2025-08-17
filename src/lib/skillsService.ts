@@ -118,10 +118,14 @@ export const skillsService = {
 
   // Delete a skill
   async deleteSkill(skillId: string): Promise<void> {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) throw new Error('User not authenticated')
+
     const { error } = await supabase
       .from('skills')
       .delete()
       .eq('id', skillId)
+      .eq('user_id', user.id) // Ensure user can only delete their own skills
 
     if (error) throw error
   }

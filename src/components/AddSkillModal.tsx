@@ -56,7 +56,7 @@ export default function AddSkillModal({ isOpen, onClose, onAddSkill, isLoading =
               value={skillName}
               onChange={(e) => setSkillName(e.target.value)}
               className="w-full px-4 py-2 bg-[#1A1A2A] border border-[#3A3A4A] rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#4A42E4] focus:border-transparent"
-              placeholder="e.g., Coding, Reading, Design, etc."
+              placeholder="e.g., Study sessions, Reading, Learn English, Prepare SAT, etc."
               disabled={isLoading}
               autoFocus
             />
@@ -72,7 +72,7 @@ export default function AddSkillModal({ isOpen, onClose, onAddSkill, isLoading =
               value={targetHours}
               onChange={(e) => setTargetHours(e.target.value)}
               className="w-full px-4 py-2 bg-[#1A1A2A] border border-[#3A3A4A] rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#4A42E4] focus:border-transparent"
-              placeholder="e.g., 10000"
+              placeholder="e.g., 1000"
               min="1"
               disabled={isLoading}
             />
@@ -87,7 +87,7 @@ export default function AddSkillModal({ isOpen, onClose, onAddSkill, isLoading =
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className="w-full px-4 py-2 bg-[#1A1A2A] border border-[#3A3A4A] rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#4A42E4] focus:border-transparent resize-none"
-              placeholder="e.g., Master React and TypeScript, Read 50 books this year..."
+              placeholder="e.g.,Building coding skills through practice projects and learning new frameworks"
               rows={3}
               disabled={isLoading}
             />

@@ -140,11 +140,11 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
 
         {isLoadingSkills ? (
           <div className="w-full border rounded-lg p-2 text-sm bg-[#26265e] text-gray-400 text-center">
-            Loading skills...
+            Loading goals...
           </div>
         ) : skills.length === 0 ? (
           <div className="w-full border rounded-lg p-2 text-sm bg-[#26265e] text-gray-400 text-center">
-            No skills available
+            No goals available
           </div>
         ) : (
           <select

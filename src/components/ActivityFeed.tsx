@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react'
 import { sessionsService, Session } from '@/lib/skillsService'
+import { supabase } from '@/lib/supabaseClient'
+import { User } from '@supabase/supabase-js'
 
 interface ActivityFeedProps {
   maxItems?: number
@@ -11,10 +13,21 @@ interface ActivityFeedProps {
 export default function ActivityFeed({ maxItems = 10, refreshTrigger }: ActivityFeedProps) {
   const [sessions, setSessions] = useState<Session[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [user, setUser] = useState<User | null>(null)
 
   useEffect(() => {
+    fetchUserData()
     fetchSessions()
   }, [refreshTrigger]) // Refresh when refreshTrigger changes
+
+  const fetchUserData = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser()
+      setUser(user)
+    } catch (error) {
+      console.error('Error fetching user:', error)
+    }
+  }
 
   const fetchSessions = async () => {
     try {
@@ -113,11 +126,23 @@ export default function ActivityFeed({ maxItems = 10, refreshTrigger }: Activity
           <div key={session.id} className="relative flex items-start space-x-4">
             {/* Circular profile icon */}
             <div className="relative z-10 flex-shrink-0">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full flex items-center justify-center">
-                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                </svg>
-              </div>
+              {user?.user_metadata?.avatar_url ? (
+                // User's Google OAuth profile picture
+                <div className="w-8 h-8 rounded-full overflow-hidden">
+                  <img 
+                    src={user.user_metadata.avatar_url} 
+                    alt="Profile" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ) : (
+                // Fallback to gradient avatar with initials
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full flex items-center justify-center">
+                  <span className="text-white text-xs font-medium">
+                    {user?.user_metadata?.full_name?.charAt(0) || user?.email?.charAt(0) || 'U'}
+                  </span>
+                </div>
+              )}
             </div>
 
             {/* Activity content */}
