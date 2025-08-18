@@ -98,18 +98,18 @@ export default function DeepWorkStats({ refreshTrigger }: DeepWorkStatsProps) {
 
       {/* Missed Days */}
       <div className="bg-[#1d1d4e] p-6 rounded-xl">
-        <p className="text-sm mb-2 text-gray-300">Missed Days</p>
+        <p className="text-sm mb-2 text-gray-300">Missed Days This Week</p>
         <h3 className="text-2xl font-bold">
-          {stats.missedDaysThisYear} / {stats.totalDaysThisYear} days
+          {stats.missedDaysThisWeek} / {stats.totalDaysThisWeek}
         </h3>
         <div className="h-2 mt-2 bg-[#37378a] rounded-full overflow-hidden">
           <div 
             className="h-full bg-indigo-500 transition-all duration-500"
-            style={{ width: `${(stats.missedDaysThisYear / stats.totalDaysThisYear) * 100}%` }}
+            style={{ width: `${(stats.missedDaysThisWeek / stats.totalDaysThisWeek) * 100}%` }}
           />
         </div>
         <p className="text-xs text-gray-400 mt-1">
-          {stats.totalDaysThisYear - stats.missedDaysThisYear} days with sessions
+          {stats.totalDaysThisWeek - stats.missedDaysThisWeek} days with sessions
         </p>
       </div>
     </div>

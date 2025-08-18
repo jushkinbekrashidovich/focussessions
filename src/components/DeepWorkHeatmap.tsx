@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react'
 import { sessionsService, Session } from '@/lib/skillsService'
+import { useTheme } from '@/contexts/ThemeContext'
+import { getUserCurrentTimezone } from '@/lib/timezoneUtils'
 
 interface DeepWorkHeatmapProps {
   refreshTrigger?: number
@@ -16,10 +18,18 @@ interface DayData {
 export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps) {
   const [heatmapData, setHeatmapData] = useState<DayData[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [userTimezone, setUserTimezone] = useState<string>('')
+  const { theme } = useTheme()
+
+  useEffect(() => {
+    // Get user's current timezone automatically
+    const currentTimezone = getUserCurrentTimezone()
+    setUserTimezone(currentTimezone)
+  }, [])
 
   useEffect(() => {
     fetchHeatmapData()
-  }, [refreshTrigger])
+  }, [refreshTrigger, userTimezone])
 
   const fetchHeatmapData = async () => {
     try {
@@ -37,20 +47,38 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
   const generateHeatmapData = (sessions: Session[]): DayData[] => {
     const data: DayData[] = []
     const currentYear = new Date().getFullYear()
-    const startDate = new Date(currentYear, 0, 1) // January 1st of current year
-    const endDate = new Date(currentYear, 11, 31) // December 31st of current year
     
-    // Create a map of total session minutes by date
+    // Create a map of total session minutes by date in user's timezone
     const sessionMinutes = new Map<string, number>()
     
     sessions.forEach(session => {
       const sessionDate = new Date(session.created_at)
-      const dateKey = sessionDate.toISOString().split('T')[0]
+      
+      // Convert to user's timezone if specified
+      let localDate: Date
+      if (userTimezone && userTimezone !== 'UTC') {
+        try {
+          // Create date string in user's timezone
+          const timezoneDate = sessionDate.toLocaleString('en-US', { timeZone: userTimezone })
+          localDate = new Date(timezoneDate)
+        } catch (error) {
+          console.warn('Error converting timezone in DeepWorkHeatmap, using UTC:', error)
+          localDate = sessionDate
+        }
+      } else {
+        localDate = sessionDate
+      }
+      
+      const dateKey = localDate.toISOString().split('T')[0]
       const currentMinutes = sessionMinutes.get(dateKey) || 0
       sessionMinutes.set(dateKey, currentMinutes + session.duration_min)
     })
     
-    // Generate data for each day of the whole year
+    // Generate data for each day of the whole year (365 or 366 days)
+    // Start from January 1st and go through December 31st
+    const startDate = new Date(currentYear, 0, 1) // January 1st
+    const endDate = new Date(currentYear, 11, 31) // December 31st
+    
     for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
       const dateKey = d.toISOString().split('T')[0]
       const totalMinutes = sessionMinutes.get(dateKey) || 0
@@ -97,37 +125,33 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
     if (heatmapData.length === 0) return null
 
     const currentYear = new Date().getFullYear()
-    const startDate = new Date(currentYear, 0, 1)
-    const endDate = new Date(currentYear, 11, 31)
-    const totalDays = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)) + 1
+    const startDate = new Date(currentYear, 0, 1) // January 1st
     
-    // Calculate grid dimensions - always 52-53 weeks for full year
-    const weeks = Math.ceil(totalDays / 7)
+    // Calculate weeks needed for the full year
+    // We need exactly 53 weeks to cover the full year
+    const totalWeeks = 53
     
+    // Create grid structure - each column represents a week
     const grid: DayData[][] = []
-    let currentWeek: DayData[] = []
     
-    // Fill the grid
-    for (let i = 0; i < totalDays; i++) {
-      if (i > 0 && i % 7 === 0) {
-        grid.push(currentWeek)
-        currentWeek = []
+    // Fill the grid with data, ensuring proper week alignment
+    for (let weekIndex = 0; weekIndex < totalWeeks; weekIndex++) {
+      const week: DayData[] = []
+      for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
+        const dataIndex = weekIndex * 7 + dayIndex
+        if (dataIndex < heatmapData.length) {
+          week.push(heatmapData[dataIndex])
+        } else {
+          week.push({ date: '', count: 0, intensity: 0 })
+        }
       }
-      currentWeek.push(heatmapData[i] || { date: '', count: 0, intensity: 0 })
-    }
-    if (currentWeek.length > 0) {
-      grid.push(currentWeek)
-    }
-    
-    // Pad the last week if needed
-    while (grid[grid.length - 1]?.length < 7) {
-      grid[grid.length - 1].push({ date: '', count: 0, intensity: 0 })
+      grid.push(week)
     }
 
     return (
       <div className="space-y-3">
         {/* Month labels - positioned above the grid */}
-        <div className="flex justify-between text-xs text-gray-400 px-2">
+        <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 px-2">
           {Array.from({ length: 12 }, (_, i) => (
             <span key={i} className="flex-1 text-center">
               {getMonthLabel(i)}
@@ -137,21 +161,20 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
         
         {/* Main grid with day labels */}
         <div className="flex">
-          {/* Day labels on the left */}
+          {/* Day labels on the left - Tue, Thu, Sat only */}
           <div className="flex flex-col mr-1 space-y-1">
             {Array.from({ length: 7 }, (_, i) => (
-              <div key={i} className="h-4 text-xs text-gray-400 w-4 text-right leading-none">
-                {i === 1 ? 'Tues' : i === 3 ? 'Thurs' : i === 5 ? 'Sat' : ''}
+              <div key={i} className="h-4 text-xs text-gray-500 dark:text-gray-400 w-4 text-right leading-none">
+                {i === 1 ? 'Tue' : i === 3 ? 'Thu' : i === 5 ? 'Sat' : ''}
               </div>
             ))}
           </div>
           
-          {/* Heatmap grid */}
+          {/* Heatmap grid - each column is a week */}
           <div className="flex space-x-0.5 ml-3.5">
-            {Array.from({ length: weeks }, (_, weekIndex) => (
+            {grid.map((week, weekIndex) => (
               <div key={weekIndex} className="flex flex-col space-y-0.5">
-                {Array.from({ length: 7 }, (_, dayIndex) => {
-                  const dayData = grid[weekIndex]?.[dayIndex]
+                {week.map((dayData, dayIndex) => {
                   if (!dayData || !dayData.date) {
                     return <div key={dayIndex} className="w-4 h-4 rounded-sm bg-transparent" />
                   }
@@ -171,14 +194,14 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
 
         {/* Color intensity legend - bottom right */}
         <div className="flex justify-end items-center space-x-2 mt-4">
-          <span className="text-xs text-gray-400">Less</span>
+          <span className="text-xs text-gray-500 dark:text-gray-400">Less</span>
           <div className="flex space-x-1">
             <div className="w-3 h-3 rounded-sm bg-[#9195DE]"></div>
             <div className="w-3 h-3 rounded-sm bg-[#7A7FD8]"></div>
             <div className="w-3 h-3 rounded-sm bg-[#6369D2]"></div>
             <div className="w-3 h-3 rounded-sm bg-[#555AB5]"></div>
           </div>
-          <span className="text-xs text-gray-400">More</span>
+          <span className="text-xs text-gray-500 dark:text-gray-400">More</span>
         </div>
       </div>
     )
@@ -186,19 +209,19 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
 
   if (isLoading) {
     return (
-      <div className="bg-[#1d1d4e] rounded-xl p-6 h-[200px] animate-pulse">
-        <div className="h-4 bg-gray-600 rounded w-1/3 mb-4"></div>
-        <div className="h-32 bg-gray-600 rounded"></div>
+      <div className="bg-gray-100 dark:bg-[#1d1d4e] rounded-xl p-6 h-[200px] animate-pulse transition-colors duration-200">
+        <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-1/3 mb-4"></div>
+        <div className="h-32 bg-gray-300 dark:bg-gray-600 rounded"></div>
       </div>
     )
   }
 
     return (
     <div>
-      <h2 className="text-xl mb-4 font-semibold text-white">Your Deep Work</h2>
+      <h2 className="text-xl mb-4 font-semibold text-gray-900 dark:text-white transition-colors duration-200">Your Deep Work</h2>
       
       {heatmapData.length === 0 ? (
-        <div className="text-gray-500 text-center py-8">
+        <div className="text-gray-600 dark:text-gray-500 text-center py-8 transition-colors duration-200">
           <p>No deep work data yet.</p>
           <p className="text-sm mt-2">Complete your first session to see your activity heatmap!</p>
         </div>

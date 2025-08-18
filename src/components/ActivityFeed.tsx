@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { sessionsService, Session } from '@/lib/skillsService'
 import { supabase } from '@/lib/supabaseClient'
 import { User } from '@supabase/supabase-js'
+import { getUserCurrentTimezone } from '@/lib/timezoneUtils'
 
 interface ActivityFeedProps {
   maxItems?: number
@@ -14,10 +15,14 @@ export default function ActivityFeed({ maxItems = 10, refreshTrigger }: Activity
   const [sessions, setSessions] = useState<Session[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [user, setUser] = useState<User | null>(null)
+  const [userTimezone, setUserTimezone] = useState<string>('')
 
   useEffect(() => {
     fetchUserData()
     fetchSessions()
+    // Get user's current timezone automatically
+    const currentTimezone = getUserCurrentTimezone()
+    setUserTimezone(currentTimezone)
   }, [refreshTrigger]) // Refresh when refreshTrigger changes
 
   const fetchUserData = async () => {
@@ -60,7 +65,20 @@ export default function ActivityFeed({ maxItems = 10, refreshTrigger }: Activity
 
   const formatTimeAgo = (dateString: string): string => {
     const now = new Date()
-    const sessionDate = new Date(dateString)
+    let sessionDate = new Date(dateString)
+    
+    // Convert to user's timezone if specified
+    if (userTimezone && userTimezone !== 'UTC') {
+      try {
+        // Create date string in user's timezone
+        const timezoneDate = sessionDate.toLocaleString('en-US', { timeZone: userTimezone })
+        sessionDate = new Date(timezoneDate)
+      } catch (error) {
+        console.warn('Error converting timezone in ActivityFeed, using UTC:', error)
+        sessionDate = new Date(dateString)
+      }
+    }
+    
     const diffInMs = now.getTime() - sessionDate.getTime()
     const diffInSeconds = Math.floor(diffInMs / 1000)
     const diffInMinutes = Math.floor(diffInMs / (1000 * 60))

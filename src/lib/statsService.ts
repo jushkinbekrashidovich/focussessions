@@ -5,8 +5,8 @@ export interface DeepWorkStats {
   monthlyMinutes: number
   totalMonthlyMinutes: number
   streak: number
-  missedDaysThisYear: number
-  totalDaysThisYear: number
+  missedDaysThisWeek: number
+  totalDaysThisWeek: number
   currentMonthProgress: number
   currentMonthTotalDays: number
   currentMonthPassedDays: number
@@ -40,9 +40,8 @@ export const statsService = {
       // Calculate streak
       const streak = this.calculateStreak(sessions)
       
-      // Calculate missed days this year
-      const missedDaysThisYear = this.calculateMissedDaysThisYear(sessions, currentYear)
-      const totalDaysThisYear = this.isLeapYear(currentYear) ? 366 : 365
+      // Calculate missed days this week (Monday to Sunday)
+      const { missedDaysThisWeek, totalDaysThisWeek } = this.calculateMissedDaysThisWeek(sessions)
       
       // Calculate current month progress
       const currentMonthTotalDays = new Date(currentYear, currentMonth + 1, 0).getDate()
@@ -57,8 +56,8 @@ export const statsService = {
         monthlyMinutes,
         totalMonthlyMinutes,
         streak,
-        missedDaysThisYear,
-        totalDaysThisYear,
+        missedDaysThisWeek,
+        totalDaysThisWeek,
         currentMonthProgress: clampedProgress,
         currentMonthTotalDays,
         currentMonthPassedDays
@@ -71,8 +70,8 @@ export const statsService = {
         monthlyMinutes: 0,
         totalMonthlyMinutes: 0,
         streak: 0,
-        missedDaysThisYear: 0,
-        totalDaysThisYear: 365,
+        missedDaysThisWeek: 0, // Placeholder, will be implemented
+        totalDaysThisWeek: 7, // Placeholder, will be implemented
         currentMonthProgress: 0,
         currentMonthTotalDays: 30,
         currentMonthPassedDays: 0
@@ -84,61 +83,96 @@ export const statsService = {
   calculateStreak(sessions: Session[]): number {
     if (sessions.length === 0) return 0
     
-    const today = new Date()
+    const now = new Date()
+    const today = new Date(now)
     today.setHours(0, 0, 0, 0)
     
-    const sessionDates = new Set(
-      sessions.map(session => {
-        const date = new Date(session.created_at)
-        date.setHours(0, 0, 0, 0)
-        return date.getTime()
-      })
-    )
+    // Group sessions by date and calculate total minutes per day
+    const dailyMinutes = new Map<string, number>()
+    sessions.forEach(session => {
+      const date = new Date(session.created_at)
+      date.setHours(0, 0, 0, 0)
+      const dateKey = date.getTime()
+      const currentMinutes = dailyMinutes.get(dateKey.toString()) || 0
+      dailyMinutes.set(dateKey.toString(), currentMinutes + session.duration_min)
+    })
     
     let streak = 0
     let currentDate = new Date(today)
     
-    while (sessionDates.has(currentDate.getTime())) {
-      streak++
+    // Check if today has at least 10 minutes of sessions
+    const todayMinutes = dailyMinutes.get(today.getTime().toString()) || 0
+    const todayCompleted = todayMinutes >= 10
+    
+    // If today is not completed yet, start from yesterday
+    if (!todayCompleted) {
       currentDate.setDate(currentDate.getDate() - 1)
+    }
+    
+    // Count consecutive days with at least 10 minutes
+    while (true) {
+      const dateKey = currentDate.getTime().toString()
+      const dayMinutes = dailyMinutes.get(dateKey) || 0
+      
+      if (dayMinutes >= 10) {
+        streak++
+        currentDate.setDate(currentDate.getDate() - 1)
+      } else {
+        break
+      }
     }
     
     return streak
   },
 
-  // Calculate missed days this year
-  calculateMissedDaysThisYear(sessions: Session[], year: number): number {
-    const startOfYear = new Date(year, 0, 1)
-    const endOfYear = new Date(year, 11, 31)
-    const today = new Date()
+  // Calculate missed days this week (Monday to Sunday)
+  calculateMissedDaysThisWeek(sessions: Session[]): { missedDaysThisWeek: number; totalDaysThisWeek: number } {
+    const now = new Date()
+    const today = new Date(now)
     
-    // Only count up to today if we're in the current year
-    const endDate = year === today.getFullYear() ? today : endOfYear
+    // Find the most recent Monday (start of week)
+    const dayOfWeek = today.getDay() // 0 = Sunday, 1 = Monday, etc.
+    const daysSinceMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1 // Days since last Monday
     
-    const sessionDates = new Set(
-      sessions
-        .filter(session => {
-          const sessionDate = new Date(session.created_at)
-          return sessionDate.getFullYear() === year
-        })
-        .map(session => {
-          const date = new Date(session.created_at)
-          date.setHours(0, 0, 0, 0)
-          return date.getTime()
-        })
-    )
+    const monday = new Date(today)
+    monday.setDate(monday.getDate() - daysSinceMonday)
+    monday.setHours(0, 0, 0, 0)
+    
+    // Find the next Sunday (end of week)
+    const sunday = new Date(monday)
+    sunday.setDate(sunday.getDate() + 6)
+    sunday.setHours(23, 59, 59, 999)
+    
+    // Group sessions by date and calculate total minutes per day
+    const dailyMinutes = new Map<string, number>()
+    sessions.forEach(session => {
+      const sessionDate = new Date(session.created_at)
+      if (sessionDate >= monday && sessionDate <= sunday) {
+        const dateKey = sessionDate.toDateString()
+        const currentMinutes = dailyMinutes.get(dateKey) || 0
+        dailyMinutes.set(dateKey, currentMinutes + session.duration_min)
+      }
+    })
     
     let missedDays = 0
-    const currentDate = new Date(startOfYear)
+    const currentDate = new Date(monday)
     
-    while (currentDate <= endDate) {
-      if (!sessionDates.has(currentDate.getTime())) {
+    // Count days without at least 10 minutes of sessions
+    while (currentDate <= sunday) {
+      const dateKey = currentDate.toDateString()
+      const dayMinutes = dailyMinutes.get(dateKey) || 0
+      
+      if (dayMinutes < 10) {
         missedDays++
       }
+      
       currentDate.setDate(currentDate.getDate() + 1)
     }
     
-    return missedDays
+    return {
+      missedDaysThisWeek: missedDays,
+      totalDaysThisWeek: 7
+    }
   },
 
   // Check if year is leap year

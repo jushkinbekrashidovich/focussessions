@@ -1,7 +1,7 @@
 // src/app/layout.tsx
 import './globals.css'
-
 import { Inter } from 'next/font/google'
+import { ThemeProvider } from '@/contexts/ThemeContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,7 +18,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>
-        <main className="bg-[#151515] ">{children}</main>
+        <ThemeProvider>
+          <main className="bg-white dark:bg-[#151515] transition-colors duration-200">
+            {children}
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   )
