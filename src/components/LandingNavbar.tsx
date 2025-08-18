@@ -19,7 +19,7 @@ export default function LandingNavbar() {
             href="#demo"
             className="text-[0.94rem] font-bold text-[#5F5F5F] hover:text-white transition"
           >
-            Demo
+            About
           </Link>
           <Link
             href="#features"

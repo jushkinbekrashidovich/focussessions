@@ -56,18 +56,13 @@ export default function Home() {
         <p className="text-lg text-gray-400 text-center mb-10 max-w-2xl">
         The gamified time-tracking app with a simple interface that helps you stay focused and productive — whether you're working, studying, or just getting things done, every single day!
         </p>
-        <div className="w-full max-w-3xl flex justify-center">
-          <div className="w-full aspect-video rounded-3xl overflow-hidden shadow-lg bg-black">
-            <iframe
-              width="100%"
-              height="100%"
-              src="https://www.youtube.com/embed/E5ONTXHS2mM"
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-              className="w-full h-full"
-            ></iframe>
+        <div className="w-full max-w-4xl flex justify-center">
+          <div className="w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl border-2 border-gray-700">
+            <img
+              src="/dashboard.jpg"
+              alt="Dashboard Preview"
+              className="w-full h-auto object-cover"
+            />
           </div>
         </div>
       </section>
@@ -90,12 +85,12 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Right: Chat Image */}
-          <div className="flex-1 max-w-xl">
+          {/* Right: Timer Image */}
+          <div className="flex-1 max-w-sm">
             <img
-              src="/f3d27dee-5f39-42f3-8491-8c564f3c5cb6.png"
-              alt="Conversational Flow Chat"
-              className="rounded-3xl shadow-xl w-full"
+              src="/timer.jpg"
+              alt="Focus Timer Interface"
+              className="rounded-3xl shadow-xl border-2 border-gray-700 w-full"
             />
           </div>
         </div>
@@ -105,12 +100,12 @@ export default function Home() {
       <section className="w-full flex justify-center bg-[#151515] px-6 py-80">
         <div className="max-w-6xl w-full flex flex-col-reverse md:flex-row items-center md:items-start gap-12">
           
-          {/* Left: Chat Image */}
-          <div className="flex-1 max-w-xl">
+          {/* Left: Heatmap Image */}
+          <div className="flex-1 max-w-6xl">
             <img
-              src="/97840c68-6ee8-428a-9295-de211926179d.png"
-              alt="Follow-up Chat"
-              className="rounded-3xl shadow-xl w-full"
+              src="/heatmap.jpg"
+              alt="Deep Work Heatmap"
+              className="rounded-2xl shadow-xl border-2 border-gray-700 w-full"
             />
           </div>
 
@@ -140,12 +135,12 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Right: Chat Image */}
+          {/* Right: Goal Card Image */}
           <div className="flex-1 max-w-xl">
             <img
-              src="/f3d27dee-5f39-42f3-8491-8c564f3c5cb6.png"
-              alt="Conversational Flow Chat"
-              className="rounded-3xl shadow-xl w-full"
+              src="/profile.jpg"
+              alt="Personal Focus Goals"
+              className="rounded-3xl shadow-xl border-2 border-gray-700 w-full"
             />
           </div>
         </div>
