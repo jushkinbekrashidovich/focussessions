@@ -1,13 +1,34 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { User } from '@supabase/supabase-js'
+import { supabase } from '@/lib/supabaseClient'
 import LandingNavbar from '@/components/LandingNavbar'
 
 export default function Home() {
-   const router = useRouter()
+  const router = useRouter()
+  const [user, setUser] = useState<User | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    checkUser()
+  }, [])
+
+  const checkUser = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser()
+      setUser(user)
+    } catch (error) {
+      console.error('Error checking user:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <>
-      <LandingNavbar />
+      <LandingNavbar user={user} />
       {/* First Section */}
       <section className="w-full text-white flex flex-col justify-center items-center px-4 py-8 sm:py-12 md:py-16 pt-20 sm:pt-24 md:pt-28">
         <div className="max-w-4xl w-full text-center space-y-4 sm:space-y-6">
@@ -19,15 +40,31 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4">
-            <button
-              onClick={() => {
-                console.log('Try Now clicked')
-                router.push('/login')
-              }}
-              className="bg-white text-black text-sm font-medium px-6 py-3 sm:py-2 rounded-full hover:bg-gray-200 transition w-full sm:w-auto"
-            >
-              Try Now
-            </button>
+            {isLoading ? (
+              <div className="animate-pulse bg-gray-600 h-10 w-32 rounded-full"></div>
+            ) : user ? (
+              <div className="text-center space-y-3">
+                <p className="text-green-400 text-sm sm:text-base font-medium">
+                  Welcome back! Ready to continue your focus journey?
+                </p>
+                <button
+                  onClick={() => router.push('/app')}
+                  className="bg-[#4A42E4] hover:bg-[#3b35c6] text-white text-sm font-medium px-6 py-3 sm:py-2 rounded-full transition w-full sm:w-auto"
+                >
+                  Go to Dashboard
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => {
+                  console.log('Try Now clicked')
+                  router.push('/login')
+                }}
+                className="bg-white text-black text-sm font-medium px-6 py-3 sm:py-2 rounded-full hover:bg-gray-200 transition w-full sm:w-auto"
+              >
+                Try Now
+              </button>
+            )}
           </div>
         </div>
       </section>

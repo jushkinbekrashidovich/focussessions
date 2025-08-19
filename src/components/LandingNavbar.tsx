@@ -3,8 +3,13 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
+import { User } from '@supabase/supabase-js'
 
-export default function LandingNavbar() {
+interface LandingNavbarProps {
+  user: User | null
+}
+
+export default function LandingNavbar({ user }: LandingNavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const toggleMenu = () => {
@@ -43,13 +48,21 @@ export default function LandingNavbar() {
 
         {/* Desktop Auth Buttons */}
         <div className="hidden md:flex items-center gap-4">
-          
-          <Link
-            href="/login"
-            className="bg-[#4A42E4] hover:bg-[#3b35c6] px-5 py-2 rounded-lg text-sm font-semibold text-white transition"
-          >
-            Get Started
-          </Link>
+          {user ? (
+            <Link
+              href="/app"
+              className="bg-[#4A42E4] hover:bg-[#3b35c6] px-5 py-2 rounded-lg text-sm font-semibold text-white transition"
+            >
+              Dashboard
+            </Link>
+          ) : (
+            <Link
+              href="/login"
+              className="bg-[#4A42E4] hover:bg-[#3b35c6] px-5 py-2 rounded-lg text-sm font-semibold text-white transition"
+            >
+              Get Started
+            </Link>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -89,20 +102,32 @@ export default function LandingNavbar() {
             Pricing
           </Link>
           <div className="border-t border-gray-700 mt-2 pt-2">
-            <Link
-              href="/login"
-              className="block px-6 py-3 text-[0.94rem] font-bold text-[#5F5F5F] hover:text-white transition hover:bg-gray-800"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Login
-            </Link>
-            <Link
-              href="/login"
-              className="block mx-6 mt-2 bg-[#4A42E4] hover:bg-[#3b35c6] px-5 py-3 rounded-lg text-sm font-semibold text-white transition text-center"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Get Started
-            </Link>
+            {user ? (
+              <Link
+                href="/app"
+                className="block px-6 py-3 text-[0.94rem] font-bold text-gray-400 hover:text-white transition hover:bg-gray-800"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Dashboard
+              </Link>
+            ) : (
+              <Link
+                href="/login"
+                className="block px-6 py-3 text-[0.94rem] font-bold text-gray-400 hover:text-white transition hover:bg-gray-800"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Login
+              </Link>
+            )}
+            {!user && (
+              <Link
+                href="/login"
+                className="block mx-6 mt-2 bg-[#4A42E4] hover:bg-[#3b35c6] px-5 py-3 rounded-lg text-sm font-semibold text-white transition text-center"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Get Started
+              </Link>
+            )}
           </div>
         </nav>
       </div>
