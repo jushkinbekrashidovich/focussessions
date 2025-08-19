@@ -1,7 +1,6 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { signInWithGoogle } from '@/lib/auth'
 import LandingNavbar from '@/components/LandingNavbar'
 
 export default function Home() {

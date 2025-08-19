@@ -2,68 +2,102 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
-  const supabaseResponse = NextResponse.next({
-    request,
-  })
-
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll()
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, ...options }) => {
-            request.cookies.set({
-              name,
-              value,
-              ...options,
-            })
-            supabaseResponse.cookies.set({
-              name,
-              value,
-              ...options,
-            })
-          })
-        },
-      },
+  try {
+    // Only run middleware on routes that need authentication
+    const protectedRoutes = ['/app', '/profile', '/activity']
+    const isProtectedRoute = protectedRoutes.some(route => 
+      request.nextUrl.pathname.startsWith(route)
+    )
+    
+    // If not a protected route, just continue without middleware
+    if (!isProtectedRoute) {
+      return NextResponse.next()
     }
-  )
 
-  // Refresh session if expired - required for Server Components
-  // https://supabase.com/docs/guides/auth/auth-helpers/nextjs#managing-refresh-tokens
-  const { data: { session }, error } = await supabase.auth.getSession()
+    const supabaseResponse = NextResponse.next({
+      request,
+    })
 
-  if (error) {
-    console.error('Middleware auth error:', error)
-  }
+    // Check if environment variables are available
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    
+    if (!supabaseUrl || !supabaseAnonKey) {
+      console.error('Missing Supabase environment variables in middleware')
+      // Redirect to login if we can't authenticate
+      const redirectUrl = new URL('/login', request.url)
+      return NextResponse.redirect(redirectUrl)
+    }
 
-  // If no session and trying to access protected routes, redirect to login
-  if (!session && request.nextUrl.pathname.startsWith('/app')) {
+    const supabase = createServerClient(
+      supabaseUrl,
+      supabaseAnonKey,
+      {
+        cookies: {
+          getAll() {
+            return request.cookies.getAll()
+          },
+          setAll(cookiesToSet) {
+            cookiesToSet.forEach(({ name, value, ...options }) => {
+              request.cookies.set({
+                name,
+                value,
+                ...options,
+              })
+              supabaseResponse.cookies.set({
+                name,
+                value,
+                ...options,
+              })
+            })
+          },
+        },
+      }
+    )
+
+    // Refresh session if expired - required for Server Components
+    const { data: { session }, error } = await supabase.auth.getSession()
+
+    if (error) {
+      console.error('Middleware auth error:', error)
+      // If there's an auth error, redirect to login
+      const redirectUrl = new URL('/login', request.url)
+      return NextResponse.redirect(redirectUrl)
+    }
+
+    // If no session and trying to access protected routes, redirect to login
+    if (!session && isProtectedRoute) {
+      const redirectUrl = new URL('/login', request.url)
+      return NextResponse.redirect(redirectUrl)
+    }
+
+    // If session exists and trying to access login, redirect to app
+    if (session && request.nextUrl.pathname === '/login') {
+      const redirectUrl = new URL('/app', request.url)
+      return NextResponse.redirect(redirectUrl)
+    }
+
+    return supabaseResponse
+  } catch (error) {
+    console.error('Middleware error:', error)
+    // If middleware fails, redirect to login
     const redirectUrl = new URL('/login', request.url)
     return NextResponse.redirect(redirectUrl)
   }
-
-  // If session exists and trying to access login, redirect to app
-  if (session && request.nextUrl.pathname === '/login') {
-    const redirectUrl = new URL('/app', request.url)
-    return NextResponse.redirect(redirectUrl)
-  }
-
-  return supabaseResponse
 }
 
 export const config = {
   matcher: [
     /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public folder
+     * Match only the routes that need middleware:
+     * - /app/* (protected routes)
+     * - /profile/* (protected routes) 
+     * - /activity/* (protected routes)
+     * - /login (for redirect logic)
      */
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    '/app/:path*',
+    '/profile/:path*', 
+    '/activity/:path*',
+    '/login'
   ],
 }
