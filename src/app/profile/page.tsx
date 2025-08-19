@@ -234,7 +234,7 @@ export default function ProfilePage() {
               
               {/* Message */}
               <p className="text-gray-600 dark:text-gray-300 mb-6">
-                Are you sure you want to logout? You'll need to sign in again to access your profile.
+                Are you sure you want to logout? You&apos;ll need to sign in again to access your profile.
               </p>
               
               {/* Buttons */}

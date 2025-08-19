@@ -42,7 +42,7 @@ export default function Home() {
           </span>
         </h2>
         <p className="text-base sm:text-lg text-gray-400 text-center mb-8 sm:mb-10 max-w-2xl px-4">
-          The gamified time-tracking app with a simple interface that helps you stay focused and productive — whether you're working, studying, or just getting things done, every single day!
+          The gamified time-tracking app with a simple interface that helps you stay focused and productive — whether you&apos;re working, studying, or just getting things done, every single day!
         </p>
         <div className="w-full max-w-4xl flex justify-center px-4">
           <div className="w-full max-w-4xl rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 border-gray-700">
@@ -118,7 +118,7 @@ export default function Home() {
             Personal Focus Goals
             </h2>
             <p className="text-gray-400 text-base sm:text-lg max-w-md mx-auto md:mx-0">
-            Create custom categories like &quot;Math&quot;,&quot;Writing&quot; or some project you want to work on and track your progress in each area. 
+            Create custom categories like &quot;Math&quot;, &quot;Writing&quot; or some project you want to work on and track your progress in each area. 
             </p>
           </div>
 
@@ -143,7 +143,7 @@ export default function Home() {
           </h2>
 
           <p className="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto px-4">
-            This isn't just a timer app. It helps to boost your productivity. You'll get more done in a week than most do in a month!
+            This isn&apos;t just a timer app. It helps to boost your productivity. You&apos;ll get more done in a week than most do in a month!
           </p>
         </div>
 

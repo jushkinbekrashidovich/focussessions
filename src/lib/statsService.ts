@@ -98,7 +98,7 @@ export const statsService = {
     })
     
     let streak = 0
-    let currentDate = new Date(today)
+    const currentDate = new Date(today)
     
     // Check if today has at least 10 minutes of sessions
     const todayMinutes = dailyMinutes.get(today.getTime().toString()) || 0
