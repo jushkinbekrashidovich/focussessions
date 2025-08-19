@@ -1,6 +1,9 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+
+// Force dynamic rendering to avoid SSG issues with Supabase
+export const dynamic = 'force-dynamic'
 import { User } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabaseClient'
 import AppNavbar from '@/components/AppNavbar'

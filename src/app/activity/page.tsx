@@ -1,6 +1,9 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+
+// Force dynamic rendering to avoid SSG issues with Supabase
+export const dynamic = 'force-dynamic'
 import SkillCard from '@/components/SkillCard'
 import AppNavbar from '@/components/AppNavbar'
 import AddSkillModal from '@/components/AddSkillModal'

@@ -1,6 +1,9 @@
 'use client'
 
 import { useState } from 'react'
+
+// Force dynamic rendering to avoid SSG issues with Supabase
+export const dynamic = 'force-dynamic'
 import TimerBox from '@/components/TimerBox'
 import AppNavbar from '@/components/AppNavbar'
 import ActivityFeed from '@/components/ActivityFeed'
