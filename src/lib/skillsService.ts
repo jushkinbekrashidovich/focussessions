@@ -104,7 +104,7 @@ export const skillsService = {
 
     if (sessionsError) throw sessionsError
 
-    const totalMinutes = sessions.reduce((sum, session) => sum + session.duration_min, 0)
+    const totalMinutes = (sessions || []).reduce((sum: number, session: { duration_min: number }) => sum + session.duration_min, 0)
     const completedHours = totalMinutes / 60
     const targetHours = skill.target_hours
     const progressPercentage = Math.min((completedHours / targetHours) * 100, 100)

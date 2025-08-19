@@ -1,5 +1,9 @@
 // components/LoginPage.jsx
 'use client'
+
+// Force dynamic rendering to avoid SSG issues with Supabase
+export const dynamic = 'force-dynamic'
+
 import { signInWithGoogle } from '@/lib/auth'
 
 
