@@ -9,8 +9,8 @@ export default function Home() {
     <>
       <LandingNavbar />
       {/* First Section */}
-      <section className="w-full text-white flex flex-col justify-center items-center px-4 py-16 sm:py-20 md:py-24 pt-28 sm:pt-32 md:pt-36">
-        <div className="max-w-4xl w-full text-center space-y-6 sm:space-y-8">
+      <section className="w-full text-white flex flex-col justify-center items-center px-4 py-8 sm:py-12 md:py-16 pt-20 sm:pt-24 md:pt-28">
+        <div className="max-w-4xl w-full text-center space-y-4 sm:space-y-6">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight px-2">
             Train Your Focus
           </h1>
@@ -18,7 +18,7 @@ export default function Home() {
             Build discipline, stay consistent, and track your progress visually.
           </p>
 
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 pt-2">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4">
             <button
               onClick={() => {
                 console.log('Try Now clicked')
@@ -34,7 +34,7 @@ export default function Home() {
 
 
       {/* Second Section */}
-      <section id="demo" className="w-full flex flex-col items-center justify-center bg-[#151515] px-4 py-16 sm:py-20 md:py-24">
+      <section id="demo" className="w-full flex flex-col items-center justify-center bg-[#151515] px-4 py-12 sm:py-16 md:py-20">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white text-center mb-6 sm:mb-8 px-4">
           Build <span className="relative inline-block">
             <span className="bg-yellow-400 text-black px-1 pt-1 pb-0 -mx-1">Focus Habits</span> That Sticks
@@ -58,7 +58,7 @@ export default function Home() {
              
         </h2>
       {/* Features Section */}
-      <section id="features" className="w-full flex justify-center px-4 sm:px-6 py-16 sm:py-20 md:py-24 bg-[#151515]">
+      <section id="features" className="w-full flex justify-center px-4 sm:px-6 py-12 sm:py-16 md:py-20 bg-[#151515]">
         <div className="max-w-6xl w-full flex flex-col md:flex-row items-center md:items-start gap-8 sm:gap-12">
           
           {/* Left: Text */}
@@ -83,7 +83,7 @@ export default function Home() {
       </section>
 
       {/* Features Section Part 2 */}
-      <section className="w-full flex justify-center bg-[#151515] px-4 sm:px-6 py-16 sm:py-20 md:py-24">
+      <section className="w-full flex justify-center bg-[#151515] px-4 sm:px-6 py-12 sm:py-16 md:py-20">
         <div className="max-w-6xl w-full flex flex-col-reverse md:flex-row items-center md:items-start gap-8 sm:gap-12">
           
           {/* Left: Heatmap Image */}
@@ -108,7 +108,7 @@ export default function Home() {
       </section>
 
       {/* Features Section Part 3 */}
-      <section id="featuresp3" className="w-full flex justify-center px-4 sm:px-6 py-16 sm:py-20 md:py-24 bg-[#151515]">
+      <section id="featuresp3" className="w-full flex justify-center px-4 sm:px-6 py-12 sm:py-16 md:py-20 bg-[#151515]">
         <div className="max-w-6xl w-full flex flex-col md:flex-row items-center md:items-start gap-8 sm:gap-12">
           
           {/* Left: Text */}
@@ -133,7 +133,7 @@ export default function Home() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="w-full px-4 sm:px-6 md:px-40 py-16 sm:py-20 md:py-24 bg-[#151515]">
+      <section id="pricing" className="w-full px-4 sm:px-6 md:px-40 py-12 sm:py-16 md:py-20 bg-[#151515]">
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 px-4">
             One click to <span className="relative inline-block">
