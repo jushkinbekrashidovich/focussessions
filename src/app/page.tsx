@@ -32,6 +32,8 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Spacing between sections */}
+      <div className="h-16 sm:h-20 md:h-24"></div>
 
       {/* Second Section */}
       <section id="demo" className="w-full flex flex-col items-center justify-center bg-[#151515] px-4 py-12 sm:py-16 md:py-20">
@@ -53,10 +55,10 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <h2 className="text-3xl md:text-4xl font-extrabold text-white text-center mb-4">
-        Everything You Need to Build Deep Focus.
-             
-        </h2>
+
+      {/* Spacing between sections */}
+      <div className="h-16 sm:h-20 md:h-24"></div>
+
       {/* Features Section */}
       <section id="features" className="w-full flex justify-center px-4 sm:px-6 py-12 sm:py-16 md:py-20 bg-[#151515]">
         <div className="max-w-6xl w-full flex flex-col md:flex-row items-center md:items-start gap-8 sm:gap-12">
@@ -81,6 +83,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Spacing between sections */}
+      <div className="h-16 sm:h-20 md:h-24"></div>
 
       {/* Features Section Part 2 */}
       <section className="w-full flex justify-center bg-[#151515] px-4 sm:px-6 py-12 sm:py-16 md:py-20">
@@ -107,6 +112,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Spacing between sections */}
+      <div className="h-16 sm:h-20 md:h-24"></div>
+
       {/* Features Section Part 3 */}
       <section id="featuresp3" className="w-full flex justify-center px-4 sm:px-6 py-12 sm:py-16 md:py-20 bg-[#151515]">
         <div className="max-w-6xl w-full flex flex-col md:flex-row items-center md:items-start gap-8 sm:gap-12">
@@ -131,6 +139,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Spacing between sections */}
+      <div className="h-16 sm:h-20 md:h-24"></div>
 
       {/* Pricing Section */}
       <section id="pricing" className="w-full px-4 sm:px-6 md:px-40 py-12 sm:py-16 md:py-20 bg-[#151515]">
