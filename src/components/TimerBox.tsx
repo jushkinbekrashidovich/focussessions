@@ -133,9 +133,9 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
 
   return (
     <>
-      <div className="w-[330px] bg-[#1D1D4E] rounded-xl p-6 text-center space-y-4">
-        <div className="w-60 h-60 mx-auto rounded-full border-2 border-gray-300 flex flex-col items-center justify-center">
-          <div className="text-5xl font-semibold">{format(secondsLeft)}</div>
+      <div className="w-full lg:w-[330px] bg-[#1D1D4E] rounded-xl p-4 sm:p-6 text-center space-y-3 sm:space-y-4">
+        <div className="w-48 h-48 sm:w-56 sm:h-56 lg:w-60 lg:h-60 mx-auto rounded-full border-2 border-gray-300 flex flex-col items-center justify-center">
+          <div className="text-3xl sm:text-4xl lg:text-5xl font-semibold">{format(secondsLeft)}</div>
         </div>
 
         {isLoadingSkills ? (
@@ -171,7 +171,7 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
             <button
               key={p.val}
               onClick={() => !running && setMinutes(p.val)}
-              className={`flex-1 rounded-lg py-2 text-sm ${
+              className={`flex-1 rounded-lg py-1.5 sm:py-2 text-xs sm:text-sm ${
                 minutes === p.val
                   ? 'bg-[#5046E5] text-white'
                   : 'bg-[#26265e] text-gray-300'
@@ -186,7 +186,7 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
         {!running ? (
           <button
             onClick={handleStart}
-            className="w-full bg-[#5046E5] text-white py-3 rounded-lg text-sm font-semibold disabled:opacity-50"
+            className="w-full bg-[#5046E5] text-white py-2.5 sm:py-3 rounded-lg text-sm font-semibold disabled:opacity-50"
             disabled={!selectedSkill || skills.length === 0}
           >
             {minutes === 0 ? '▶ Start Long Session' : '▶ Start Timer'}
@@ -194,7 +194,7 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
         ) : (
           <button
             onClick={handleStop}
-            className="w-full bg-red-500 text-white py-3 rounded-lg text-sm font-semibold"
+            className="w-full bg-red-500 text-white py-2.5 sm:py-3 rounded-lg text-sm font-semibold"
           >
             {minutes === 0 ? '⏹ End Long Session' : '⏹ Stop Timer'}
           </button>
@@ -204,12 +204,12 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
 
       {/* Flip Mode Overlay */}
       {showFlipMode && running && (
-        <div className="fixed inset-0 bg-[#1a1a1a] z-50 flex flex-col items-center justify-center">
+        <div className="fixed inset-0 bg-[#1a1a1a] z-50 flex flex-col items-center justify-center p-4">
           {/* Flip Clock Display */}
-          <div className="flex items-center space-x-4 mb-12">
+          <div className="flex items-center space-x-2 sm:space-x-4 mb-8 sm:mb-12">
             {/* Hours */}
-            <div className="bg-[#2a2a2a] rounded-lg p-6 shadow-lg">
-              <div className="text-8xl font-bold text-white font-mono">
+            <div className="bg-[#2a2a2a] rounded-lg p-3 sm:p-6 shadow-lg">
+              <div className="text-4xl sm:text-6xl lg:text-8xl font-bold text-white font-mono">
                 {minutes === 0 
                   ? Math.floor(secondsLeft / 3600).toString().padStart(2, '0')
                   : Math.floor(secondsLeft / 3600).toString().padStart(2, '0')
@@ -218,48 +218,48 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
             </div>
             
             {/* First Colon */}
-            <div className="flex flex-col space-y-2">
-              <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
-              <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
+            <div className="flex flex-col space-y-1 sm:space-y-2">
+              <div className="w-2 h-2 sm:w-3 sm:h-3 bg-gray-500 rounded-full"></div>
+              <div className="w-2 h-2 sm:w-3 sm:h-3 bg-gray-500 rounded-full"></div>
             </div>
             
             {/* Minutes */}
-            <div className="bg-[#2a2a2a] rounded-lg p-6 shadow-lg">
-              <div className="text-8xl font-bold text-white font-mono">
+            <div className="bg-[#2a2a2a] rounded-lg p-3 sm:p-6 shadow-lg">
+              <div className="text-4xl sm:text-6xl lg:text-8xl font-bold text-white font-mono">
                 {Math.floor((secondsLeft % 3600) / 60).toString().padStart(2, '0')}
               </div>
             </div>
             
             {/* Second Colon */}
-            <div className="flex flex-col space-y-2">
-              <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
-              <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
+            <div className="flex flex-col space-y-1 sm:space-y-2">
+              <div className="w-2 h-2 sm:w-3 sm:h-3 bg-gray-500 rounded-full"></div>
+              <div className="w-2 h-2 sm:w-3 sm:h-3 bg-gray-500 rounded-full"></div>
             </div>
             
             {/* Seconds */}
-            <div className="bg-[#2a2a2a] rounded-lg p-6 shadow-lg">
-              <div className="text-8xl font-bold text-white font-mono">
+            <div className="bg-[#2a2a2a] rounded-lg p-3 sm:p-6 shadow-lg">
+              <div className="text-4xl sm:text-6xl lg:text-8xl font-bold text-white font-mono">
                 {(secondsLeft % 60).toString().padStart(2, '0')}
               </div>
             </div>
           </div>
 
           {/* Instructions */}
-          <div className="text-gray-400 text-lg mb-8">
+          <div className="text-gray-400 text-base sm:text-lg mb-6 sm:mb-8 text-center">
             Press ESC to quit flip mode
           </div>
 
           {/* Control Buttons */}
-          <div className="flex gap-4">
+          <div className="flex gap-3 sm:gap-4">
             <button
               onClick={() => setShowFlipMode(false)}
-              className="px-6 py-3 border border-gray-600 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors"
+              className="px-4 sm:px-6 py-2.5 sm:py-3 border border-gray-600 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors text-sm sm:text-base"
             >
               Cancel
             </button>
             <button
               onClick={handleStop}
-              className="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+              className="px-4 sm:px-6 py-2.5 sm:py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm sm:text-base"
             >
               Stop Session
             </button>
@@ -269,9 +269,9 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
 
       {/* Popup */}
       {showPrompt && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40">
-          <div className="bg-[#1D1D4E] rounded-xl p-6 w-[400px]">
-            <h2 className="text-lg font-semibold mb-4">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 p-4">
+          <div className="bg-[#1D1D4E] rounded-xl p-4 sm:p-6 w-full max-w-sm sm:w-[400px]">
+            <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
               {minutes === 0 ? 'Long Session' : 'Session'} Completed for <span className="font-bold">{skills.find(s => s.id === selectedSkill)?.name || 'Unknown Skill'}</span>
             </h2>
             <label className="text-sm">What did you accomplish?</label>
@@ -279,11 +279,11 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
               value={note}
               onChange={(e) => setNote(e.target.value)}
               placeholder="Describe your progress..."
-              className="w-full h-32 mt-2 p-3 rounded-lg bg-[#26265e] text-white resize-none"
+              className="w-full h-24 sm:h-32 mt-2 p-3 rounded-lg bg-[#26265e] text-white resize-none text-sm"
             />
             <button
               onClick={handleSave}
-              className="mt-4 w-full bg-[#5046E5] text-white py-2 rounded-lg disabled:opacity-50"
+              className="mt-3 sm:mt-4 w-full bg-[#5046E5] text-white py-2 rounded-lg disabled:opacity-50 text-sm"
               disabled={!note.trim() || isSaving}
             >
               {isSaving ? 'Saving...' : 'Save Session'}

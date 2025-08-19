@@ -22,14 +22,14 @@ export default function HomePage() {
       <AppNavbar />
 
       {/* Body */}
-      <div className="flex flex-1 p-8 gap-12">
-        {/* Left: Timer section */}
-        <div className="w-[330px]">
+      <div className="flex flex-col lg:flex-row flex-1 p-4 sm:p-6 lg:p-8 gap-6 lg:gap-12">
+        {/* Timer section - Mobile: full width, Desktop: fixed width */}
+        <div className="w-full lg:w-[330px]">
           <TimerBox onSessionCompleted={handleSessionCompleted} />
         </div>
 
-        {/* Right: main dashboard */}
-        <div className="flex-1 space-y-12 overflow-auto">
+        {/* Main dashboard - Mobile: vertical stack, Desktop: horizontal layout */}
+        <div className="flex-1 space-y-6 lg:space-y-12 overflow-auto">
           {/* Stats */}
           <DeepWorkStats refreshTrigger={refreshTrigger} />
 
@@ -38,7 +38,7 @@ export default function HomePage() {
 
           {/* Activity Feed */}
           <div>
-            <h2 className="text-xl mb-4 font-semibold">Your Activity</h2>
+            <h2 className="text-lg lg:text-xl mb-3 lg:mb-4 font-semibold">Your Activity</h2>
             <ActivityFeed maxItems={10} refreshTrigger={refreshTrigger} />
           </div>
         </div>

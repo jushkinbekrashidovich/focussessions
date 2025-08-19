@@ -9,11 +9,11 @@ import { signInWithGoogle } from '@/lib/auth'
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center ">
-      <div className="bg-white rounded-xl shadow-md p-10 w-full max-w-md text-center">
-        <div className="flex items-center justify-center w-16 h-16 mx-auto mb-6 bg-blue-100 rounded-full">
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <div className="bg-white rounded-xl shadow-md p-6 sm:p-8 md:p-10 w-full max-w-sm sm:max-w-md text-center">
+        <div className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 sm:mb-6 bg-blue-100 rounded-full">
           <svg
-            className="w-8 h-8 text-blue-500"
+            className="w-6 h-6 sm:w-8 sm:h-8 text-blue-500"
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
@@ -27,16 +27,16 @@ export default function LoginPage() {
             />
           </svg>
         </div>
-        <h1 className="text-2xl font-semibold mb-2">FocusDot</h1>
-        <p className="text-gray-600 mb-6">Sign in to your account to get started</p>
+        <h1 className="text-xl sm:text-2xl font-semibold mb-2">FocusDot</h1>
+        <p className="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base">Sign in to your account to get started</p>
         <button 
         onClick={() => {
           console.log('Google sign-in clicked')
            signInWithGoogle() // Temporarily commented out
         }}
-        className="flex items-center justify-center w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition">
+        className="flex items-center justify-center w-full py-2.5 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition text-sm sm:text-base">
           <svg
-            className="w-5 h-5 mr-2"
+            className="w-4 h-4 sm:w-5 sm:h-5 mr-2"
             aria-hidden="true"
             focusable="false"
             data-prefix="fab"
@@ -52,7 +52,7 @@ export default function LoginPage() {
           </svg>
           Sign in with Google
         </button>
-        <p className="text-gray-400 text-xs mt-6">Protected by secure OAuth2</p>
+        <p className="text-gray-400 text-xs mt-4 sm:mt-6">Protected by secure OAuth2</p>
       </div>
     </div>
   );
