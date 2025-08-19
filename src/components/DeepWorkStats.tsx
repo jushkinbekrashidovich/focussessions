@@ -37,12 +37,12 @@ export default function DeepWorkStats({ refreshTrigger }: DeepWorkStatsProps) {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-3 gap-3 sm:gap-6">
         {[...Array(3)].map((_, i) => (
-          <div key={i} className="bg-[#1d1d4e] p-6 rounded-xl animate-pulse">
-            <div className="h-4 bg-gray-600 rounded w-3/4 mb-2"></div>
-            <div className="h-8 bg-gray-600 rounded w-1/2 mb-2"></div>
-            <div className="h-2 bg-gray-600 rounded-full"></div>
+          <div key={i} className="bg-[#1d1d4e] p-3 sm:p-6 rounded-xl animate-pulse">
+            <div className="h-3 sm:h-4 bg-gray-600 rounded w-3/4 mb-1 sm:mb-2"></div>
+            <div className="h-6 sm:h-8 bg-gray-600 rounded w-1/2 mb-1 sm:mb-2"></div>
+            <div className="h-1.5 sm:h-2 bg-gray-600 rounded-full"></div>
           </div>
         ))}
       </div>
@@ -51,8 +51,8 @@ export default function DeepWorkStats({ refreshTrigger }: DeepWorkStatsProps) {
 
   if (!stats) {
     return (
-      <div className="grid grid-cols-3 gap-6">
-        <div className="bg-[#1d1d4e] p-6 rounded-xl text-center text-gray-400">
+      <div className="grid grid-cols-3 gap-3 sm:gap-6">
+        <div className="bg-[#1d1d4e] p-3 sm:p-6 rounded-xl text-center text-gray-400 text-xs sm:text-sm">
           Failed to load stats
         </div>
       </div>
@@ -60,14 +60,14 @@ export default function DeepWorkStats({ refreshTrigger }: DeepWorkStatsProps) {
   }
 
   return (
-    <div className="grid grid-cols-3 gap-6">
+    <div className="grid grid-cols-3 gap-3 sm:gap-6">
       {/* Deep Work This Month */}
-      <div className="bg-[#1d1d4e] p-6 rounded-xl">
-        <p className="text-sm mb-2 text-gray-300">Deep Work This Month</p>
-        <h3 className="text-2xl font-bold">
+      <div className="bg-[#1d1d4e] p-3 sm:p-6 rounded-xl">
+        <p className="text-xs sm:text-sm mb-1 sm:mb-2 text-gray-300">Deep Work This Month</p>
+        <h3 className="text-lg sm:text-2xl font-bold">
           {formatMonthlyTime(stats.monthlyHours, stats.monthlyMinutes)}
         </h3>
-        <div className="h-2 mt-2 bg-[#37378a] rounded-full overflow-hidden">
+        <div className="h-1.5 sm:h-2 mt-1 sm:mt-2 bg-[#37378a] rounded-full overflow-hidden">
           <div 
             className="h-full bg-indigo-500 transition-all duration-500"
             style={{ width: `${stats.currentMonthProgress}%` }}
@@ -84,9 +84,9 @@ export default function DeepWorkStats({ refreshTrigger }: DeepWorkStatsProps) {
       </div>
 
       {/* Deep Work Streak */}
-      <div className="bg-[#1d1d4e] p-6 rounded-xl">
-        <p className="text-sm mb-2 text-gray-300">Deep Work Streak</p>
-        <h3 className="text-2xl font-bold">{stats.streak} days</h3>
+      <div className="bg-[#1d1d4e] p-3 sm:p-6 rounded-xl">
+        <p className="text-xs sm:text-sm mb-1 sm:mb-2 text-gray-300">Deep Work Streak</p>
+        <h3 className="text-lg sm:text-2xl font-bold">{stats.streak} days</h3>
         <p className="text-xs text-gray-400 mt-1">
           {stats.streak === 0 ? 'Start your streak today!' : 
            stats.streak === 1 ? 'Great start!' : 
@@ -97,12 +97,12 @@ export default function DeepWorkStats({ refreshTrigger }: DeepWorkStatsProps) {
       </div>
 
       {/* Missed Days */}
-      <div className="bg-[#1d1d4e] p-6 rounded-xl">
-        <p className="text-sm mb-2 text-gray-300">Missed Days This Week</p>
-        <h3 className="text-2xl font-bold">
+      <div className="bg-[#1d1d4e] p-3 sm:p-6 rounded-xl">
+        <p className="text-xs sm:text-sm mb-1 sm:mb-2 text-gray-300">Missed Days This Week</p>
+        <h3 className="text-lg sm:text-2xl font-bold">
           {stats.missedDaysThisWeek} / {stats.totalDaysThisWeek}
         </h3>
-        <div className="h-2 mt-2 bg-[#37378a] rounded-full overflow-hidden">
+        <div className="h-1.5 sm:h-2 mt-1 sm:mt-2 bg-[#37378a] rounded-full overflow-hidden">
           <div 
             className="h-full bg-indigo-500 transition-all duration-500"
             style={{ width: `${(stats.missedDaysThisWeek / stats.totalDaysThisWeek) * 100}%` }}
