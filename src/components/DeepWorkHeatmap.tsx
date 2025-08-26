@@ -123,39 +123,44 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
   const renderHeatmapGrid = () => {
     if (heatmapData.length === 0) return null
 
-    const startDate = new Date(selectedYear, 0, 1) // January 1st
+    // Simple approach: Create a grid that starts exactly from January 1st
+    // Each column represents a week, each row represents a day of the week
     
-    // Calculate the first Monday of the year (or the Monday before if Jan 1st is not Monday)
-    const firstDayOfYear = startDate.getDay() // 0 = Sunday, 1 = Monday, etc.
-    const daysToSubtract = firstDayOfYear === 0 ? 6 : firstDayOfYear - 1 // Days to subtract to get to Monday
+    // Calculate the day of week for January 1st (0 = Sunday, 1 = Monday, etc.)
+    const januaryFirst = new Date(selectedYear, 0, 1)
+    const firstDayOfWeek = januaryFirst.getDay() // 0 = Sunday, 1 = Monday, etc.
     
-    const firstMonday = new Date(startDate)
-    firstMonday.setDate(firstMonday.getDate() - daysToSubtract)
+    // Convert to Monday-based week (0 = Monday, 1 = Tuesday, ..., 6 = Sunday)
+    const mondayBasedDay = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1
     
-    // Calculate total weeks needed (including partial weeks at start/end)
-    const endDate = new Date(selectedYear, 11, 31) // December 31st
-    const lastDayOfYear = endDate.getDay()
-    const daysToAdd = lastDayOfYear === 0 ? 0 : 7 - lastDayOfYear // Days to add to complete the week
+    // Calculate total weeks needed (52 or 53 weeks)
+    const totalWeeks = 53
     
-    const lastSunday = new Date(endDate)
-    lastSunday.setDate(lastSunday.getDate() + daysToAdd)
-    
-    const totalDays = Math.ceil((lastSunday.getTime() - firstMonday.getTime()) / (1000 * 60 * 60 * 24))
-    const totalWeeks = Math.ceil(totalDays / 7)
-    
-    // Create grid structure - each column represents a week
+    // Create grid structure
     const grid: DayData[][] = []
     
-    // Fill the grid with data, ensuring proper week alignment starting from Monday
+    // Fill the grid week by week
     for (let weekIndex = 0; weekIndex < totalWeeks; weekIndex++) {
       const week: DayData[] = []
+      
       for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
-        const currentDate = new Date(firstMonday)
-        currentDate.setDate(firstMonday.getDate() + (weekIndex * 7) + dayIndex)
+        // Calculate the actual date for this grid position
+        let actualDate: Date
+        
+        if (weekIndex === 0 && dayIndex < mondayBasedDay) {
+          // This is before January 1st - empty cell
+          week.push({ date: '', count: 0, intensity: 0 })
+          continue
+        } else {
+          // Calculate the actual date
+          const daysFromStart = (weekIndex * 7) + dayIndex - mondayBasedDay
+          actualDate = new Date(selectedYear, 0, 1)
+          actualDate.setDate(1 + daysFromStart)
+        }
         
         // Check if this date is within the selected year
-        if (currentDate.getFullYear() === selectedYear) {
-          const dateKey = currentDate.toISOString().split('T')[0]
+        if (actualDate.getFullYear() === selectedYear) {
+          const dateKey = actualDate.toISOString().split('T')[0]
           const dayData = heatmapData.find(d => d.date === dateKey)
           if (dayData) {
             week.push(dayData)
@@ -163,10 +168,11 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
             week.push({ date: dateKey, count: 0, intensity: 0 })
           }
         } else {
-          // This date is outside the selected year (padding)
+          // This date is outside the selected year
           week.push({ date: '', count: 0, intensity: 0 })
         }
       }
+      
       grid.push(week)
     }
 
@@ -252,8 +258,8 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
             onChange={(e) => setSelectedYear(Number(e.target.value))}
             className="bg-[#26265e] text-white text-xs px-2 py-1 rounded border border-[#37378a] focus:outline-none focus:border-indigo-500"
           >
-            {Array.from({ length: 10 }, (_, i) => {
-              const year = new Date().getFullYear() - 5 + i
+            {Array.from({ length: 77 }, (_, i) => {
+              const year = 2024 + i
               return (
                 <option key={year} value={year}>
                   {year}
