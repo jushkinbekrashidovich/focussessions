@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react'
 import { sessionsService, Session } from '@/lib/skillsService'
-import { useTheme } from '@/contexts/ThemeContext'
 import { getUserCurrentTimezone } from '@/lib/timezoneUtils'
 
 interface DeepWorkHeatmapProps {
@@ -19,7 +18,6 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
   const [heatmapData, setHeatmapData] = useState<DayData[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [userTimezone, setUserTimezone] = useState<string>('')
-  const { theme } = useTheme()
 
   useEffect(() => {
     // Get user's current timezone automatically
@@ -151,7 +149,7 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
     return (
       <div className="space-y-2 sm:space-y-3">
         {/* Month labels - positioned above the grid */}
-        <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 px-1 sm:px-2">
+        <div className="flex justify-between text-xs text-gray-400 px-1 sm:px-2">
           {Array.from({ length: 12 }, (_, i) => (
             <span key={i} className="flex-1 text-center text-xs">
               {getMonthLabel(i)}
@@ -164,7 +162,7 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
           {/* Day labels on the left - Tue, Thu, Sat only */}
           <div className="flex flex-col mr-0.5 sm:mr-1 space-y-0.5 sm:space-y-1">
             {Array.from({ length: 7 }, (_, i) => (
-              <div key={i} className="h-3 sm:h-4 text-xs text-gray-500 dark:text-gray-400 w-3 sm:w-4 text-right leading-none">
+              <div key={i} className="h-3 sm:h-4 text-xs text-gray-400 w-3 sm:w-4 text-right leading-none">
                 {i === 1 ? 'Tue' : i === 3 ? 'Thu' : i === 5 ? 'Sat' : ''}
               </div>
             ))}
@@ -194,14 +192,14 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
 
         {/* Color intensity legend - bottom right */}
         <div className="flex justify-end items-center space-x-1 sm:space-x-2 mt-2 sm:mt-4">
-          <span className="text-xs text-gray-500 dark:text-gray-400">Less</span>
+          <span className="text-xs text-gray-400">Less</span>
           <div className="flex space-x-0.5 sm:space-x-1">
             <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-sm bg-[#9195DE]"></div>
             <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-sm bg-[#7A7FD8]"></div>
             <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-sm bg-[#6369D2]"></div>
             <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-sm bg-[#555AB5]"></div>
           </div>
-          <span className="text-xs text-gray-500 dark:text-gray-400">More</span>
+          <span className="text-xs text-gray-400">More</span>
         </div>
       </div>
     )
@@ -209,19 +207,19 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
 
   if (isLoading) {
     return (
-      <div className="bg-gray-100 dark:bg-[#1d1d4e] rounded-xl p-3 sm:p-6 h-[150px] sm:h-[200px] animate-pulse transition-colors duration-200">
-        <div className="h-3 sm:h-4 bg-gray-300 dark:bg-gray-600 rounded w-1/3 mb-2 sm:mb-4"></div>
-        <div className="h-24 sm:h-32 bg-gray-300 dark:bg-gray-600 rounded"></div>
+      <div className="bg-[#1d1d4e] rounded-xl p-3 sm:p-6 h-[150px] sm:h-[200px] animate-pulse transition-colors duration-200">
+        <div className="h-3 sm:h-4 bg-gray-600 rounded w-1/3 mb-2 sm:mb-4"></div>
+        <div className="h-24 sm:h-32 bg-gray-600 rounded"></div>
       </div>
     )
   }
 
     return (
     <div>
-      <h2 className="text-lg sm:text-xl mb-3 sm:mb-4 font-semibold text-gray-900 dark:text-white transition-colors duration-200">Your Deep Work</h2>
+      <h2 className="text-lg sm:text-xl mb-3 sm:mb-4 font-semibold text-white transition-colors duration-200">Your Deep Work</h2>
       
       {heatmapData.length === 0 ? (
-        <div className="text-gray-600 dark:text-gray-500 text-center py-6 sm:py-8 transition-colors duration-200">
+        <div className="text-gray-500 text-center py-6 sm:py-8 transition-colors duration-200">
           <p className="text-sm sm:text-base">No deep work data yet.</p>
           <p className="text-xs sm:text-sm mt-2">Complete your first session to see your activity heatmap!</p>
         </div>

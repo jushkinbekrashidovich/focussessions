@@ -63,7 +63,7 @@ export default function TimezoneSelector({ selectedTimezone, onTimezoneChange }:
       {/* Timezone Display Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between w-full px-3 py-2 text-sm bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+        className="flex items-center justify-between w-full px-3 py-2 text-sm bg-gray-700 border border-gray-600 rounded-md text-gray-300 hover:bg-gray-600 transition-colors"
       >
         <span className="truncate">{getCurrentTimezoneLabel()}</span>
         <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -73,15 +73,15 @@ export default function TimezoneSelector({ selectedTimezone, onTimezoneChange }:
 
       {/* Dropdown */}
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg z-50 max-h-60 overflow-hidden">
+        <div className="absolute top-full left-0 right-0 mt-1 bg-gray-800 border border-gray-600 rounded-md shadow-lg z-50 max-h-60 overflow-hidden">
           {/* Search Input */}
-          <div className="p-3 border-b border-gray-200 dark:border-gray-700">
+          <div className="p-3 border-b border-gray-700">
             <input
               type="text"
               placeholder="Search timezones..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-3 py-2 text-sm bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-gray-700 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 text-sm bg-gray-700 border border-gray-600 rounded-md text-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               autoFocus
             />
           </div>
@@ -89,7 +89,7 @@ export default function TimezoneSelector({ selectedTimezone, onTimezoneChange }:
           {/* Timezone List */}
           <div className="max-h-48 overflow-y-auto">
             {filteredTimezones.length === 0 ? (
-              <div className="px-3 py-2 text-sm text-gray-500 dark:text-gray-400 text-center">
+              <div className="px-3 py-2 text-sm text-gray-400 text-center">
                 No timezones found
               </div>
             ) : (
@@ -97,10 +97,10 @@ export default function TimezoneSelector({ selectedTimezone, onTimezoneChange }:
                 <button
                   key={timezone.value}
                   onClick={() => handleTimezoneSelect(timezone.value)}
-                  className={`w-full px-3 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${
+                  className={`w-full px-3 py-2 text-sm text-left hover:bg-gray-700 transition-colors ${
                     selectedTimezone === timezone.value 
-                      ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' 
-                      : 'text-gray-700 dark:text-gray-300'
+                      ? 'bg-blue-900 text-blue-300' 
+                      : 'text-gray-300'
                   }`}
                 >
                   {timezone.label}
