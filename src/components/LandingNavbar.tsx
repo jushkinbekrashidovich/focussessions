@@ -21,7 +21,7 @@ export default function LandingNavbar({ user }: LandingNavbarProps) {
       <div className="max-w-6xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <span className="flex items-center gap-2 text-lg font-semibold text-gray-400 select-none">
-          <Image src="/logo.svg" alt="Logo" width={80} height={80} className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24" priority />
+          <Image src="/logo.svg" alt="Logo" width={80} height={80} className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28" priority />
         </span>
 
         {/* Desktop Navigation */}

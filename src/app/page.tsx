@@ -30,7 +30,7 @@ export default function Home() {
     <>
       <LandingNavbar user={user} />
       {/* Spacing between navbar and first section */}
-      <div className="h-32 sm:h-36 md:h-40"></div>
+      <div className="h-40 sm:h-44 md:h-48"></div>
       
       {/* First Section */}
       <section className="w-full text-white flex flex-col justify-center items-center px-4 py-8 sm:py-12 md:py-16">
@@ -73,7 +73,7 @@ export default function Home() {
       </section>
 
       {/* Spacing between sections */}
-      <div className="h-32 sm:h-36 md:h-40"></div>
+      <div className="h-40 sm:h-44 md:h-48"></div>
 
       {/* Second Section */}
       <section id="demo" className="w-full flex flex-col items-center justify-center bg-[#151515] px-4 py-12 sm:py-16 md:py-20">
