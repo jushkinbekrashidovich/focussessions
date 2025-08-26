@@ -38,7 +38,7 @@ export default function HomePage() {
 
           {/* Activity Feed */}
           <div>
-            <h2 className="text-lg lg:text-xl mb-3 lg:mb-4 font-semibold">Your Activity</h2>
+            <h2 className="text-lg lg:text-xl mb-3 lg:mb-4 font-semibold">My Activity</h2>
             <ActivityFeed maxItems={10} refreshTrigger={refreshTrigger} />
           </div>
         </div>

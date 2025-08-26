@@ -35,6 +35,23 @@ export default function DeepWorkStats({ refreshTrigger }: DeepWorkStatsProps) {
     return `${hours}h ${minutes}m`
   }
 
+  const formatLongestSessionTime = (minutes: number): string => {
+    const hours = Math.floor(minutes / 60)
+    const remainingMinutes = minutes % 60
+    if (hours === 0) return `${remainingMinutes} min`
+    if (remainingMinutes === 0) return `${hours}h`
+    return `${hours}h ${remainingMinutes} min`
+  }
+
+  const formatDate = (dateString: string): string => {
+    const date = new Date(dateString)
+    return date.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    })
+  }
+
   if (isLoading) {
     return (
       <div className="grid grid-cols-3 gap-3 sm:gap-6">
@@ -76,11 +93,6 @@ export default function DeepWorkStats({ refreshTrigger }: DeepWorkStatsProps) {
         <p className="text-xs text-gray-400 mt-1">
           {stats.currentMonthPassedDays}/{stats.currentMonthTotalDays} 
         </p>
-        {stats.totalMonthlyMinutes > 0 && (
-          <p className="text-xs text-green-400 mt-1">
-            {Math.round((stats.totalMonthlyMinutes / (stats.currentMonthPassedDays * 24 * 60)) * 10) / 10} min/day average
-          </p>
-        )}
       </div>
 
       {/* Deep Work Streak */}
@@ -96,21 +108,26 @@ export default function DeepWorkStats({ refreshTrigger }: DeepWorkStatsProps) {
         </p>
       </div>
 
-      {/* Missed Days */}
+      {/* Longest Focus Session */}
       <div className="bg-[#1d1d4e] p-3 sm:p-6 rounded-xl">
-        <p className="text-xs sm:text-sm mb-1 sm:mb-2 text-gray-300">Missed Days This Week</p>
-        <h3 className="text-lg sm:text-2xl font-bold">
-          {stats.missedDaysThisWeek} / {stats.totalDaysThisWeek}
-        </h3>
-        <div className="h-1.5 sm:h-2 mt-1 sm:mt-2 bg-[#37378a] rounded-full overflow-hidden">
-          <div 
-            className="h-full bg-indigo-500 transition-all duration-500"
-            style={{ width: `${(stats.missedDaysThisWeek / stats.totalDaysThisWeek) * 100}%` }}
-          />
-        </div>
-        <p className="text-xs text-gray-400 mt-1">
-          {stats.totalDaysThisWeek - stats.missedDaysThisWeek} days with sessions
-        </p>
+        <p className="text-xs sm:text-sm mb-1 sm:mb-2 text-gray-300">Longest Focus Session</p>
+        {stats.longestSession ? (
+          <>
+            <h3 className="text-lg sm:text-2xl font-bold">
+              {formatLongestSessionTime(stats.longestSession.duration_min)}
+            </h3>
+            <p className="text-xs text-gray-400 mt-1">
+              {formatDate(stats.longestSession.created_at)}
+            </p>
+          </>
+        ) : (
+          <>
+            <h3 className="text-lg sm:text-2xl font-bold text-gray-400">No sessions yet</h3>
+            <p className="text-xs text-gray-400 mt-1">
+              Complete your first session to see your record
+            </p>
+          </>
+        )}
       </div>
     </div>
   )

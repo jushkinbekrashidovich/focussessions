@@ -5,8 +5,10 @@ export interface DeepWorkStats {
   monthlyMinutes: number
   totalMonthlyMinutes: number
   streak: number
-  missedDaysThisWeek: number
-  totalDaysThisWeek: number
+  longestSession: {
+    duration_min: number
+    created_at: string
+  } | null
   currentMonthProgress: number
   currentMonthTotalDays: number
   currentMonthPassedDays: number
@@ -40,8 +42,8 @@ export const statsService = {
       // Calculate streak
       const streak = this.calculateStreak(sessions)
       
-      // Calculate missed days this week (Monday to Sunday)
-      const { missedDaysThisWeek, totalDaysThisWeek } = this.calculateMissedDaysThisWeek(sessions)
+      // Calculate longest focus session
+      const longestSession = this.calculateLongestSession(sessions)
       
       // Calculate current month progress
       const currentMonthTotalDays = new Date(currentYear, currentMonth + 1, 0).getDate()
@@ -56,8 +58,7 @@ export const statsService = {
         monthlyMinutes,
         totalMonthlyMinutes,
         streak,
-        missedDaysThisWeek,
-        totalDaysThisWeek,
+        longestSession,
         currentMonthProgress: clampedProgress,
         currentMonthTotalDays,
         currentMonthPassedDays
@@ -70,8 +71,7 @@ export const statsService = {
         monthlyMinutes: 0,
         totalMonthlyMinutes: 0,
         streak: 0,
-        missedDaysThisWeek: 0, // Placeholder, will be implemented
-        totalDaysThisWeek: 7, // Placeholder, will be implemented
+        longestSession: null,
         currentMonthProgress: 0,
         currentMonthTotalDays: 30,
         currentMonthPassedDays: 0
@@ -125,53 +125,20 @@ export const statsService = {
     return streak
   },
 
-  // Calculate missed days this week (Monday to Sunday)
-  calculateMissedDaysThisWeek(sessions: Session[]): { missedDaysThisWeek: number; totalDaysThisWeek: number } {
-    const now = new Date()
-    const today = new Date(now)
+
+
+  // Calculate longest focus session
+  calculateLongestSession(sessions: Session[]): { duration_min: number; created_at: string } | null {
+    if (sessions.length === 0) return null
     
-    // Find the most recent Monday (start of week)
-    const dayOfWeek = today.getDay() // 0 = Sunday, 1 = Monday, etc.
-    const daysSinceMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1 // Days since last Monday
-    
-    const monday = new Date(today)
-    monday.setDate(monday.getDate() - daysSinceMonday)
-    monday.setHours(0, 0, 0, 0)
-    
-    // Find the next Sunday (end of week)
-    const sunday = new Date(monday)
-    sunday.setDate(sunday.getDate() + 6)
-    sunday.setHours(23, 59, 59, 999)
-    
-    // Group sessions by date and calculate total minutes per day
-    const dailyMinutes = new Map<string, number>()
-    sessions.forEach(session => {
-      const sessionDate = new Date(session.created_at)
-      if (sessionDate >= monday && sessionDate <= sunday) {
-        const dateKey = sessionDate.toDateString()
-        const currentMinutes = dailyMinutes.get(dateKey) || 0
-        dailyMinutes.set(dateKey, currentMinutes + session.duration_min)
-      }
+    // Find the session with the longest duration
+    const longestSession = sessions.reduce((longest, current) => {
+      return current.duration_min > longest.duration_min ? current : longest
     })
     
-    let missedDays = 0
-    const currentDate = new Date(monday)
-    
-    // Count days without at least 10 minutes of sessions
-    while (currentDate <= sunday) {
-      const dateKey = currentDate.toDateString()
-      const dayMinutes = dailyMinutes.get(dateKey) || 0
-      
-      if (dayMinutes < 10) {
-        missedDays++
-      }
-      
-      currentDate.setDate(currentDate.getDate() + 1)
-    }
-    
     return {
-      missedDaysThisWeek: missedDays,
-      totalDaysThisWeek: 7
+      duration_min: longestSession.duration_min,
+      created_at: longestSession.created_at
     }
   },
 

@@ -18,6 +18,7 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
   const [heatmapData, setHeatmapData] = useState<DayData[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [userTimezone, setUserTimezone] = useState<string>('')
+  const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear())
 
   useEffect(() => {
     // Get user's current timezone automatically
@@ -27,7 +28,7 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
 
   useEffect(() => {
     fetchHeatmapData()
-  }, [refreshTrigger, userTimezone])
+  }, [refreshTrigger, userTimezone, selectedYear])
 
   const fetchHeatmapData = async () => {
     try {
@@ -44,7 +45,6 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
 
   const generateHeatmapData = (sessions: Session[]): DayData[] => {
     const data: DayData[] = []
-    const currentYear = new Date().getFullYear()
     
     // Create a map of total session minutes by date in user's timezone
     const sessionMinutes = new Map<string, number>()
@@ -72,10 +72,10 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
       sessionMinutes.set(dateKey, currentMinutes + session.duration_min)
     })
     
-    // Generate data for each day of the whole year (365 or 366 days)
+    // Generate data for each day of the selected year (365 or 366 days)
     // Start from January 1st and go through December 31st
-    const startDate = new Date(currentYear, 0, 1) // January 1st
-    const endDate = new Date(currentYear, 11, 31) // December 31st
+    const startDate = new Date(selectedYear, 0, 1) // January 1st
+    const endDate = new Date(selectedYear, 11, 31) // December 31st
     
     for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
       const dateKey = d.toISOString().split('T')[0]
@@ -115,6 +115,7 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
   }
 
   const getDayLabel = (dayIndex: number): string => {
+    // Start from Monday (1) to Sunday (0)
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     return days[dayIndex]
   }
@@ -122,24 +123,47 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
   const renderHeatmapGrid = () => {
     if (heatmapData.length === 0) return null
 
-    const currentYear = new Date().getFullYear()
-    const startDate = new Date(currentYear, 0, 1) // January 1st
+    const startDate = new Date(selectedYear, 0, 1) // January 1st
     
-    // Calculate weeks needed for the full year
-    // We need exactly 53 weeks to cover the full year
-    const totalWeeks = 53
+    // Calculate the first Monday of the year (or the Monday before if Jan 1st is not Monday)
+    const firstDayOfYear = startDate.getDay() // 0 = Sunday, 1 = Monday, etc.
+    const daysToSubtract = firstDayOfYear === 0 ? 6 : firstDayOfYear - 1 // Days to subtract to get to Monday
+    
+    const firstMonday = new Date(startDate)
+    firstMonday.setDate(firstMonday.getDate() - daysToSubtract)
+    
+    // Calculate total weeks needed (including partial weeks at start/end)
+    const endDate = new Date(selectedYear, 11, 31) // December 31st
+    const lastDayOfYear = endDate.getDay()
+    const daysToAdd = lastDayOfYear === 0 ? 0 : 7 - lastDayOfYear // Days to add to complete the week
+    
+    const lastSunday = new Date(endDate)
+    lastSunday.setDate(lastSunday.getDate() + daysToAdd)
+    
+    const totalDays = Math.ceil((lastSunday.getTime() - firstMonday.getTime()) / (1000 * 60 * 60 * 24))
+    const totalWeeks = Math.ceil(totalDays / 7)
     
     // Create grid structure - each column represents a week
     const grid: DayData[][] = []
     
-    // Fill the grid with data, ensuring proper week alignment
+    // Fill the grid with data, ensuring proper week alignment starting from Monday
     for (let weekIndex = 0; weekIndex < totalWeeks; weekIndex++) {
       const week: DayData[] = []
       for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
-        const dataIndex = weekIndex * 7 + dayIndex
-        if (dataIndex < heatmapData.length) {
-          week.push(heatmapData[dataIndex])
+        const currentDate = new Date(firstMonday)
+        currentDate.setDate(firstMonday.getDate() + (weekIndex * 7) + dayIndex)
+        
+        // Check if this date is within the selected year
+        if (currentDate.getFullYear() === selectedYear) {
+          const dateKey = currentDate.toISOString().split('T')[0]
+          const dayData = heatmapData.find(d => d.date === dateKey)
+          if (dayData) {
+            week.push(dayData)
+          } else {
+            week.push({ date: dateKey, count: 0, intensity: 0 })
+          }
         } else {
+          // This date is outside the selected year (padding)
           week.push({ date: '', count: 0, intensity: 0 })
         }
       }
@@ -159,11 +183,11 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
         
         {/* Main grid with day labels */}
         <div className="flex">
-          {/* Day labels on the left - Tue, Thu, Sat only */}
+          {/* Day labels on the left - Mon, Tue, Wed, Thu, Fri, Sat, Sun */}
           <div className="flex flex-col mr-0.5 sm:mr-1 space-y-0.5 sm:space-y-1">
-            {Array.from({ length: 7 }, (_, i) => (
-              <div key={i} className="h-3 sm:h-4 text-xs text-gray-400 w-3 sm:w-4 text-right leading-none">
-                {i === 1 ? 'Tue' : i === 3 ? 'Thu' : i === 5 ? 'Sat' : ''}
+            {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day, i) => (
+              <div key={i} className="h-3 sm:h-4 text-xs text-gray-400 w-8 sm:w-10 text-right leading-none">
+                {day}
               </div>
             ))}
           </div>
@@ -216,7 +240,29 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
 
     return (
     <div>
-      <h2 className="text-lg sm:text-xl mb-3 sm:mb-4 font-semibold text-white transition-colors duration-200">Your Deep Work</h2>
+      <div className="flex justify-between items-center mb-3 sm:mb-4">
+        <h2 className="text-lg sm:text-xl font-semibold text-white transition-colors duration-200">My Deep Work</h2>
+        
+        {/* Year Selection */}
+        <div className="flex items-center space-x-2">
+          <label htmlFor="year-select" className="text-xs text-gray-400">Year:</label>
+          <select
+            id="year-select"
+            value={selectedYear}
+            onChange={(e) => setSelectedYear(Number(e.target.value))}
+            className="bg-[#26265e] text-white text-xs px-2 py-1 rounded border border-[#37378a] focus:outline-none focus:border-indigo-500"
+          >
+            {Array.from({ length: 10 }, (_, i) => {
+              const year = new Date().getFullYear() - 5 + i
+              return (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              )
+            })}
+          </select>
+        </div>
+      </div>
       
       {heatmapData.length === 0 ? (
         <div className="text-gray-500 text-center py-6 sm:py-8 transition-colors duration-200">
