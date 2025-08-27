@@ -197,55 +197,82 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
-          {/* Basic Plan */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 sm:gap-8 max-w-7xl mx-auto">
+          {/* Free Plan */}
           <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8 shadow-sm">
-            <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">Monthly</h3>
-            <p className="text-2xl sm:text-3xl font-bold text-white mb-1">$1.87/mth</p>
-            <p className="text-sm text-gray-400 mb-4 sm:mb-6">Billed monthly.</p>
+            <div className="text-center mb-4">
+              <span className="inline-block bg-green-500 text-black text-xs font-bold px-3 py-1 rounded-full mb-3">FREE</span>
+            </div>
+            <h3 className="text-lg sm:text-xl font-semibold text-white mb-2 text-center">Free</h3>
+            <p className="text-2xl sm:text-3xl font-bold text-white mb-1 text-center">$0</p>
+            <p className="text-sm text-gray-400 mb-4 sm:mb-6 text-center">Forever free</p>
             <ul className="space-y-2 text-gray-400 text-sm mb-4 sm:mb-6">
-              <li>✔ Access to all basic features</li>
-              <li>✔ Basic reporting and analytics</li>
-              <li>✔ Up to 10 users</li>
-              <li>✔ 20GB/user</li>
-              <li>✔ Basic support</li>
+              <li>✔ Basic focus timer</li>
+              <li>✔ Simple progress tracking</li>
+              <li>✔ Basic statistics</li>
+              <li>✔ Up to 3 focus categories</li>
+              <li>✔ Community support</li>
             </ul>
-            <button className="w-full border border-white text-white font-medium py-2 rounded-md hover:bg-white hover:text-black transition">
-              Get started
+            <button className="w-full border border-gray-600 text-gray-300 font-medium py-2 rounded-md hover:border-gray-500 hover:text-white transition cursor-not-allowed">
+              Current Plan
             </button>
           </div>
 
-          {/* Business Plan */}
-          <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8 shadow-md">
-            <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">Yearly</h3>
-            <p className="text-2xl sm:text-3xl font-bold text-white mb-1">$9.9/mth</p>
-            <p className="text-sm text-gray-400 mb-4 sm:mb-6">Billed annually.</p>
+          {/* Pro Monthly Plan */}
+          <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8 shadow-sm">
+            <h3 className="text-lg sm:text-xl font-semibold text-white mb-2 text-center">Pro Monthly</h3>
+            <p className="text-2xl sm:text-3xl font-bold text-white mb-1 text-center">$1.9</p>
+            <p className="text-sm text-gray-400 mb-4 sm:mb-6 text-center">per month</p>
             <ul className="space-y-2 text-gray-400 text-sm mb-4 sm:mb-6">
-              <li>✔ 200+ integrations</li>
-              <li>✔ Advanced analytics</li>
-              <li>✔ Up to 20 users</li>
-              <li>✔ 40GB/user</li>
+              <li>✔ Everything in Free</li>
+              <li>✔ Advanced analytics & insights</li>
+              <li>✔ Unlimited focus categories</li>
+              <li>✔ Custom focus goals</li>
+              <li>✔ Priority support</li>
+            </ul>
+            <button className="w-full border border-white text-white font-medium py-2 rounded-md hover:bg-white hover:text-black transition">
+              Get Pro
+            </button>
+          </div>
+
+          {/* Pro Yearly Plan */}
+          <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8 shadow-md relative">
+            <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+              <span className="bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full">BEST VALUE</span>
+            </div>
+            <h3 className="text-lg sm:text-xl font-semibold text-white mb-2 text-center">Pro Yearly</h3>
+            <p className="text-2xl sm:text-3xl font-bold text-white mb-1 text-center">$20</p>
+            <p className="text-sm text-gray-400 mb-4 sm:mb-6 text-center">per year</p>
+            <p className="text-xs text-green-400 mb-4 text-center">Save 12% vs monthly</p>
+            <ul className="space-y-2 text-gray-400 text-sm mb-4 sm:mb-6">
+              <li>✔ Everything in Pro Monthly</li>
+              <li>✔ Early access to new features</li>
+              <li>✔ Advanced focus insights</li>
+              <li>✔ Export your data</li>
               <li>✔ Priority support</li>
             </ul>
             <button className="w-full bg-white text-black font-medium py-2 rounded-md hover:bg-gray-300 transition">
-              Get started
+              Get Pro Yearly
             </button>
           </div>
 
-          {/* Enterprise Plan */}
+          {/* Lifetime Plan */}
           <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8 shadow-sm">
-            <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">Lifetime</h3>
-            <p className="text-2xl sm:text-3xl font-bold text-white mb-1">$99/mth</p>
-            <p className="text-sm text-gray-400 mb-4 sm:mb-6">Billed annually.</p>
+            <div className="text-center mb-4">
+              <span className="inline-block bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full mb-3">LIMITED</span>
+            </div>
+            <h3 className="text-lg sm:text-xl font-semibold text-white mb-2 text-center">Lifetime</h3>
+            <p className="text-2xl sm:text-3xl font-bold text-white mb-1 text-center">$44</p>
+            <p className="text-sm text-gray-400 mb-4 sm:mb-6 text-center">One-time payment</p>
             <ul className="space-y-2 text-gray-400 text-sm mb-4 sm:mb-6">
-              <li>✔ Advanced custom fields</li>
-              <li>✔ Full audit logs</li>
-              <li>✔ Unlimited users</li>
-              <li>✔ Unlimited data</li>
-              <li>✔ Personalized support</li>
+              <li>✔ Everything in Pro Yearly</li>
+              <li>✔ All future features included</li>
+              <li>✔ Lifetime updates</li>
+              <li>✔ Premium support</li>
+              <li>✔ No recurring fees</li>
             </ul>
             <button className="w-full border border-white text-white font-medium py-2 rounded-md hover:bg-white hover:text-black transition">
-              Get started
+              Get Lifetime
             </button>
           </div>
         </div>
