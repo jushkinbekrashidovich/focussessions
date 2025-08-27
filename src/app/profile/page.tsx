@@ -1,75 +1,32 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 // Force dynamic rendering to avoid SSG issues with Supabase
 export const dynamic = 'force-dynamic'
 import { User } from '@supabase/supabase-js'
-import { supabase } from '@/lib/supabaseClient'
 import AppNavbar from '@/components/AppNavbar'
 import DeepWorkHeatmap from '@/components/DeepWorkHeatmap'
-import { skillsService, Skill } from '@/lib/skillsService'
+import SkillProgress from '@/components/SkillProgress'
+import { Skill } from '@/lib/skillsService'
 import { useRouter } from 'next/navigation'
+import { useUser, useSkills } from '@/lib/hooks'
 
 export default function ProfilePage() {
-  const [user, setUser] = useState<User | null>(null)
-  const [skills, setSkills] = useState<Skill[]>([])
-  const [skillProgress, setSkillProgress] = useState<{[key: string]: {completedHours: number, targetHours: number, progressPercentage: number}}>({})
-  const [isLoading, setIsLoading] = useState(true)
   const [showLogoutModal, setShowLogoutModal] = useState(false)
   const [isLoggingOut, setIsLoggingOut] = useState(false)
-  const [refreshTrigger, setRefreshTrigger] = useState(0)
   const router = useRouter()
 
-  useEffect(() => {
-    fetchUserData()
-    fetchSkills()
-  }, [])
-
-  const fetchUserData = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser()
-      setUser(user)
-    } catch (error) {
-      console.error('Error fetching user:', error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  const fetchSkills = async () => {
-    try {
-      const skillsData = await skillsService.getUserSkills()
-      setSkills(skillsData)
-      
-      // Fetch progress for each skill
-      const progressData: {[key: string]: {completedHours: number, targetHours: number, progressPercentage: number}} = {}
-      
-      for (const skill of skillsData) {
-        try {
-          const progress = await skillsService.getSkillProgress(skill.id)
-          progressData[skill.id] = progress
-        } catch (error) {
-          console.error(`Error fetching progress for skill ${skill.id}:`, error)
-          progressData[skill.id] = { completedHours: 0, targetHours: skill.target_hours || 0, progressPercentage: 0 }
-        }
-      }
-      
-      setSkillProgress(progressData)
-    } catch (error) {
-      console.error('Error fetching skills:', error)
-    }
-  }
-
-  const refreshData = () => {
-    setRefreshTrigger(prev => prev + 1)
-    fetchSkills()
-  }
+  // Use React Query hooks
+  const { data: user, isLoading: isLoadingUser } = useUser()
+  const { data: skills = [], isLoading: isLoadingSkills } = useSkills()
+  
+  const isLoading = isLoadingUser || isLoadingSkills
 
   const handleLogout = async () => {
     setIsLoggingOut(true)
     try {
-      await supabase.auth.signOut()
+      // For now, just redirect to login
       router.push('/login')
     } catch (error) {
       console.error('Error logging out:', error)
@@ -165,7 +122,7 @@ export default function ProfilePage() {
             </div>
             
             {/* Heatmap */}
-            <DeepWorkHeatmap refreshTrigger={refreshTrigger} />
+            <DeepWorkHeatmap />
           </div>
         </div>
 
@@ -189,24 +146,7 @@ export default function ProfilePage() {
                   <p className="font-semibold text-white text-xs sm:text-sm">{skill.name}</p>
                   
                   {/* Progress section */}
-                  <div className="mt-1 sm:mt-1.5">
-                    <div className="h-1 bg-[#37378a] rounded-full overflow-hidden mb-1">
-                      <div 
-                        className="h-full bg-green-400 transition-all duration-500"
-                        style={{ width: `${Math.min((skillProgress[skill.id]?.completedHours || 0) / (skillProgress[skill.id]?.targetHours || 1) * 100, 100)}%` }}
-                      />
-                    </div>
-                    
-                    {/* Progress text */}
-                    <div className="flex justify-between items-center text-xs">
-                      <span className="text-gray-300">
-                        {(skillProgress[skill.id]?.completedHours || 0)}h / {(skillProgress[skill.id]?.targetHours || 0)}h
-                      </span>
-                      <span className="text-green-400">
-                        {Math.min(Math.round((skillProgress[skill.id]?.completedHours || 0) / (skillProgress[skill.id]?.targetHours || 1) * 100), 100)}%
-                      </span>
-                    </div>
-                  </div>
+                  <SkillProgress skillId={skill.id} targetHours={skill.target_hours || 0} />
 
                   <p className="text-xs text-gray-400 mt-1">
                     {skill.description || 'Click to start a session'}

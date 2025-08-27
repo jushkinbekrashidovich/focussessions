@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { skillsService, sessionsService, Skill } from '@/lib/skillsService'
+import { Skill } from '@/lib/skillsService'
+import { useSkills, useCreateSession } from '@/lib/hooks'
 
 interface TimerBoxProps {
   onSessionCompleted?: () => void
@@ -13,33 +14,21 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
   const [running, setRunning] = useState(false)
   const [showFlipMode, setShowFlipMode] = useState(false)
   const [selectedSkill, setSelectedSkill] = useState('')
-  const [skills, setSkills] = useState<Skill[]>([])
-  const [isLoadingSkills, setIsLoadingSkills] = useState(true)
-
   const [sessionStart, setSessionStart] = useState<Date | null>(null)
   const [showPrompt, setShowPrompt] = useState(false)
   const [note, setNote] = useState('')
   const [isSaving, setIsSaving] = useState(false)
 
-  // Fetch skills on component mount
-  useEffect(() => {
-    fetchSkills()
-  }, [])
+  // Use React Query hooks
+  const { data: skills = [], isLoading: isLoadingSkills } = useSkills()
+  const createSessionMutation = useCreateSession()
 
-  const fetchSkills = async () => {
-    try {
-      setIsLoadingSkills(true)
-      const userSkills = await skillsService.getUserSkills()
-      setSkills(userSkills)
-      if (userSkills.length > 0) {
-        setSelectedSkill(userSkills[0].id)
-      }
-    } catch (error) {
-      console.error('Error fetching skills:', error)
-    } finally {
-      setIsLoadingSkills(false)
+  // Set selected skill when skills are loaded
+  useEffect(() => {
+    if (skills.length > 0 && !selectedSkill) {
+      setSelectedSkill(skills[0].id)
     }
-  }
+  }, [skills, selectedSkill])
 
   const handleStart = () => {
     if (!selectedSkill) return
@@ -81,12 +70,14 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
     
     try {
       setIsSaving(true)
-      await sessionsService.createSession(
-        selectedSkill,
-        sessionStart.toISOString(),
-        new Date().toISOString(),
+      const duration = Math.floor((new Date().getTime() - sessionStart.getTime()) / (1000 * 60))
+      
+      await createSessionMutation.mutateAsync({
+        skillId: selectedSkill,
+        duration,
         note
-      )
+      })
+      
       setShowPrompt(false)
       setNote('')
       setSessionStart(null)

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 // Force dynamic rendering to avoid SSG issues with Supabase
 export const dynamic = 'force-dynamic'
@@ -9,39 +9,26 @@ import AppNavbar from '@/components/AppNavbar'
 import AddSkillModal from '@/components/AddSkillModal'
 import EditGoalModal from '@/components/EditGoalModal'
 import DeleteConfirmationModal from '@/components/DeleteConfirmationModal'
-import { skillsService, Skill } from '@/lib/skillsService'
+import { Skill } from '@/lib/skillsService'
+import { useSkills, useCreateSkill, useUpdateSkill, useDeleteSkill } from '@/lib/hooks'
 
 export default function ActivityPage() {
-  const [skills, setSkills] = useState<Skill[]>([])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const [isLoadingSkills, setIsLoadingSkills] = useState(true)
 
-  // Fetch skills on component mount
-  useEffect(() => {
-    fetchSkills()
-  }, [])
-
-  const fetchSkills = async () => {
-    try {
-      setIsLoadingSkills(true)
-      const userSkills = await skillsService.getUserSkills()
-      setSkills(userSkills)
-    } catch (error) {
-      console.error('Error fetching skills:', error)
-    } finally {
-      setIsLoadingSkills(false)
-    }
-  }
+  // Use React Query hooks
+  const { data: skills = [], isLoading: isLoadingSkills } = useSkills()
+  const createSkillMutation = useCreateSkill()
+  const updateSkillMutation = useUpdateSkill()
+  const deleteSkillMutation = useDeleteSkill()
 
   const handleAddSkill = async (skillName: string, targetHours: number, description: string) => {
     try {
       setIsLoading(true)
-      await skillsService.createSkill(skillName, targetHours, description)
-      await fetchSkills() // Refresh the skills list
+      await createSkillMutation.mutateAsync({ name: skillName, targetHours, description })
       setIsModalOpen(false)
     } catch (error) {
       console.error('Error adding skill:', error)
@@ -59,8 +46,7 @@ export default function ActivityPage() {
   const handleUpdateSkill = async (skillId: string, name: string, targetHours: number, description: string) => {
     try {
       setIsLoading(true)
-      await skillsService.updateSkill(skillId, { name, target_hours: targetHours, description })
-      await fetchSkills() // Refresh the skills list
+      await updateSkillMutation.mutateAsync({ skillId, name, targetHours, description })
       setIsEditModalOpen(false)
       setSelectedSkill(null)
     } catch (error) {
@@ -81,8 +67,7 @@ export default function ActivityPage() {
     
     try {
       setIsLoading(true)
-      await skillsService.deleteSkill(selectedSkill.id)
-      await fetchSkills() // Refresh the skills list
+      await deleteSkillMutation.mutateAsync(selectedSkill.id)
       setIsDeleteModalOpen(false)
       setSelectedSkill(null)
     } catch (error) {

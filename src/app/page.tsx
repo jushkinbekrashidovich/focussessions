@@ -1,34 +1,17 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import { User } from '@supabase/supabase-js'
-import { supabase } from '@/lib/supabaseClient'
 import LandingNavbar from '@/components/LandingNavbar'
+import { useUser } from '@/lib/hooks'
 
 export default function Home() {
   const router = useRouter()
-  const [user, setUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    checkUser()
-  }, [])
-
-  const checkUser = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser()
-      setUser(user)
-    } catch (error) {
-      console.error('Error checking user:', error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  const { data: user, isLoading } = useUser()
+  const userData = user || null
 
   return (
     <>
-      <LandingNavbar user={user} />
+      <LandingNavbar user={userData} />
       {/* Spacing between navbar and first section */}
       <div className="h-40 sm:h-44 md:h-48"></div>
       

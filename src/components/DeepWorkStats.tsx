@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import { statsService } from '@/lib/statsService'
+import React from 'react'
+import { useDeepWorkStats } from '@/lib/hooks'
 import type { DeepWorkStats } from '@/lib/statsService'
 
 interface DeepWorkStatsProps {
@@ -9,24 +9,8 @@ interface DeepWorkStatsProps {
 }
 
 export default function DeepWorkStats({ refreshTrigger }: DeepWorkStatsProps) {
-  const [stats, setStats] = useState<DeepWorkStats | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    fetchStats()
-  }, [refreshTrigger])
-
-  const fetchStats = async () => {
-    try {
-      setIsLoading(true)
-      const deepWorkStats = await statsService.getDeepWorkStats()
-      setStats(deepWorkStats)
-    } catch (error) {
-      console.error('Error fetching stats:', error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  // Use React Query hook
+  const { data: stats, isLoading } = useDeepWorkStats()
 
   const formatMonthlyTime = (hours: number, minutes: number): string => {
     if (hours === 0 && minutes === 0) return '0'

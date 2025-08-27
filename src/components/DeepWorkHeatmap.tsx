@@ -1,8 +1,9 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { sessionsService, Session } from '@/lib/skillsService'
+import { Session } from '@/lib/skillsService'
 import { getUserCurrentTimezone } from '@/lib/timezoneUtils'
+import { useSessions } from '@/lib/hooks'
 
 interface DeepWorkHeatmapProps {
   refreshTrigger?: number
@@ -16,7 +17,6 @@ interface DayData {
 
 export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps) {
   const [heatmapData, setHeatmapData] = useState<DayData[]>([])
-  const [isLoading, setIsLoading] = useState(true)
   const [userTimezone, setUserTimezone] = useState<string>('')
   const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear())
 
@@ -26,22 +26,17 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
     setUserTimezone(currentTimezone)
   }, [])
 
-  useEffect(() => {
-    fetchHeatmapData()
-  }, [refreshTrigger, userTimezone, selectedYear])
+  // Use React Query hook
+  const { data: sessions = [], isLoading: isLoadingSessions } = useSessions()
 
-  const fetchHeatmapData = async () => {
-    try {
-      setIsLoading(true)
-      const sessions = await sessionsService.getUserSessions()
+  useEffect(() => {
+    if (sessions.length > 0) {
       const data = generateHeatmapData(sessions)
       setHeatmapData(data)
-    } catch (error) {
-      console.error('Error fetching heatmap data:', error)
-    } finally {
-      setIsLoading(false)
     }
-  }
+  }, [sessions, userTimezone, selectedYear])
+
+  const isLoading = isLoadingSessions
 
   const generateHeatmapData = (sessions: Session[]): DayData[] => {
     const data: DayData[] = []

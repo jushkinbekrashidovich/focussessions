@@ -1,10 +1,9 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import { sessionsService, Session } from '@/lib/skillsService'
-import { supabase } from '@/lib/supabaseClient'
-import { User } from '@supabase/supabase-js'
+import React, { useState } from 'react'
+import { Session } from '@/lib/skillsService'
 import { getUserCurrentTimezone } from '@/lib/timezoneUtils'
+import { useRecentSessions, useUser } from '@/lib/hooks'
 
 interface ActivityFeedProps {
   maxItems?: number
@@ -12,43 +11,19 @@ interface ActivityFeedProps {
 }
 
 export default function ActivityFeed({ maxItems = 10, refreshTrigger }: ActivityFeedProps) {
-  const [sessions, setSessions] = useState<Session[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [user, setUser] = useState<User | null>(null)
   const [userTimezone, setUserTimezone] = useState<string>('')
-
-  useEffect(() => {
-    fetchUserData()
-    fetchSessions()
-    // Get user's current timezone automatically
+  
+  // Use React Query hooks
+  const { data: user, isLoading: isLoadingUser } = useUser()
+  const { data: sessions = [], isLoading: isLoadingSessions } = useRecentSessions(maxItems)
+  
+  // Get user's current timezone automatically
+  React.useEffect(() => {
     const currentTimezone = getUserCurrentTimezone()
     setUserTimezone(currentTimezone)
-  }, [refreshTrigger]) // Refresh when refreshTrigger changes
-
-  const fetchUserData = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser()
-      setUser(user)
-    } catch (error) {
-      console.error('Error fetching user:', error)
-    }
-  }
-
-  const fetchSessions = async () => {
-    try {
-      setIsLoading(true)
-      const userSessions = await sessionsService.getUserSessions()
-      // Sort by most recent first and limit to maxItems
-      const recentSessions = userSessions
-        .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-        .slice(0, maxItems)
-      setSessions(recentSessions)
-    } catch (error) {
-      console.error('Error fetching sessions:', error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  }, [])
+  
+  const isLoading = isLoadingUser || isLoadingSessions
 
   const formatDuration = (minutes: number): string => {
     const hours = Math.floor(minutes / 60)
