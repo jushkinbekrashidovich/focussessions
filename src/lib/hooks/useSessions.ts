@@ -36,8 +36,11 @@ export function useCreateSession() {
   const queryClient = useQueryClient()
   
   return useMutation({
-    mutationFn: ({ skillId, duration, note }: { skillId: string; duration: number; note?: string }) =>
-      sessionsService.createSession(skillId, duration, note),
+    mutationFn: ({ skillId, duration, note }: { skillId: string; duration: number; note?: string }) => {
+      const endTime = new Date().toISOString()
+      const startTime = new Date(Date.now() - duration * 60 * 1000).toISOString()
+      return sessionsService.createSession(skillId, startTime, endTime, note)
+    },
     onSuccess: () => {
       // Invalidate all session-related queries
       queryClient.invalidateQueries({ queryKey: sessionKeys.all })

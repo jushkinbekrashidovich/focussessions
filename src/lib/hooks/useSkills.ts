@@ -47,7 +47,7 @@ export function useUpdateSkill() {
   
   return useMutation({
     mutationFn: ({ skillId, name, targetHours, description }: { skillId: string; name: string; targetHours: number; description: string }) =>
-      skillsService.updateSkill(skillId, name, targetHours, description),
+      skillsService.updateSkill(skillId, { name, target_hours: targetHours, description }),
     onSuccess: (_, { skillId }) => {
       // Invalidate skills list and specific skill progress
       queryClient.invalidateQueries({ queryKey: skillKeys.user() })
