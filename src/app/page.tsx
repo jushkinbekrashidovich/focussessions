@@ -36,10 +36,10 @@ export default function Home() {
       <section className="w-full text-white flex flex-col justify-center items-center px-4 py-8 sm:py-12 md:py-16">
         <div className="max-w-4xl w-full text-center space-y-4 sm:space-y-6">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight px-2">
-            Train Your Focus
+            Deep work feels impossible
           </h1>
           <p className="text-gray-400 text-base sm:text-lg md:text-xl px-4 max-w-2xl mx-auto">
-            Build discipline, stay consistent, and track your progress visually.
+            Build the focus to make it happen.
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4">
@@ -187,13 +187,13 @@ export default function Home() {
       <section id="pricing" className="w-full px-4 sm:px-6 md:px-40 py-12 sm:py-16 md:py-20 bg-[#151515]">
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 px-4">
-            One click to <span className="relative inline-block">
-              <span className="bg-yellow-400 text-black px-1 pt-1 pb-0 -mx-1">lifetime discipline</span>
+            <span className="relative inline-block">
+              <span className="bg-yellow-400 text-black px-1 pt-1 pb-0 -mx-1">Build Better Focus Habits</span>
             </span>
           </h2>
 
           <p className="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto px-4">
-            This isn&apos;t just a timer app. It helps to boost your productivity. You&apos;ll get more done in a week than most do in a month!
+            Build discipline, stay consistent, and track your progress visually.
           </p>
         </div>
 
