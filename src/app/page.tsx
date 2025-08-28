@@ -19,10 +19,10 @@ export default function Home() {
       <section className="w-full text-white flex flex-col justify-center items-center px-4 py-8 sm:py-12 md:py-16">
         <div className="max-w-4xl w-full text-center space-y-4 sm:space-y-6">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight px-2">
-            Deep work feels impossible
+            Deep work is hard
           </h1>
           <p className="text-gray-400 text-base sm:text-lg md:text-xl px-4 max-w-2xl mx-auto">
-            Build the focus to make it happen.
+            So we built something to make it easier
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4">
@@ -148,7 +148,7 @@ export default function Home() {
             Personal Focus Goals
             </h2>
             <p className="text-gray-400 text-base sm:text-lg max-w-md mx-auto md:mx-0">
-            Create custom categories like &quot;Math&quot;, &quot;Writing&quot; or some project you want to work on and track your progress in each area. 
+            Create custom categories for any project or area you want to improve and track your progress. 
             </p>
           </div>
 
