@@ -9,9 +9,11 @@ import AppNavbar from '@/components/AppNavbar'
 import ActivityFeed from '@/components/ActivityFeed'
 import DeepWorkStats from '@/components/DeepWorkStats'
 import DeepWorkHeatmap from '@/components/DeepWorkHeatmap'
+import { useUserPreferences } from '@/lib/hooks'
 
 export default function HomePage() {
   const [refreshTrigger, setRefreshTrigger] = useState(0)
+  const { currentTimezone } = useUserPreferences()
 
   const handleSessionCompleted = () => {
     setRefreshTrigger((prev: number) => prev + 1)
@@ -34,12 +36,12 @@ export default function HomePage() {
           <DeepWorkStats refreshTrigger={refreshTrigger} />
 
           {/* Heatmap */}
-          <DeepWorkHeatmap refreshTrigger={refreshTrigger} />
+          <DeepWorkHeatmap refreshTrigger={refreshTrigger} userTimezone={currentTimezone} />
 
           {/* Activity Feed */}
           <div>
             <h2 className="text-lg lg:text-xl mb-3 lg:mb-4 font-semibold">My Activity</h2>
-            <ActivityFeed maxItems={10} refreshTrigger={refreshTrigger} />
+            <ActivityFeed maxItems={10} refreshTrigger={refreshTrigger} userTimezone={currentTimezone} />
           </div>
         </div>
       </div>

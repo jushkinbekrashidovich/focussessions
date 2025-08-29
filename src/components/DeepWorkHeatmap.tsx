@@ -7,6 +7,7 @@ import { useSessions } from '@/lib/hooks'
 
 interface DeepWorkHeatmapProps {
   refreshTrigger?: number
+  userTimezone?: string
 }
 
 interface DayData {
@@ -15,16 +16,12 @@ interface DayData {
   intensity: number // 0-4 for color intensity
 }
 
-export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps) {
+export default function DeepWorkHeatmap({ refreshTrigger, userTimezone }: DeepWorkHeatmapProps) {
   const [heatmapData, setHeatmapData] = useState<DayData[]>([])
-  const [userTimezone, setUserTimezone] = useState<string>('')
   const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear())
 
-  useEffect(() => {
-    // Get user's current timezone automatically
-    const currentTimezone = getUserCurrentTimezone()
-    setUserTimezone(currentTimezone)
-  }, [])
+  // Use the timezone from props, fallback to detected timezone if not provided
+  const effectiveTimezone = userTimezone || getUserCurrentTimezone()
 
   // Use React Query hook
   const { data: sessions = [], isLoading: isLoadingSessions } = useSessions()
@@ -34,7 +31,7 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
       const data = generateHeatmapData(sessions)
       setHeatmapData(data)
     }
-  }, [sessions, userTimezone, selectedYear])
+  }, [sessions, effectiveTimezone, selectedYear])
 
   const isLoading = isLoadingSessions
 
@@ -49,10 +46,10 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
       
       // Convert to user's timezone if specified
       let localDate: Date
-      if (userTimezone && userTimezone !== 'UTC') {
+      if (effectiveTimezone && effectiveTimezone !== 'UTC') {
         try {
           // Create date string in user's timezone
-          const timezoneDate = sessionDate.toLocaleString('en-US', { timeZone: userTimezone })
+          const timezoneDate = sessionDate.toLocaleString('en-US', { timeZone: effectiveTimezone })
           localDate = new Date(timezoneDate)
         } catch (error) {
           console.warn('Error converting timezone in DeepWorkHeatmap, using UTC:', error)
