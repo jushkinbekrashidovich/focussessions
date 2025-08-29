@@ -31,7 +31,7 @@ export default function Home() {
             ) : user ? (
               <div className="text-center space-y-3">
                 <p className="text-green-400 text-sm sm:text-base font-medium">
-                  Welcome back! Ready to continue your focus journey?
+                  Welcome back! Time to dive into deep work?
                 </p>
                 <button
                   onClick={() => router.push('/app')}
@@ -62,7 +62,7 @@ export default function Home() {
       <section id="demo" className="w-full flex flex-col items-center justify-center bg-[#151515] px-4 py-12 sm:py-16 md:py-20">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white text-center mb-6 sm:mb-8 px-4">
           Build <span className="relative inline-block">
-            <span className="bg-yellow-400 text-black px-1 pt-1 pb-0 -mx-1">Focus Habits</span> That Sticks
+            <span className="bg-yellow-400 text-black px-1 pt-1 pb-0 -mx-1">Focus Habits</span>
           </span>
         </h2>
         <p className="text-gray-400 text-base sm:text-lg text-center mb-8 sm:mb-10 max-w-2xl px-4">
