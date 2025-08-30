@@ -1,16 +1,15 @@
 // Timezone utilities for the app
 
-export interface TimezoneOption {
+interface TimezoneOption {
   value: string
   label: string
   offset: string
 }
 
-// Get user's current timezone
 export function getUserCurrentTimezone(): string {
   try {
     return Intl.DateTimeFormat().resolvedOptions().timeZone
-  } catch (error) {
+  } catch {
     // Fallback to UTC if timezone detection fails
     return 'UTC'
   }
@@ -27,9 +26,6 @@ export function getAllTimezones(): TimezoneOption[] {
     timezoneNames.forEach(timezone => {
       try {
         // Get current offset for this timezone
-        const date = new Date()
-        const utc = date.getTime() + (date.getTimezoneOffset() * 60000)
-        const targetTime = new Date(utc + (getTimezoneOffset(timezone) * 60000))
         const offset = getTimezoneOffset(timezone)
         
         // Format offset string
@@ -45,9 +41,9 @@ export function getAllTimezones(): TimezoneOption[] {
           label: `${label} (UTC${offsetString})`,
           offset: offsetString
         })
-      } catch (error) {
+      } catch {
         // Skip timezones that cause errors
-        console.warn(`Error processing timezone ${timezone}:`, error)
+        console.warn(`Error processing timezone ${timezone}`)
       }
     })
     
@@ -58,8 +54,8 @@ export function getAllTimezones(): TimezoneOption[] {
       return getTimezoneOffset(a.value) - getTimezoneOffset(b.value)
     })
     
-  } catch (error) {
-    console.error('Error getting timezones:', error)
+  } catch {
+    console.error('Error getting timezones')
     // Fallback to common timezones
     return getCommonTimezones()
   }
@@ -74,7 +70,7 @@ function getTimezoneOffset(timezone: string): number {
     const utc = date.getTime() + (date.getTimezoneOffset() * 60000)
     const targetTime = new Date(utc + (new Date(date.toLocaleString('en-US', { timeZone: timezone })).getTime() - date.getTime()))
     return (targetTime.getTime() - date.getTime()) / 60000
-  } catch (error) {
+  } catch {
     return 0
   }
 }
@@ -109,8 +105,8 @@ export function convertToUserTimezone(date: string | Date, userTimezone: string)
     const utcDate = new Date(date)
     const userDate = new Date(utcDate.toLocaleString('en-US', { timeZone: userTimezone }))
     return userDate
-  } catch (error) {
-    console.error('Error converting timezone:', error)
+  } catch {
+    console.error('Error converting timezone')
     return new Date(date)
   }
 }
@@ -124,7 +120,7 @@ export function getTimezoneDisplayName(timezone: string): string {
       timeZoneName: 'long'
     })
     return formatter.formatToParts(date).find(part => part.type === 'timeZoneName')?.value || timezone
-  } catch (error) {
+  } catch {
     return timezone
   }
 }

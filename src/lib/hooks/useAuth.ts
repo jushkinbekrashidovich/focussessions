@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabaseClient'
-import { User } from '@supabase/supabase-js'
 
 // Query keys for consistent caching
 export const authKeys = {

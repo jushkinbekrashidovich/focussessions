@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { skillsService, Skill } from '@/lib/skillsService'
+import { skillsService } from '@/lib/skillsService'
 
 // Query keys for consistent caching
 export const skillKeys = {

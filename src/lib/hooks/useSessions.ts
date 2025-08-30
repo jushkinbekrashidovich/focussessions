@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { sessionsService, Session } from '@/lib/skillsService'
+import { sessionsService } from '@/lib/skillsService'
 
 // Query keys for consistent caching
 export const sessionKeys = {

@@ -18,7 +18,7 @@ export default function TermsPage() {
           <div className="space-y-6 text-gray-300">
             <div>
               <h2 className="text-xl font-semibold text-white mb-3">1. Acceptance of Terms</h2>
-              <p>By accessing and using FocusSessions ("the Service"), you accept and agree to be bound by the terms and provision of this agreement.</p>
+              <p>By accessing and using FocusSessions (&quot;the Service&quot;), you accept and agree to be bound by the terms and provision of this agreement.</p>
             </div>
 
             <div>
