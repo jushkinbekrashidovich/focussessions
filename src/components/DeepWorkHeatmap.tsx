@@ -7,7 +7,6 @@ import { useSessions } from '@/lib/hooks'
 
 interface DeepWorkHeatmapProps {
   refreshTrigger?: number
-  userTimezone?: string
 }
 
 interface DayData {
@@ -16,12 +15,16 @@ interface DayData {
   intensity: number // 0-4 for color intensity
 }
 
-export default function DeepWorkHeatmap({ refreshTrigger, userTimezone }: DeepWorkHeatmapProps) {
+export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps) {
   const [heatmapData, setHeatmapData] = useState<DayData[]>([])
+  const [userTimezone, setUserTimezone] = useState<string>('')
   const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear())
 
-  // Use the timezone from props, fallback to detected timezone if not provided
-  const effectiveTimezone = userTimezone || getUserCurrentTimezone()
+  useEffect(() => {
+    // Get user's current timezone automatically
+    const currentTimezone = getUserCurrentTimezone()
+    setUserTimezone(currentTimezone)
+  }, [])
 
   // Use React Query hook
   const { data: sessions = [], isLoading: isLoadingSessions } = useSessions()
@@ -31,7 +34,7 @@ export default function DeepWorkHeatmap({ refreshTrigger, userTimezone }: DeepWo
       const data = generateHeatmapData(sessions)
       setHeatmapData(data)
     }
-  }, [sessions, effectiveTimezone, selectedYear])
+  }, [sessions, userTimezone, selectedYear])
 
   const isLoading = isLoadingSessions
 
@@ -46,10 +49,10 @@ export default function DeepWorkHeatmap({ refreshTrigger, userTimezone }: DeepWo
       
       // Convert to user's timezone if specified
       let localDate: Date
-      if (effectiveTimezone && effectiveTimezone !== 'UTC') {
+      if (userTimezone && userTimezone !== 'UTC') {
         try {
           // Create date string in user's timezone
-          const timezoneDate = sessionDate.toLocaleString('en-US', { timeZone: effectiveTimezone })
+          const timezoneDate = sessionDate.toLocaleString('en-US', { timeZone: userTimezone })
           localDate = new Date(timezoneDate)
         } catch (error) {
           console.warn('Error converting timezone in DeepWorkHeatmap, using UTC:', error)
@@ -125,8 +128,9 @@ export default function DeepWorkHeatmap({ refreshTrigger, userTimezone }: DeepWo
     // Convert to Monday-based week (0 = Monday, 1 = Tuesday, ..., 6 = Sunday)
     const mondayBasedDay = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1
     
-    // Calculate total weeks needed (52 or 53 weeks)
-    const totalWeeks = 53
+    // Calculate total weeks needed for the selected year
+    const daysInYear = new Date(selectedYear, 11, 31).getDate() === 31 ? 365 : 366
+    const totalWeeks = Math.ceil((daysInYear + mondayBasedDay) / 7)
     
     // Create grid structure
     const grid: DayData[][] = []
@@ -160,12 +164,18 @@ export default function DeepWorkHeatmap({ refreshTrigger, userTimezone }: DeepWo
             week.push({ date: dateKey, count: 0, intensity: 0 })
           }
         } else {
-          // This date is outside the selected year
-          week.push({ date: '', count: 0, intensity: 0 })
+          // This date is outside the selected year - don't add it
+          break
         }
       }
       
-      grid.push(week)
+      // Only add the week if it contains valid dates
+      if (week.length === 7) {
+        grid.push(week)
+      } else {
+        // If we didn't get a full week, we've reached the end of the year
+        break
+      }
     }
 
     return (
@@ -250,7 +260,7 @@ export default function DeepWorkHeatmap({ refreshTrigger, userTimezone }: DeepWo
             onChange={(e) => setSelectedYear(Number(e.target.value))}
             className="bg-[#26265e] text-white text-xs px-2 py-1 rounded border border-[#37378a] focus:outline-none focus:border-indigo-500"
           >
-            {Array.from({ length: 77 }, (_, i) => {
+            {Array.from({ length: 5 }, (_, i) => {
               const year = 2024 + i
               return (
                 <option key={year} value={year}>

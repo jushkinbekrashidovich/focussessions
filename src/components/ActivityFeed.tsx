@@ -8,16 +8,20 @@ import { useRecentSessions, useUser } from '@/lib/hooks'
 interface ActivityFeedProps {
   maxItems?: number
   refreshTrigger?: number // Add this to trigger refresh from parent
-  userTimezone?: string
 }
 
-export default function ActivityFeed({ maxItems = 10, refreshTrigger, userTimezone }: ActivityFeedProps) {
+export default function ActivityFeed({ maxItems = 10, refreshTrigger }: ActivityFeedProps) {
+  const [userTimezone, setUserTimezone] = useState<string>('')
+  
   // Use React Query hooks
   const { data: user, isLoading: isLoadingUser } = useUser()
   const { data: sessions = [], isLoading: isLoadingSessions } = useRecentSessions(maxItems)
   
-  // Use the timezone from props, fallback to detected timezone if not provided
-  const effectiveTimezone = userTimezone || getUserCurrentTimezone()
+  // Get user's current timezone automatically
+  React.useEffect(() => {
+    const currentTimezone = getUserCurrentTimezone()
+    setUserTimezone(currentTimezone)
+  }, [])
   
   const isLoading = isLoadingUser || isLoadingSessions
 
@@ -39,10 +43,10 @@ export default function ActivityFeed({ maxItems = 10, refreshTrigger, userTimezo
     let sessionDate = new Date(dateString)
     
     // Convert to user's timezone if specified
-    if (effectiveTimezone && effectiveTimezone !== 'UTC') {
+    if (userTimezone && userTimezone !== 'UTC') {
       try {
         // Create date string in user's timezone
-        const timezoneDate = sessionDate.toLocaleString('en-US', { timeZone: effectiveTimezone })
+        const timezoneDate = sessionDate.toLocaleString('en-US', { timeZone: userTimezone })
         sessionDate = new Date(timezoneDate)
       } catch (error) {
         console.warn('Error converting timezone in ActivityFeed, using UTC:', error)

@@ -8,10 +8,9 @@ import { User } from '@supabase/supabase-js'
 import AppNavbar from '@/components/AppNavbar'
 import DeepWorkHeatmap from '@/components/DeepWorkHeatmap'
 import SkillProgress from '@/components/SkillProgress'
-import TimezoneSelector from '@/components/TimezoneSelector'
 import { Skill } from '@/lib/skillsService'
 import { useRouter } from 'next/navigation'
-import { useUser, useSkills, useUserPreferences } from '@/lib/hooks'
+import { useUser, useSkills } from '@/lib/hooks'
 
 export default function ProfilePage() {
   const [showLogoutModal, setShowLogoutModal] = useState(false)
@@ -21,13 +20,8 @@ export default function ProfilePage() {
   // Use React Query hooks
   const { data: user, isLoading: isLoadingUser } = useUser()
   const { data: skills = [], isLoading: isLoadingSkills } = useSkills()
-  const { currentTimezone, updateTimezone, isUpdatingTimezone } = useUserPreferences()
   
   const isLoading = isLoadingUser || isLoadingSkills
-
-  const handleTimezoneChange = (newTimezone: string) => {
-    updateTimezone(newTimezone)
-  }
 
   const handleLogout = async () => {
     setIsLoggingOut(true)
@@ -97,15 +91,6 @@ export default function ProfilePage() {
               <p className="text-gray-300 text-xs sm:text-sm mb-1">
                 {user.email}
               </p>
-              
-              {/* Timezone Selector */}
-              <div className="mt-2">
-                <label className="block text-xs text-gray-400 mb-1">Timezone:</label>
-                <TimezoneSelector
-                  selectedTimezone={currentTimezone}
-                  onTimezoneChange={handleTimezoneChange}
-                />
-              </div>
             </div>
 
             {/* Action Buttons */}
@@ -137,7 +122,7 @@ export default function ProfilePage() {
             </div>
             
             {/* Heatmap */}
-            <DeepWorkHeatmap userTimezone={currentTimezone} />
+            <DeepWorkHeatmap />
           </div>
         </div>
 
