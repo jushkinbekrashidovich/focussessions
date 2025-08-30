@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation'
 import LandingNavbar from '@/components/LandingNavbar'
 import { useUser } from '@/lib/hooks'
+import Footer from '@/components/Footer'
 
 export default function Home() {
   const router = useRouter()
@@ -260,6 +261,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+      
+      {/* Footer */}
+      <Footer />
     </>
   );
 }
