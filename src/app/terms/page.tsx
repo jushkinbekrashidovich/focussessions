@@ -18,12 +18,12 @@ export default function TermsPage() {
           <div className="space-y-6 text-gray-300">
             <div>
               <h2 className="text-xl font-semibold text-white mb-3">1. Acceptance of Terms</h2>
-              <p>By accessing and using FocusSessions (&quot;the Service&quot;), you accept and agree to be bound by the terms and provision of this agreement.</p>
+              <p>By accessing and using FocusDot (&quot;the Service&quot;), you accept and agree to be bound by the terms and provision of this agreement.</p>
             </div>
 
             <div>
               <h2 className="text-xl font-semibold text-white mb-3">2. Description of Service</h2>
-              <p>FocusSessions is a productivity application that provides time-tracking, focus session management, and productivity analytics tools to help users build better work habits.</p>
+              <p>FocusDot is a productivity application that provides time-tracking, focus session management, and productivity analytics tools to help users build better work habits.</p>
             </div>
 
             <div>
@@ -47,22 +47,12 @@ export default function TermsPage() {
             </div>
 
             <div>
-              <h2 className="text-xl font-semibold text-white mb-3">7. Termination</h2>
-              <p>We may terminate or suspend your account and access to the Service at any time, with or without cause, with or without notice. Upon termination, your right to use the Service will cease immediately.</p>
-            </div>
-
-            <div>
-              <h2 className="text-xl font-semibold text-white mb-3">8. Limitation of Liability</h2>
-              <p>In no event shall FocusSessions be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses.</p>
-            </div>
-
-            <div>
-              <h2 className="text-xl font-semibold text-white mb-3">9. Changes to Terms</h2>
+              <h2 className="text-xl font-semibold text-white mb-3">7. Changes to Terms</h2>
               <p>We reserve the right to modify these terms at any time. We will notify users of any material changes via email or through the Service.</p>
             </div>
 
             <div>
-              <h2 className="text-xl font-semibold text-white mb-3">10. Contact Information</h2>
+              <h2 className="text-xl font-semibold text-white mb-3">8. Contact Information</h2>
               <p>If you have any questions about these Terms of Service, please contact us at support@focusdot.app</p>
             </div>
 

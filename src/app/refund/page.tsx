@@ -18,7 +18,7 @@ export default function RefundPage() {
           <div className="space-y-6 text-gray-300">
             <div>
               <h2 className="text-xl font-semibold text-white mb-3">1. General Refund Policy</h2>
-              <p>FocusSessions offers subscription-based services with automatic recurring billing. All subscription fees are non-refundable except as required by law or as outlined in this policy.</p>
+              <p>FocusDot offers subscription-based services with automatic recurring billing. All subscription fees are non-refundable except as required by law or as outlined in this policy.</p>
             </div>
 
             <div>
@@ -37,13 +37,13 @@ export default function RefundPage() {
             </div>
 
             <div>
-              <h2 className="text-xl font-semibold text-white mb-3">5. Free Trial Period</h2>
-              <p>If you signed up for a free trial, you will not be charged until the trial period ends. You may cancel at any time during the trial period without being charged.</p>
+              <h2 className="text-xl font-semibold text-white mb-3">5. Annual Subscriptions</h2>
+              <p>For annual subscriptions, refunds are not provided for partial months. If you cancel an annual subscription, you will continue to have access until the end of your billing period.</p>
             </div>
 
             <div>
-              <h2 className="text-xl font-semibold text-white mb-3">6. Annual Subscriptions</h2>
-              <p>For annual subscriptions, refunds are not provided for partial months. If you cancel an annual subscription, you will continue to have access until the end of your billing period.</p>
+              <h2 className="text-xl font-semibold text-white mb-3">6. Lifetime Purchases</h2>
+              <p>Lifetime purchases are one-time payments that provide permanent access to FocusDot. Due to the nature of lifetime access, refunds are not provided for lifetime purchases except as required by law or in cases of significant service issues.</p>
             </div>
 
             <div>

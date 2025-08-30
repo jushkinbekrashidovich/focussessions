@@ -13,8 +13,8 @@ export default function Footer() {
           {/* Left Column - Brand Information */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <Image src="/logo.svg" alt="FocusSessions" width={40} height={40} />
-              <span className="text-xl font-bold text-white">FocusSessions</span>
+              <Image src="/logo.svg" alt="FocusDot" width={40} height={40} />
+              <span className="text-xl font-bold text-white">FocusDot</span>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
               A modern productivity platform that helps you build focus habits through gamified time-tracking. 
@@ -77,10 +77,10 @@ export default function Footer() {
         <div className="border-t border-gray-700 pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-gray-400 text-sm">
-              © 2025 FocusSessions. All rights reserved.
+              © 2025 FocusDot. All rights reserved.
             </div>
             <div className="text-gray-400 text-sm">
-              Built with ❤️ for productivity
+              Built with ☕ for productivity
             </div>
           </div>
         </div>

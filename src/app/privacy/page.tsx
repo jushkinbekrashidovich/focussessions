@@ -57,17 +57,12 @@ export default function PrivacyPage() {
             </div>
 
             <div>
-              <h2 className="text-xl font-semibold text-white mb-3">9. Children&apos;s Privacy</h2>
-              <p>Our services are not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13.</p>
-            </div>
-
-            <div>
-              <h2 className="text-xl font-semibold text-white mb-3">10. Changes to This Policy</h2>
+              <h2 className="text-xl font-semibold text-white mb-3">9. Changes to This Policy</h2>
               <p>We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the &quot;Last Updated&quot; date.</p>
             </div>
 
             <div>
-              <h2 className="text-xl font-semibold text-white mb-3">11. Contact Us</h2>
+              <h2 className="text-xl font-semibold text-white mb-3">10. Contact Us</h2>
               <p>If you have any questions about this Privacy Policy, please contact us at privacy@focusdot.app</p>
             </div>
 
