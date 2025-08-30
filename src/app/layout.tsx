@@ -10,6 +10,11 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata = {
   title: 'FocusSessions',
   description: 'Stay focused, one session at a time.',
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/logo.svg',
+  },
 }
 
 export default function RootLayout({
