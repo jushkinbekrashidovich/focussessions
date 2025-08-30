@@ -128,9 +128,8 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
     // Convert to Monday-based week (0 = Monday, 1 = Tuesday, ..., 6 = Sunday)
     const mondayBasedDay = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1
     
-    // Calculate total weeks needed for the selected year
-    const daysInYear = new Date(selectedYear, 11, 31).getDate() === 31 ? 365 : 366
-    const totalWeeks = Math.ceil((daysInYear + mondayBasedDay) / 7)
+    // Calculate total weeks needed (52 or 53 weeks)
+    const totalWeeks = 53
     
     // Create grid structure
     const grid: DayData[][] = []
@@ -164,18 +163,12 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
             week.push({ date: dateKey, count: 0, intensity: 0 })
           }
         } else {
-          // This date is outside the selected year - don't add it
-          break
+          // This date is outside the selected year
+          week.push({ date: '', count: 0, intensity: 0 })
         }
       }
       
-      // Only add the week if it contains valid dates
-      if (week.length === 7) {
-        grid.push(week)
-      } else {
-        // If we didn't get a full week, we've reached the end of the year
-        break
-      }
+      grid.push(week)
     }
 
     return (
