@@ -23,6 +23,26 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
   const { data: skills = [], isLoading: isLoadingSkills } = useSkills()
   const createSessionMutation = useCreateSession()
 
+  // Request notification permission on component mount
+  useEffect(() => {
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission()
+    }
+  }, [])
+
+  // Function to show notification when timer finishes
+  const showTimerFinishedNotification = () => {
+    if ('Notification' in window && Notification.permission === 'granted') {
+      const skillName = skills.find(s => s.id === selectedSkill)?.name || 'your goal'
+      new Notification('Focus Session Complete! 🎯', {
+        body: `Your ${minutes === 0 ? 'long session' : `${minutes}-minute session`} for ${skillName} is finished. Time to log your progress!`,
+        icon: '/favicon.ico',
+        tag: 'timer-finished',
+        requireInteraction: true
+      })
+    }
+  }
+
   // Set selected skill when skills are loaded
   useEffect(() => {
     if (skills.length > 0 && !selectedSkill) {
@@ -51,6 +71,10 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
     const handleEscKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && showFlipMode) {
         setShowFlipMode(false)
+        // If timer is running and user exits flip mode, show notification
+        if (running) {
+          showTimerFinishedNotification()
+        }
       }
     }
 
@@ -63,6 +87,7 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
   const handleStop = () => {
     setRunning(false)
     setShowPrompt(true)
+    showTimerFinishedNotification()
   }
 
   const handleSave = async () => {
@@ -108,6 +133,7 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
           clearInterval(interval)
           setRunning(false)
           setShowPrompt(true)
+          showTimerFinishedNotification()
           return prev
         }
         return prev - 1
@@ -243,13 +269,22 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
           {/* Control Buttons */}
           <div className="flex gap-3 sm:gap-4">
             <button
-              onClick={() => setShowFlipMode(false)}
+              onClick={() => {
+                setShowFlipMode(false)
+                // If timer is running and user cancels flip mode, show notification
+                if (running) {
+                  showTimerFinishedNotification()
+                }
+              }}
               className="px-4 sm:px-6 py-2.5 sm:py-3 border border-gray-600 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors text-sm sm:text-base"
             >
               Cancel
             </button>
             <button
-              onClick={handleStop}
+              onClick={() => {
+                handleStop()
+                // Note: handleStop already calls showTimerFinishedNotification()
+              }}
               className="px-4 sm:px-6 py-2.5 sm:py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm sm:text-base"
             >
               Stop Session
