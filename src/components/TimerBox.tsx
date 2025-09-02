@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Skill } from '@/lib/skillsService'
 import { useSkills, useCreateSession } from '@/lib/hooks'
 
@@ -34,7 +34,7 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
   const playCompletionSound = () => {
     try {
       // Create a simple beep sound using Web Audio API
-      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
+      const audioContext = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)()
       const oscillator = audioContext.createOscillator()
       const gainNode = audioContext.createGain()
       
@@ -57,7 +57,7 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
   }
 
   // Function to show notification when timer finishes
-  const showTimerFinishedNotification = () => {
+  const showTimerFinishedNotification = useCallback(() => {
     // Play sound notification
     playCompletionSound()
     
@@ -71,7 +71,7 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
         requireInteraction: true
       })
     }
-  }
+  }, [skills, selectedSkill, minutes])
 
   // Set selected skill when skills are loaded
   useEffect(() => {
@@ -112,7 +112,7 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
       document.addEventListener('keydown', handleEscKey)
       return () => document.removeEventListener('keydown', handleEscKey)
     }
-  }, [showFlipMode])
+  }, [showFlipMode, running, showTimerFinishedNotification])
 
   const handleStop = () => {
     setRunning(false)
@@ -170,7 +170,7 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
       })
     }, 1000)
     return () => clearInterval(interval)
-  }, [running, minutes])
+  }, [running, minutes, showTimerFinishedNotification])
 
   const format = (s: number) => {
     const m = Math.floor(s / 60).toString().padStart(2, '0')
