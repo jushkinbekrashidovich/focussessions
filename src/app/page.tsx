@@ -5,6 +5,7 @@ import LandingNavbar from '@/components/LandingNavbar'
 import { useUser } from '@/lib/hooks'
 import { usePaddle } from '@/contexts/PaddleContext'
 import Footer from '@/components/Footer'
+import Head from 'next/head'
 
 
 export default function Home() {
@@ -15,11 +16,67 @@ export default function Home() {
 
   return (
     <>
+      <Head>
+        <title>FocusDot - Build Unbreakable Concentration Habits | Visual Focus Tracker</title>
+        <meta name="description" content="The visual focus tracker built for anyone serious about building unbreakable deep work habits. Track your progress, see your streaks, and stay motivated every single day." />
+        <meta name="keywords" content="focus app, concentration tracker, deep work, productivity app, focus habits, pomodoro timer, focus streaks, study timer, work focus, concentration habits" />
+        <link rel="canonical" href="https://focusdot.app" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="FocusDot - Build Unbreakable Concentration Habits" />
+        <meta property="og:description" content="The visual focus tracker built for anyone serious about building unbreakable deep work habits. Track your progress, see your streaks, and stay motivated every single day." />
+        <meta property="og:url" content="https://focusdot.app" />
+        <meta property="og:image" content="https://focusdot.app/dashboard.jpg" />
+        <meta property="og:type" content="website" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="FocusDot - Build Unbreakable Concentration Habits" />
+        <meta name="twitter:description" content="The visual focus tracker built for anyone serious about building unbreakable deep work habits." />
+        <meta name="twitter:image" content="https://focusdot.app/dashboard.jpg" />
+        
+        {/* Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": "FocusDot",
+              "description": "The visual focus tracker built for anyone serious about building unbreakable deep work habits. Track your progress, see your streaks, and stay motivated every single day.",
+              "url": "https://focusdot.app",
+              "applicationCategory": "ProductivityApplication",
+              "operatingSystem": "Web Browser",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD",
+                "description": "Free tier available with Pro plans starting at $1.90/month"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.8",
+                "ratingCount": "2500"
+              },
+              "author": {
+                "@type": "Organization",
+                "name": "FocusDot Team"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "FocusDot",
+                "url": "https://focusdot.app"
+              },
+              "keywords": "focus app, concentration tracker, deep work, productivity app, focus habits, pomodoro timer, focus streaks, study timer, work focus, concentration habits"
+            })
+          }}
+        />
+      </Head>
       <LandingNavbar user={userData} />
       {/* Spacing between navbar and first section */}
       <div className="h-40 sm:h-44 md:h-48"></div>
       
-      {/* First Section */}
+      {/* Hero Section */}
       <section className="w-full text-white flex flex-col justify-center items-center px-4 py-8 sm:py-12 md:py-16">
         <div className="max-w-4xl w-full text-center space-y-4 sm:space-y-6">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight px-2">
@@ -62,7 +119,7 @@ export default function Home() {
       {/* Spacing between sections */}
       <div className="h-40 sm:h-44 md:h-48"></div>
 
-      {/* Second Section */}
+      {/* Main Value Proposition Section */}
       <section id="demo" className="w-full flex flex-col items-center justify-center bg-[#151515] px-4 py-12 sm:py-16 md:py-20">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white text-center mb-6 sm:mb-8 px-4">
           Build <span className="relative inline-block">

@@ -8,8 +8,74 @@ const inter = Inter({ subsets: ['latin'] })
 
 
 export const metadata = {
-  title: 'FocusSessions',
-  description: 'Stay focused, one session at a time.',
+  title: {
+    default: 'FocusDot - Build Unbreakable Concentration Habits',
+    template: '%s | FocusDot'
+  },
+  description: 'The visual focus tracker built for anyone serious about building unbreakable deep work habits. Track your progress, see your streaks, and stay motivated every single day.',
+  keywords: [
+    'focus app',
+    'concentration tracker',
+    'deep work',
+    'productivity app',
+    'focus habits',
+    'pomodoro timer',
+    'focus streaks',
+    'study timer',
+    'work focus',
+    'concentration habits',
+    'focus tracker',
+    'productivity tracker',
+    'focus sessions',
+    'deep work tracker',
+    'focus visualization'
+  ],
+  authors: [{ name: 'FocusDot Team' }],
+  creator: 'FocusDot',
+  publisher: 'FocusDot',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL('https://focusdot.app'),
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://focusdot.app',
+    title: 'FocusDot - Build Unbreakable Concentration Habits',
+    description: 'The visual focus tracker built for anyone serious about building unbreakable deep work habits. Track your progress, see your streaks, and stay motivated every single day.',
+    siteName: 'FocusDot',
+    images: [
+      {
+        url: '/dashboard.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'FocusDot Dashboard - Visual Focus Tracking',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'FocusDot - Build Unbreakable Concentration Habits',
+    description: 'The visual focus tracker built for anyone serious about building unbreakable deep work habits.',
+    images: ['/dashboard.jpg'],
+    creator: '@focusdot',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',
