@@ -1,41 +1,11 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
 import LandingNavbar from '@/components/LandingNavbar'
 import { useUser } from '@/lib/hooks'
 import { usePaddle } from '@/contexts/PaddleContext'
 import Footer from '@/components/Footer'
 
-// FAQ Item Component
-function FAQItem({ question, answer }: { question: string; answer: string }) {
-  const [isOpen, setIsOpen] = useState(false)
-
-  return (
-    <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl overflow-hidden">
-      <button
-        className="w-full px-6 py-4 sm:px-8 sm:py-6 text-left flex justify-between items-center hover:bg-[#2a2a2a] transition-colors"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <h3 className="text-white font-semibold text-base sm:text-lg pr-4">
-          {question}
-        </h3>
-        <div className="flex-shrink-0">
-          <span className={`text-white text-xl font-bold transition-transform duration-200 ${isOpen ? 'rotate-45' : ''}`}>
-            +
-          </span>
-        </div>
-      </button>
-      {isOpen && (
-        <div className="px-6 py-4 sm:px-8 sm:py-6 border-t border-gray-700">
-          <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
-            {answer}
-          </p>
-        </div>
-      )}
-    </div>
-  )
-}
 
 export default function Home() {
   const router = useRouter()
@@ -193,75 +163,6 @@ export default function Home() {
               alt="Personal Focus Goals"
               className="rounded-2xl sm:rounded-3xl shadow-xl border-2 border-gray-700 w-full"
             />
-          </div>
-        </div>
-      </section>
-
-      {/* Spacing between sections */}
-      <div className="h-16 sm:h-20 md:h-24"></div>
-
-      {/* FAQ Section */}
-      <section id="faq" className="w-full px-4 sm:px-6 md:px-40 py-12 sm:py-16 md:py-20 bg-[#151515]">
-        <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 px-4">
-            Frequently Asked Questions
-          </h2>
-        </div>
-
-        <div className="max-w-3xl mx-auto space-y-4">
-          <FAQItem 
-            question="How is this different from other Pomodoro apps?"
-            answer="FocusDot focuses on long-term habit building with visual progress tracking. Instead of just timing sessions, you see your entire focus journey and build streaks that motivate consistency."
-          />
-          <FAQItem 
-            question="Can I track different types of work separately?"
-            answer="Yes! Create unlimited categories (with Pro) to track work projects, study sessions, creative time, and more."
-          />
-        </div>
-      </section>
-
-      {/* Spacing between sections */}
-      <div className="h-16 sm:h-20 md:h-24"></div>
-
-      {/* Social Proof Section */}
-      <section id="social-proof" className="w-full px-4 sm:px-6 md:px-40 py-12 sm:py-16 md:py-20 bg-[#151515]">
-        <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 px-4">
-            Trusted by Focused Professionals
-          </h2>
-        </div>
-
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-12">
-            <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8">
-              <p className="text-gray-300 text-sm sm:text-base mb-4 italic">
-                &ldquo;Finally, a focus app that shows me the big picture. Seeing my focus streaks keeps me motivated like nothing else.&rdquo;
-              </p>
-              <p className="text-white font-semibold text-sm">- Sarah K., Product Manager</p>
-            </div>
-
-            <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8">
-              <p className="text-gray-300 text-sm sm:text-base mb-4 italic">
-                &ldquo;The heatmap is genius. It&apos;s like GitHub contributions but for deep work. I haven&apos;t missed a focus session in 3 weeks.&rdquo;
-              </p>
-              <p className="text-white font-semibold text-sm">- Alex M., Developer</p>
-            </div>
-
-            <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8">
-              <p className="text-gray-300 text-sm sm:text-base mb-4 italic">
-                &ldquo;Simple, visual, effective. This is what focus tracking should be.&rdquo;
-              </p>
-              <p className="text-white font-semibold text-sm">- Maria L., Researcher</p>
-            </div>
-          </div>
-
-          <div className="text-center">
-            <div className="inline-flex items-center gap-2 bg-[#1e1e1e] border border-gray-700 rounded-full px-6 py-3">
-              <span className="text-2xl">📈</span>
-              <span className="text-white font-semibold text-sm sm:text-base">
-                Join 2,500+ focused professionals building better habits
-              </span>
-            </div>
           </div>
         </div>
       </section>
