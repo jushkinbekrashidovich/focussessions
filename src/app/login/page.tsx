@@ -5,9 +5,13 @@
 export const dynamic = 'force-dynamic'
 
 import { signInWithGoogle } from '@/lib/auth'
+import { useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
 
-
-export default function LoginPage() {
+function LoginForm() {
+  const searchParams = useSearchParams()
+  const redirectTo = searchParams.get('redirect') || '/app'
+  
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
       <div className="bg-white rounded-xl shadow-md p-6 sm:p-8 md:p-10 w-full max-w-sm sm:max-w-md text-center">
@@ -32,7 +36,9 @@ export default function LoginPage() {
         <button 
         onClick={() => {
           console.log('Google sign-in clicked')
-           signInWithGoogle() // Temporarily commented out
+          // Store the redirect URL in localStorage before signing in
+          localStorage.setItem('redirectAfterLogin', redirectTo)
+          signInWithGoogle()
         }}
         className="flex items-center justify-center w-full py-2.5 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition text-sm sm:text-base">
           <svg
@@ -55,5 +61,13 @@ export default function LoginPage() {
         <p className="text-gray-400 text-xs mt-4 sm:mt-6">Protected by secure OAuth2</p>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginForm />
+    </Suspense>
   );
 }

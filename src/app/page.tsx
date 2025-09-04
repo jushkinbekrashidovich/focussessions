@@ -370,7 +370,13 @@ export default function Home() {
               <li>✔ Priority support</li>
             </ul>
             <button 
-              onClick={() => openCheckout('PRO_MONTHLY', user?.email)}
+              onClick={() => {
+                if (!user) {
+                  router.push('/login?redirect=/pricing')
+                } else {
+                  openCheckout('PRO_MONTHLY', user.email)
+                }
+              }}
               disabled={isPaddleLoading}
               className="w-full border border-white text-white font-medium py-2 rounded-md hover:bg-white hover:text-black transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -394,7 +400,13 @@ export default function Home() {
               <li>✔ Priority support</li>
             </ul>
             <button 
-              onClick={() => openCheckout('PRO_YEARLY', user?.email)}
+              onClick={() => {
+                if (!user) {
+                  router.push('/login?redirect=/pricing')
+                } else {
+                  openCheckout('PRO_YEARLY', user.email)
+                }
+              }}
               disabled={isPaddleLoading}
               className="w-full bg-white text-black font-medium py-2 rounded-md hover:bg-gray-300 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -418,7 +430,13 @@ export default function Home() {
               <li>✔ No recurring fees</li>
             </ul>
             <button 
-              onClick={() => openCheckout('LIFETIME', user?.email)}
+              onClick={() => {
+                if (!user) {
+                  router.push('/login?redirect=/pricing')
+                } else {
+                  openCheckout('LIFETIME', user.email)
+                }
+              }}
               disabled={isPaddleLoading}
               className="w-full border border-white text-white font-medium py-2 rounded-md hover:bg-white hover:text-black transition disabled:opacity-50 disabled:cursor-not-allowed"
             >

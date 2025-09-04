@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 // Force dynamic rendering to avoid SSG issues with Supabase
 export const dynamic = 'force-dynamic'
@@ -12,6 +13,16 @@ import DeepWorkHeatmap from '@/components/DeepWorkHeatmap'
 
 export default function HomePage() {
   const [refreshTrigger, setRefreshTrigger] = useState(0)
+  const router = useRouter()
+
+  // Check for redirect after login
+  useEffect(() => {
+    const redirectAfterLogin = localStorage.getItem('redirectAfterLogin')
+    if (redirectAfterLogin && redirectAfterLogin !== '/app') {
+      localStorage.removeItem('redirectAfterLogin')
+      router.push(redirectAfterLogin)
+    }
+  }, [router])
 
   const handleSessionCompleted = () => {
     setRefreshTrigger((prev: number) => prev + 1)

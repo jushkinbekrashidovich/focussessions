@@ -17,5 +17,7 @@ export async function GET(request: Request) {
   }
 
   // URL to redirect to after sign in process completes
-  return NextResponse.redirect(`${requestUrl.origin}/app`)
+  // Check if there's a redirect parameter in the URL
+  const redirectTo = requestUrl.searchParams.get('redirect') || '/app'
+  return NextResponse.redirect(`${requestUrl.origin}${redirectTo}`)
 } 
