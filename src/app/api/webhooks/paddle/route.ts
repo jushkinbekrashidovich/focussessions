@@ -3,10 +3,16 @@ import { createClient } from '@supabase/supabase-js'
 import crypto from 'crypto'
 
 // Initialize Supabase client for server-side operations
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY! // You'll need to add this to your .env.local
-)
+function getSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+  
+  if (!supabaseUrl || !supabaseKey) {
+    throw new Error('Missing Supabase environment variables')
+  }
+  
+  return createClient(supabaseUrl, supabaseKey)
+}
 
 // Verify Paddle webhook signature
 function verifyPaddleSignature(payload: string, signature: string, secret: string): boolean {
@@ -26,6 +32,7 @@ async function updateUserSubscription(userId: string, subscriptionData: Record<s
   const items = subscriptionData.items as Array<{ price: { product_id: string } }> | undefined
   const billingPeriod = subscriptionData.current_billing_period as { starts_at: string; ends_at: string } | undefined
   
+  const supabase = getSupabaseClient()
   const { data, error } = await supabase
     .from('user_subscriptions')
     .upsert({
