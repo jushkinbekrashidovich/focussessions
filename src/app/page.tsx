@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import LandingNavbar from '@/components/LandingNavbar'
 import { useUser } from '@/lib/hooks'
+import { usePaddle } from '@/contexts/PaddleContext'
 import Footer from '@/components/Footer'
 
 // FAQ Item Component
@@ -39,6 +40,7 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
 export default function Home() {
   const router = useRouter()
   const { data: user, isLoading } = useUser()
+  const { openCheckout, isLoading: isPaddleLoading } = usePaddle()
   const userData = user || null
 
   return (
@@ -161,7 +163,7 @@ export default function Home() {
              Deep Work Heatmap
             </h2>
             <p className="text-gray-400 text-base sm:text-lg max-w-md mx-auto md:mx-0">
-              Your focus journey, visualized. See your entire year of deep work at a glance. Each day shows your focus intensity, creating a powerful visual motivation to maintain streaks and build lasting habits. Just like GitHub's contribution graph, but for your focus.
+              Your focus journey, visualized. See your entire year of deep work at a glance. Each day shows your focus intensity, creating a powerful visual motivation to maintain streaks and build lasting habits. Just like GitHub&apos;s contribution graph, but for your focus.
             </p>
           </div>
         </div>
@@ -233,21 +235,21 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-12">
             <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8">
               <p className="text-gray-300 text-sm sm:text-base mb-4 italic">
-                "Finally, a focus app that shows me the big picture. Seeing my focus streaks keeps me motivated like nothing else."
+                &ldquo;Finally, a focus app that shows me the big picture. Seeing my focus streaks keeps me motivated like nothing else.&rdquo;
               </p>
               <p className="text-white font-semibold text-sm">- Sarah K., Product Manager</p>
             </div>
 
             <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8">
               <p className="text-gray-300 text-sm sm:text-base mb-4 italic">
-                "The heatmap is genius. It's like GitHub contributions but for deep work. I haven't missed a focus session in 3 weeks."
+                &ldquo;The heatmap is genius. It&apos;s like GitHub contributions but for deep work. I haven&apos;t missed a focus session in 3 weeks.&rdquo;
               </p>
               <p className="text-white font-semibold text-sm">- Alex M., Developer</p>
             </div>
 
             <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8">
               <p className="text-gray-300 text-sm sm:text-base mb-4 italic">
-                "Simple, visual, effective. This is what focus tracking should be."
+                &ldquo;Simple, visual, effective. This is what focus tracking should be.&rdquo;
               </p>
               <p className="text-white font-semibold text-sm">- Maria L., Researcher</p>
             </div>
@@ -367,8 +369,12 @@ export default function Home() {
               <li>✔ Custom focus goals</li>
               <li>✔ Priority support</li>
             </ul>
-            <button className="w-full border border-white text-white font-medium py-2 rounded-md hover:bg-white hover:text-black transition">
-              Get Pro
+            <button 
+              onClick={() => openCheckout('PRO_MONTHLY', user?.email)}
+              disabled={isPaddleLoading}
+              className="w-full border border-white text-white font-medium py-2 rounded-md hover:bg-white hover:text-black transition disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isPaddleLoading ? 'Loading...' : 'Get Pro'}
             </button>
           </div>
 
@@ -387,8 +393,12 @@ export default function Home() {
               <li>✔ Advanced focus insights</li>
               <li>✔ Priority support</li>
             </ul>
-            <button className="w-full bg-white text-black font-medium py-2 rounded-md hover:bg-gray-300 transition">
-              Get Pro Yearly
+            <button 
+              onClick={() => openCheckout('PRO_YEARLY', user?.email)}
+              disabled={isPaddleLoading}
+              className="w-full bg-white text-black font-medium py-2 rounded-md hover:bg-gray-300 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isPaddleLoading ? 'Loading...' : 'Get Pro Yearly'}
             </button>
           </div>
 
@@ -407,8 +417,12 @@ export default function Home() {
               <li>✔ Premium support</li>
               <li>✔ No recurring fees</li>
             </ul>
-            <button className="w-full border border-white text-white font-medium py-2 rounded-md hover:bg-white hover:text-black transition">
-              Get Lifetime
+            <button 
+              onClick={() => openCheckout('LIFETIME', user?.email)}
+              disabled={isPaddleLoading}
+              className="w-full border border-white text-white font-medium py-2 rounded-md hover:bg-white hover:text-black transition disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isPaddleLoading ? 'Loading...' : 'Get Lifetime'}
             </button>
           </div>
         </div>

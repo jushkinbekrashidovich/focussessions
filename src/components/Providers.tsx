@@ -3,6 +3,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ThemeProvider } from '@/contexts/ThemeContext'
+import { PaddleProvider } from '@/contexts/PaddleContext'
 import { useState } from 'react'
 
 export default function Providers({ children }: { children: React.ReactNode }) {
@@ -24,7 +25,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        {children}
+        <PaddleProvider>
+          {children}
+        </PaddleProvider>
       </ThemeProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
