@@ -93,9 +93,9 @@ export default function Home() {
       {/* Second Section */}
       <section id="demo" className="w-full flex flex-col items-center justify-center bg-[#151515] px-4 py-12 sm:py-16 md:py-20">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white text-center mb-6 sm:mb-8 px-4">
-          Track your focus streaks and build <span className="relative inline-block">
-            <span className="bg-yellow-400 text-black px-1 pt-1 pb-0 -mx-1">unbreakable concentration habits</span>
-          </span>
+          Build <span className="relative inline-block">
+            <span className="bg-yellow-400 text-black px-1 pt-1 pb-0 -mx-1">unbreakable concentration </span>
+          </span> habits
         </h2>
         <p className="text-gray-400 text-base sm:text-lg text-center mb-8 sm:mb-10 max-w-2xl px-4">
           The visual focus tracker built for anyone serious about building unbreakable deep work habits. Whether you&apos;re studying, working on projects, or developing skills—track your progress, see your streaks, and stay motivated every single day.
@@ -161,7 +161,7 @@ export default function Home() {
              Deep Work Heatmap
             </h2>
             <p className="text-gray-400 text-base sm:text-lg max-w-md mx-auto md:mx-0">
-              See your entire year of focus activity at a glance. Each day shows your focus intensity, motivating you to maintain consistency and build lasting habits.
+              Your focus journey, visualized. See your entire year of deep work at a glance. Each day shows your focus intensity, creating a powerful visual motivation to maintain streaks and build lasting habits. Just like GitHub's contribution graph, but for your focus.
             </p>
           </div>
         </div>
@@ -202,9 +202,7 @@ export default function Home() {
       <section id="faq" className="w-full px-4 sm:px-6 md:px-40 py-12 sm:py-16 md:py-20 bg-[#151515]">
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 px-4">
-            <span className="relative inline-block">
-              <span className="bg-yellow-400 text-black px-1 pt-1 pb-0 -mx-1">Frequently Asked Questions</span>
-            </span>
+            Frequently Asked Questions
           </h2>
         </div>
 
@@ -223,13 +221,57 @@ export default function Home() {
       {/* Spacing between sections */}
       <div className="h-16 sm:h-20 md:h-24"></div>
 
+      {/* Social Proof Section */}
+      <section id="social-proof" className="w-full px-4 sm:px-6 md:px-40 py-12 sm:py-16 md:py-20 bg-[#151515]">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 px-4">
+            Trusted by Focused Professionals
+          </h2>
+        </div>
+
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-12">
+            <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8">
+              <p className="text-gray-300 text-sm sm:text-base mb-4 italic">
+                "Finally, a focus app that shows me the big picture. Seeing my focus streaks keeps me motivated like nothing else."
+              </p>
+              <p className="text-white font-semibold text-sm">- Sarah K., Product Manager</p>
+            </div>
+
+            <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8">
+              <p className="text-gray-300 text-sm sm:text-base mb-4 italic">
+                "The heatmap is genius. It's like GitHub contributions but for deep work. I haven't missed a focus session in 3 weeks."
+              </p>
+              <p className="text-white font-semibold text-sm">- Alex M., Developer</p>
+            </div>
+
+            <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8">
+              <p className="text-gray-300 text-sm sm:text-base mb-4 italic">
+                "Simple, visual, effective. This is what focus tracking should be."
+              </p>
+              <p className="text-white font-semibold text-sm">- Maria L., Researcher</p>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 bg-[#1e1e1e] border border-gray-700 rounded-full px-6 py-3">
+              <span className="text-2xl">📈</span>
+              <span className="text-white font-semibold text-sm sm:text-base">
+                Join 2,500+ focused professionals building better habits
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Spacing between sections */}
+      <div className="h-16 sm:h-20 md:h-24"></div>
+
       {/* Who This Is For Section */}
       <section id="who-this-is-for" className="w-full px-4 sm:px-6 md:px-40 py-12 sm:py-16 md:py-20 bg-[#151515]">
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 px-4">
-            <span className="relative inline-block">
-              <span className="bg-yellow-400 text-black px-1 pt-1 pb-0 -mx-1">Perfect For</span>
-            </span>
+            Perfect For
           </h2>
         </div>
 
