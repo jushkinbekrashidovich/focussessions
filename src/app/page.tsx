@@ -1,9 +1,40 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import LandingNavbar from '@/components/LandingNavbar'
 import { useUser } from '@/lib/hooks'
 import Footer from '@/components/Footer'
+
+// FAQ Item Component
+function FAQItem({ question, answer }: { question: string; answer: string }) {
+  const [isOpen, setIsOpen] = useState(false)
+
+  return (
+    <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl overflow-hidden">
+      <button
+        className="w-full px-6 py-4 sm:px-8 sm:py-6 text-left flex justify-between items-center hover:bg-[#2a2a2a] transition-colors"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <h3 className="text-white font-semibold text-base sm:text-lg pr-4">
+          {question}
+        </h3>
+        <div className="flex-shrink-0">
+          <span className={`text-white text-xl font-bold transition-transform duration-200 ${isOpen ? 'rotate-45' : ''}`}>
+            +
+          </span>
+        </div>
+      </button>
+      {isOpen && (
+        <div className="px-6 py-4 sm:px-8 sm:py-6 border-t border-gray-700">
+          <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
+            {answer}
+          </p>
+        </div>
+      )}
+    </div>
+  )
+}
 
 export default function Home() {
   const router = useRouter()
@@ -62,12 +93,12 @@ export default function Home() {
       {/* Second Section */}
       <section id="demo" className="w-full flex flex-col items-center justify-center bg-[#151515] px-4 py-12 sm:py-16 md:py-20">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white text-center mb-6 sm:mb-8 px-4">
-          Build <span className="relative inline-block">
-            <span className="bg-yellow-400 text-black px-1 pt-1 pb-0 -mx-1">Focus Habits</span>
+          Track your focus streaks and build <span className="relative inline-block">
+            <span className="bg-yellow-400 text-black px-1 pt-1 pb-0 -mx-1">unbreakable concentration habits</span>
           </span>
         </h2>
         <p className="text-gray-400 text-base sm:text-lg text-center mb-8 sm:mb-10 max-w-2xl px-4">
-          The gamified time-tracking app with a simple interface that helps you stay focused and productive — whether you&apos;re working, studying, or just getting things done, every single day!
+          The visual focus tracker built for anyone serious about building unbreakable deep work habits. Whether you&apos;re studying, working on projects, or developing skills—track your progress, see your streaks, and stay motivated every single day.
         </p>
         <div className="w-full max-w-4xl flex justify-center px-4">
           <div className="w-full max-w-4xl rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 border-gray-700">
@@ -167,6 +198,86 @@ export default function Home() {
       {/* Spacing between sections */}
       <div className="h-16 sm:h-20 md:h-24"></div>
 
+      {/* FAQ Section */}
+      <section id="faq" className="w-full px-4 sm:px-6 md:px-40 py-12 sm:py-16 md:py-20 bg-[#151515]">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 px-4">
+            <span className="relative inline-block">
+              <span className="bg-yellow-400 text-black px-1 pt-1 pb-0 -mx-1">Frequently Asked Questions</span>
+            </span>
+          </h2>
+        </div>
+
+        <div className="max-w-3xl mx-auto space-y-4">
+          <FAQItem 
+            question="How is this different from other Pomodoro apps?"
+            answer="FocusDot focuses on long-term habit building with visual progress tracking. Instead of just timing sessions, you see your entire focus journey and build streaks that motivate consistency."
+          />
+          <FAQItem 
+            question="Can I track different types of work separately?"
+            answer="Yes! Create unlimited categories (with Pro) to track work projects, study sessions, creative time, and more."
+          />
+        </div>
+      </section>
+
+      {/* Spacing between sections */}
+      <div className="h-16 sm:h-20 md:h-24"></div>
+
+      {/* Who This Is For Section */}
+      <section id="who-this-is-for" className="w-full px-4 sm:px-6 md:px-40 py-12 sm:py-16 md:py-20 bg-[#151515]">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 px-4">
+            <span className="relative inline-block">
+              <span className="bg-yellow-400 text-black px-1 pt-1 pb-0 -mx-1">Perfect For</span>
+            </span>
+          </h2>
+        </div>
+
+        <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8">
+              <h3 className="text-lg sm:text-xl font-semibold text-white mb-4">Anyone building deep focus skills</h3>
+              <p className="text-gray-400 text-sm sm:text-base">
+                For complex work or study sessions that require sustained concentration and mental discipline.
+              </p>
+            </div>
+
+            <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8">
+              <h3 className="text-lg sm:text-xl font-semibold text-white mb-4">Students creating consistent study habits</h3>
+              <p className="text-gray-400 text-sm sm:text-base">
+                Track learning progress and build reliable study routines that actually stick.
+              </p>
+            </div>
+
+            <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8">
+              <h3 className="text-lg sm:text-xl font-semibold text-white mb-4">Professionals who need sustained concentration</h3>
+              <p className="text-gray-400 text-sm sm:text-base">
+                For important projects that demand uninterrupted focus and high-quality output.
+              </p>
+            </div>
+
+            <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8">
+              <h3 className="text-lg sm:text-xl font-semibold text-white mb-4">Learners developing new skills</h3>
+              <p className="text-gray-400 text-sm sm:text-base">
+                Maintain consistent practice and see your progress over time with visual tracking.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-8 text-center">
+            <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8 max-w-2xl mx-auto">
+              <h3 className="text-lg sm:text-xl font-semibold text-white mb-4">Anyone tired of productivity apps that don&apos;t show long-term progress</h3>
+              <p className="text-gray-400 text-sm sm:text-base">
+                Finally see your focus habits build up over time with clear visual progress and meaningful insights.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Spacing between sections */}
+      <div className="h-16 sm:h-20 md:h-24"></div>
+
       {/* Pricing Section */}
       <section id="pricing" className="w-full px-4 sm:px-6 md:px-40 py-12 sm:py-16 md:py-20 bg-[#151515]">
         <div className="text-center mb-12 sm:mb-16">
@@ -232,7 +343,6 @@ export default function Home() {
               <li>✔ Everything in Pro Monthly</li>
               <li>✔ Early access to new features</li>
               <li>✔ Advanced focus insights</li>
-              <li>✔ Export your data</li>
               <li>✔ Priority support</li>
             </ul>
             <button className="w-full bg-white text-black font-medium py-2 rounded-md hover:bg-gray-300 transition">
