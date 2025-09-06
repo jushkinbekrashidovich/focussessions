@@ -26,7 +26,7 @@ export default function ActivityPage() {
   const createSkillMutation = useCreateSkill()
   const updateSkillMutation = useUpdateSkill()
   const deleteSkillMutation = useDeleteSkill()
-  const { isPro, isLoading } = useSubscriptionStatus()
+  const { isPro, isSubscriptionLoading } = useSubscriptionStatus()
   const router = useRouter()
 
   const handleAddSkill = async (skillName: string, targetHours: number, description: string) => {
@@ -44,7 +44,7 @@ export default function ActivityPage() {
 
   const handleAddGoalClick = () => {
     // Check if user is free and already has 1 goal
-    if (!isLoading && !isPro && skills.length >= 1) {
+    if (!isSubscriptionLoading && !isPro && skills.length >= 1) {
       router.push('/pricing')
       return
     }
@@ -100,7 +100,7 @@ export default function ActivityPage() {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-2xl font-bold">My Goals</h1>
-            {!isLoading && !isPro && (
+            {!isSubscriptionLoading && !isPro && (
               <p className="text-sm text-gray-400 mt-1">
                 Free plan: {skills.length}/1 goal used
                 {skills.length >= 1 && (

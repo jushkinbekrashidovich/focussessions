@@ -107,7 +107,7 @@ export function useSubscriptionStatus() {
   
   return {
     isPro,
-    isLoading,
+    isSubscriptionLoading: isLoading,
     user,
     subscription
   }
