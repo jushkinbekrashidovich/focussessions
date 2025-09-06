@@ -251,7 +251,7 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
 
       {/* Flip Mode Overlay */}
       {showFlipMode && running && (
-        <div className="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center">
+        <div className="fixed top-0 left-0 w-screen h-screen bg-black z-[9999] flex flex-col items-center justify-center" style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh' }}>
           {/* Flip Clock Display */}
           <div className="flex items-center space-x-3 sm:space-x-6 mb-16">
             {/* Hours */}
