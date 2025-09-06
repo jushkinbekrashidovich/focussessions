@@ -2,8 +2,12 @@
 import { initializePaddle } from '@paddle/paddle-js'
 
 // Initialize Paddle client
+const paddleToken = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN
+console.log('🔍 Debug: Paddle token from env:', paddleToken ? 'Present' : 'Missing')
+console.log('🔍 Debug: Token starts with:', paddleToken?.substring(0, 10))
+
 export const paddle = initializePaddle({
-  token: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN!,
+  token: paddleToken!,
 })
 
 // Price IDs for your pricing plans (Sandbox)

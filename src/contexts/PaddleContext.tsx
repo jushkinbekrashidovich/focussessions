@@ -21,12 +21,21 @@ export function PaddleProvider({ children }: { children: ReactNode }) {
     // Initialize Paddle
     const initPaddle = async () => {
       try {
+        console.log('🔍 Debug: Initializing Paddle...')
+        console.log('🔍 Debug: Paddle token:', process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN ? 'Present' : 'Missing')
+        
         const paddleInstance = await paddle
+        console.log('🔍 Debug: Paddle instance received:', paddleInstance)
+        
         if (paddleInstance) {
+          console.log('✅ Debug: Paddle initialized successfully')
           setIsPaddleReady(true)
+        } else {
+          console.error('❌ Debug: Paddle instance is null/undefined')
         }
       } catch (error) {
-        console.error('Failed to initialize Paddle:', error)
+        console.error('❌ Failed to initialize Paddle:', error)
+        console.error('❌ Error details:', JSON.stringify(error, null, 2))
       }
     }
 
@@ -34,8 +43,10 @@ export function PaddleProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const openCheckout = async (planType: 'PRO_MONTHLY' | 'PRO_YEARLY' | 'LIFETIME', userEmail?: string) => {
+    console.log('🔍 Debug: openCheckout called with:', { planType, userEmail, isPaddleReady })
+    
     if (!isPaddleReady) {
-      console.error('Paddle is not ready')
+      console.error('❌ Paddle is not ready')
       return
     }
 
@@ -43,6 +54,7 @@ export function PaddleProvider({ children }: { children: ReactNode }) {
 
     try {
       const productId = PRODUCT_IDS[planType]
+      console.log('🔍 Debug: Using product ID:', productId)
 
       // Prepare checkout data
       const checkoutData = {
@@ -69,14 +81,22 @@ export function PaddleProvider({ children }: { children: ReactNode }) {
       }
 
       // Open Paddle checkout
+      console.log('🔍 Debug: Opening Paddle checkout with data:', checkoutData)
       const paddleInstance = await paddle
+      console.log('🔍 Debug: Paddle instance:', paddleInstance)
+      
       if (paddleInstance) {
         try {
+          console.log('🔍 Debug: Calling paddleInstance.Checkout.open...')
           await paddleInstance.Checkout.open(checkoutData)
+          console.log('✅ Debug: Paddle checkout opened successfully')
         } catch (error) {
-          console.error('Paddle checkout error:', error)
+          console.error('❌ Paddle checkout error:', error)
+          console.error('❌ Error details:', JSON.stringify(error, null, 2))
           alert('Payment failed. Please try again.')
         }
+      } else {
+        console.error('❌ Paddle instance is null/undefined')
       }
     } catch (error) {
       console.error('Error opening checkout:', error)
