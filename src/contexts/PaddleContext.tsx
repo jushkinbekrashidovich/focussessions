@@ -82,8 +82,12 @@ export function PaddleProvider({ children }: { children: ReactNode }) {
 
       // Open Paddle checkout
       console.log('🔍 Debug: Opening Paddle checkout with data:', checkoutData)
+      console.log('🔍 Debug: Current environment:', process.env.NODE_ENV)
+      console.log('🔍 Debug: Paddle environment:', process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT)
+      
       const paddleInstance = await paddle
       console.log('🔍 Debug: Paddle instance:', paddleInstance)
+      console.log('🔍 Debug: Paddle instance methods:', Object.keys(paddleInstance || {}))
       
       if (paddleInstance) {
         try {

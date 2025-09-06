@@ -8,6 +8,7 @@ console.log('🔍 Debug: Token starts with:', paddleToken?.substring(0, 10))
 
 export const paddle = initializePaddle({
   token: paddleToken!,
+  environment: process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT === 'sandbox' ? 'sandbox' : 'production',
 })
 
 // Price IDs for your pricing plans (Sandbox)
