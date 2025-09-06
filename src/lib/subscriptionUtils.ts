@@ -1,19 +1,9 @@
 // lib/subscriptionUtils.ts
 import { useUser } from '@/lib/hooks/useAuth'
 import { useQuery } from '@tanstack/react-query'
-import { createClient } from '@supabase/supabase-js'
+import { supabase } from '@/lib/supabaseClient'
 
-// Create Supabase client for subscription queries
-function getSupabaseClient() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  
-  if (!supabaseUrl || !supabaseKey) {
-    throw new Error('Missing Supabase environment variables')
-  }
-  
-  return createClient(supabaseUrl, supabaseKey)
-}
+// Use the same Supabase client instance to avoid multiple GoTrueClient instances
 
 export function useSubscriptionStatus() {
   const { data: user, isLoading: userLoading } = useUser()
@@ -38,8 +28,16 @@ export function useSubscriptionStatus() {
       // Debug: Check all subscriptions first
       await debugUserSubscriptions(user.id)
       
-      const supabase = getSupabaseClient()
-      console.log('🔍 Debug: Supabase client created')
+      console.log('🔍 Debug: Using shared Supabase client')
+      
+      // First, let's test if we can query the table at all
+      console.log('🔍 Debug: Testing basic table access...')
+      const { data: testData, error: testError } = await supabase
+        .from('user_subscriptions')
+        .select('count')
+        .limit(1)
+      
+      console.log('🔍 Debug: Basic table test:', { testData, testError })
       
       const { data, error } = await supabase
         .from('user_subscriptions')
@@ -56,6 +54,8 @@ export function useSubscriptionStatus() {
         errorCode: error?.code,
         errorMessage: error?.message
       })
+      console.log('🔍 Debug: Query executed DATA:', JSON.stringify(data, null, 2))
+      console.log('🔍 Debug: Query executed ERROR:', JSON.stringify(error, null, 2))
       
       if (error) {
         console.error('❌ Error fetching subscription:', error)
@@ -182,7 +182,6 @@ export function getSubscriptionStatus(user: User | null | undefined) {
 export async function debugUserSubscriptions(userId: string) {
   console.log('🔍 Debug: Checking all subscriptions for user:', userId)
   
-  const supabase = getSupabaseClient()
   const { data, error } = await supabase
     .from('user_subscriptions')
     .select('*')
@@ -190,5 +189,7 @@ export async function debugUserSubscriptions(userId: string) {
     .order('created_at', { ascending: false })
   
   console.log('🔍 Debug: All user subscriptions:', { data, error })
+  console.log('🔍 Debug: All user subscriptions DATA:', JSON.stringify(data, null, 2))
+  console.log('🔍 Debug: All user subscriptions ERROR:', JSON.stringify(error, null, 2))
   return { data, error }
 }
