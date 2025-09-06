@@ -1,6 +1,10 @@
 'use client'
 
+import { useState } from 'react'
+
 export default function PricingContent() {
+  const [isYearly, setIsYearly] = useState(true)
+
   return (
     <div className="min-h-screen bg-white text-gray-900">
       {/* Main Pricing Section */}
@@ -17,10 +21,24 @@ export default function PricingContent() {
           {/* Toggle Switch */}
           <div className="flex justify-center mb-8">
             <div className="bg-gray-200 rounded-lg p-1 flex">
-              <button className="px-4 py-2 text-sm font-medium text-white bg-purple-600 rounded-md transition">
+              <button 
+                onClick={() => setIsYearly(true)}
+                className={`px-4 py-2 text-sm font-medium rounded-md transition ${
+                  isYearly 
+                    ? 'text-white bg-purple-600' 
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
                 Yearly -20%
               </button>
-              <button className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 transition">
+              <button 
+                onClick={() => setIsYearly(false)}
+                className={`px-4 py-2 text-sm font-medium rounded-md transition ${
+                  !isYearly 
+                    ? 'text-white bg-purple-600' 
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
                 Monthly
               </button>
             </div>
@@ -73,10 +91,16 @@ export default function PricingContent() {
             <div className="absolute -top-3 -right-3">
               <span className="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">Most Popular</span>
             </div>
-            <h3 className="text-2xl font-bold text-white mb-2">Pro</h3>
+            <h3 className="text-2xl font-bold text-white mb-2">
+              {isYearly ? 'Pro Yearly' : 'Pro Monthly'}
+            </h3>
             <div className="flex items-baseline mb-4">
-              <span className="text-5xl font-bold text-white">$1.9</span>
-              <span className="text-gray-400 ml-2">/month</span>
+              <span className="text-5xl font-bold text-white">
+                {isYearly ? '$20' : '$1.9'}
+              </span>
+              <span className="text-gray-400 ml-2">
+                {isYearly ? '/year' : '/month'}
+              </span>
             </div>
             <p className="text-gray-400 mb-6">Everything you need for serious focus work</p>
             <ul className="space-y-3 text-gray-300 text-sm mb-6">

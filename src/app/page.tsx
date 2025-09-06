@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import LandingNavbar from '@/components/LandingNavbar'
 import { useUser } from '@/lib/hooks'
 import { usePaddle } from '@/contexts/PaddleContext'
@@ -13,6 +14,7 @@ export default function Home() {
   const { data: user, isLoading } = useUser()
   const { openCheckout, isLoading: isPaddleLoading } = usePaddle()
   const userData = user || null
+  const [isYearly, setIsYearly] = useState(true)
 
   return (
     <>
@@ -296,10 +298,24 @@ export default function Home() {
           {/* Toggle Switch */}
           <div className="flex justify-center mb-8">
             <div className="bg-gray-700 rounded-lg p-1 flex">
-              <button className="px-4 py-2 text-sm font-medium text-white bg-purple-600 rounded-md transition">
+              <button 
+                onClick={() => setIsYearly(true)}
+                className={`px-4 py-2 text-sm font-medium rounded-md transition ${
+                  isYearly 
+                    ? 'text-white bg-purple-600' 
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
                 Yearly -20%
               </button>
-              <button className="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition">
+              <button 
+                onClick={() => setIsYearly(false)}
+                className={`px-4 py-2 text-sm font-medium rounded-md transition ${
+                  !isYearly 
+                    ? 'text-white bg-purple-600' 
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
                 Monthly
               </button>
             </div>
@@ -308,82 +324,88 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
           {/* Basic Plan */}
-          <div className="bg-white rounded-2xl p-8 shadow-sm">
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">Basic</h3>
-            <div className="flex items-baseline mb-4">
-              <span className="text-5xl font-bold text-gray-900">$0</span>
-              <span className="text-gray-600 ml-2">/month</span>
+          <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8 shadow-sm">
+            <div className="text-center mb-4">
+              <span className="inline-block bg-green-500 text-black text-xs font-bold px-3 py-1 rounded-full mb-3">FREE</span>
             </div>
-            <p className="text-gray-600 mb-6">Perfect for getting started with focus tracking</p>
-            <ul className="space-y-3 text-gray-700 text-sm mb-6">
+            <h3 className="text-lg sm:text-xl font-semibold text-white mb-2 text-center">Free</h3>
+            <p className="text-2xl sm:text-3xl font-bold text-white mb-1 text-center">$0</p>
+            <p className="text-sm text-gray-400 mb-4 sm:mb-6 text-center">Forever free</p>
+            <ul className="space-y-2 text-gray-400 text-sm mb-4 sm:mb-6">
               <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-4 h-4 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
                 Basic focus timer
               </li>
               <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-4 h-4 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
                 Simple progress tracking
               </li>
               <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-4 h-4 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
                 Basic statistics
               </li>
               <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-4 h-4 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
                 Up to 3 focus categories
               </li>
+              <li className="flex items-center">
+                <svg className="w-4 h-4 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                Community support
+              </li>
             </ul>
-            <button className="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 px-6 rounded-lg transition">
+            <button className="w-full border border-gray-600 text-gray-300 font-medium py-2 rounded-md hover:border-gray-500 hover:text-white transition cursor-not-allowed">
               Current Plan
             </button>
           </div>
 
           {/* Pro Plan */}
-          <div className="bg-gray-900 rounded-2xl p-8 shadow-lg relative">
-            <div className="absolute -top-3 -right-3">
-              <span className="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">Most Popular</span>
-            </div>
-            <h3 className="text-2xl font-bold text-white mb-2">Pro</h3>
-            <div className="flex items-baseline mb-4">
-              <span className="text-5xl font-bold text-white">$1.9</span>
-              <span className="text-gray-400 ml-2">/month</span>
-            </div>
-            <p className="text-gray-400 mb-6">Everything you need for serious focus work</p>
-            <ul className="space-y-3 text-gray-300 text-sm mb-6">
+          <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8 shadow-sm">
+            <h3 className="text-lg sm:text-xl font-semibold text-white mb-2 text-center">
+              {isYearly ? 'Pro Yearly' : 'Pro Monthly'}
+            </h3>
+            <p className="text-2xl sm:text-3xl font-bold text-white mb-1 text-center">
+              {isYearly ? '$20' : '$1.9'}
+            </p>
+            <p className="text-sm text-gray-400 mb-4 sm:mb-6 text-center">
+              {isYearly ? 'per year' : 'per month'}
+            </p>
+            <ul className="space-y-2 text-gray-400 text-sm mb-4 sm:mb-6">
               <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-4 h-4 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
                 Everything in Free
               </li>
               <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-4 h-4 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
                 Advanced analytics & insights
               </li>
               <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-4 h-4 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
                 Unlimited focus categories
               </li>
               <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-4 h-4 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
                 Early access to new features
               </li>
               <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-4 h-4 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
                 Priority support
@@ -394,51 +416,51 @@ export default function Home() {
                 if (!user) {
                   router.push('/login?redirect=/pricing')
                 } else {
-                  openCheckout('PRO_MONTHLY', user.email)
+                  openCheckout(isYearly ? 'PRO_YEARLY' : 'PRO_MONTHLY', user.email)
                 }
               }}
               disabled={isPaddleLoading}
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 px-6 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full border border-white text-white font-medium py-2 rounded-md hover:bg-white hover:text-black transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isPaddleLoading ? 'Loading...' : 'Purchase Plan'}
+              {isPaddleLoading ? 'Loading...' : 'Get Pro'}
             </button>
           </div>
 
           {/* Lifetime Plan */}
-          <div className="bg-white rounded-2xl p-8 shadow-sm">
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">Lifetime</h3>
-            <div className="flex items-baseline mb-4">
-              <span className="text-5xl font-bold text-gray-900">$44</span>
-              <span className="text-gray-600 ml-2">one-time</span>
+          <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8 shadow-sm">
+            <div className="text-center mb-4">
+              <span className="inline-block bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full mb-3">LIMITED</span>
             </div>
-            <p className="text-gray-600 mb-6">Pay once, use forever with all features</p>
-            <ul className="space-y-3 text-gray-700 text-sm mb-6">
+            <h3 className="text-lg sm:text-xl font-semibold text-white mb-2 text-center">Lifetime</h3>
+            <p className="text-2xl sm:text-3xl font-bold text-white mb-1 text-center">$44</p>
+            <p className="text-sm text-gray-400 mb-4 sm:mb-6 text-center">One-time payment</p>
+            <ul className="space-y-2 text-gray-400 text-sm mb-4 sm:mb-6">
               <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-4 h-4 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
                 Everything in Free
               </li>
               <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-4 h-4 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
                 Advanced analytics & insights
               </li>
               <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-4 h-4 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
                 Unlimited focus categories
               </li>
               <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-4 h-4 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
                 Early access to new features
               </li>
               <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-4 h-4 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
                 Priority support
@@ -453,9 +475,9 @@ export default function Home() {
                 }
               }}
               disabled={isPaddleLoading}
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 px-6 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full border border-white text-white font-medium py-2 rounded-md hover:bg-white hover:text-black transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isPaddleLoading ? 'Loading...' : 'Purchase Plan'}
+              {isPaddleLoading ? 'Loading...' : 'Get Lifetime'}
             </button>
           </div>
         </div>
