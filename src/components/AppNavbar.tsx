@@ -5,12 +5,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { useTheme } from '@/contexts/ThemeContext'
 
-interface AppNavbarProps {
-  currentView?: 'dashboard' | 'pricing'
-  onViewChange?: (view: 'dashboard' | 'pricing') => void
-}
-
-export default function AppNavbar({ currentView, onViewChange }: AppNavbarProps = {}) {
+export default function AppNavbar() {
   const { theme } = useTheme()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
@@ -25,33 +20,15 @@ export default function AppNavbar({ currentView, onViewChange }: AppNavbarProps 
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
-          {onViewChange ? (
-            <button 
-              onClick={() => onViewChange('dashboard')}
-              className={`hover:text-white transition ${currentView === 'dashboard' ? 'text-white' : ''}`}
-            >
-              Dashboard
-            </button>
-          ) : (
-            <Link href="/app" className="hover:text-white transition">
-              Dashboard
-            </Link>
-          )}
+          <Link href="/app" className="hover:text-white transition">
+            Dashboard
+          </Link>
           <Link href="/activity" className="hover:text-white transition">
             Personal Goals
           </Link>
-          {onViewChange ? (
-            <button 
-              onClick={() => onViewChange('pricing')}
-              className={`hover:text-white transition ${currentView === 'pricing' ? 'text-white' : ''}`}
-            >
-              Pricing
-            </button>
-          ) : (
-            <Link href="/pricing" className="hover:text-white transition">
-              Pricing
-            </Link>
-          )}
+          <Link href="/pricing" className="hover:text-white transition">
+            Pricing
+          </Link>
         </nav>
       </div>
 
@@ -90,25 +67,13 @@ export default function AppNavbar({ currentView, onViewChange }: AppNavbarProps 
             </div>
             
             <nav className="space-y-4">
-              {onViewChange ? (
-                <button
-                  onClick={() => {
-                    onViewChange('dashboard')
-                    setIsMobileMenuOpen(false)
-                  }}
-                  className={`block w-full text-left py-3 px-4 hover:text-white hover:bg-[#2a2a58] rounded-lg transition ${currentView === 'dashboard' ? 'text-white bg-[#2a2a58]' : 'text-gray-300'}`}
-                >
-                  Dashboard
-                </button>
-              ) : (
-                <Link
-                  href="/app"
-                  className="block py-3 px-4 text-gray-300 hover:text-white hover:bg-[#2a2a58] rounded-lg transition"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Dashboard
-                </Link>
-              )}
+              <Link
+                href="/app"
+                className="block py-3 px-4 text-gray-300 hover:text-white hover:bg-[#2a2a58] rounded-lg transition"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Dashboard
+              </Link>
               <Link
                 href="/activity"
                 className="block py-3 px-4 text-gray-300 hover:text-white hover:bg-[#2a2a58] rounded-lg transition"
@@ -116,25 +81,13 @@ export default function AppNavbar({ currentView, onViewChange }: AppNavbarProps 
               >
                 Personal Goals
               </Link>
-              {onViewChange ? (
-                <button
-                  onClick={() => {
-                    onViewChange('pricing')
-                    setIsMobileMenuOpen(false)
-                  }}
-                  className={`block w-full text-left py-3 px-4 hover:text-white hover:bg-[#2a2a58] rounded-lg transition ${currentView === 'pricing' ? 'text-white bg-[#2a2a58]' : 'text-gray-300'}`}
-                >
-                  Pricing
-                </button>
-              ) : (
-                <Link
-                  href="/pricing"
-                  className="block py-3 px-4 text-gray-300 hover:text-white hover:bg-[#2a2a58] rounded-lg transition"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Pricing
-                </Link>
-              )}
+              <Link
+                href="/pricing"
+                className="block py-3 px-4 text-gray-300 hover:text-white hover:bg-[#2a2a58] rounded-lg transition"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Pricing
+              </Link>
               <Link
                 href="/profile"
                 className="block py-3 px-4 text-gray-300 hover:text-white hover:bg-[#2a2a58] rounded-lg transition"
