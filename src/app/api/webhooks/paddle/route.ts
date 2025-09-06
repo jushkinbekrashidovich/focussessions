@@ -89,10 +89,14 @@ async function handleSuccessfulPayment(eventData: Record<string, unknown>) {
 export async function POST(request: NextRequest) {
   try {
     console.log('🔔 Webhook received from Paddle')
-    const body = await request.text()
-    const signature = request.headers.get('paddle-signature')
+    console.log('🔔 Request headers:', Object.fromEntries(request.headers.entries()))
     
+    const body = await request.text()
+    console.log('🔔 Webhook body:', body)
+    
+    const signature = request.headers.get('paddle-signature')
     console.log('🔔 Webhook signature present:', !!signature)
+    console.log('🔔 Webhook signature value:', signature)
     
     if (!signature) {
       console.log('❌ Webhook missing signature')
