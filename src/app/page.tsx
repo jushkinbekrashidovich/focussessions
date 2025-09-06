@@ -123,8 +123,8 @@ export default function Home() {
       <section id="demo" className="w-full flex flex-col items-center justify-center bg-[#151515] px-4 py-12 sm:py-16 md:py-20">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white text-center mb-6 sm:mb-8 px-4">
           Build <span className="relative inline-block">
-            <span className="bg-yellow-400 text-black px-1 pt-1 pb-0 -mx-1">unbreakable concentration </span>
-          </span> habits
+            <span className="bg-yellow-400 text-black px-1 pt-1 pb-0 -mx-1">Better Focus</span>
+          </span> Habits
         </h2>
         <p className="text-gray-400 text-base sm:text-lg text-center mb-8 sm:mb-10 max-w-2xl px-4">
           The visual focus tracker built for anyone serious about building unbreakable deep work habits. Whether you&apos;re studying, working on projects, or developing skills—track your progress, see your streaks, and stay motivated every single day.

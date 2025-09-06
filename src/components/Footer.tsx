@@ -21,16 +21,19 @@ export default function Footer() {
               Save your time and increase your efficiency with deep work sessions.
             </p>
             <div className="flex space-x-3">
-              {/* Social Media Icons - You can add these later */}
-              <div className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center">
-                <span className="text-xs text-gray-400">T</span>
-              </div>
-              <div className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center">
-                <span className="text-xs text-gray-400">I</span>
-              </div>
-              <div className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center">
-                <span className="text-xs text-gray-400">L</span>
-              </div>
+              {/* Social Media Icons */}
+              <a href="#" className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center hover:bg-gray-600 transition">
+                <Image src="/telegram.svg" alt="Telegram" width={16} height={16} />
+              </a>
+              <a href="#" className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center hover:bg-gray-600 transition">
+                <Image src="/instagram.svg" alt="Instagram" width={16} height={16} />
+              </a>
+              <a href="#" className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center hover:bg-gray-600 transition">
+                <Image src="/linkedin.svg" alt="LinkedIn" width={16} height={16} />
+              </a>
+              <a href="#" className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center hover:bg-gray-600 transition">
+                <Image src="/tiktok.svg" alt="TikTok" width={16} height={16} />
+              </a>
             </div>
           </div>
 
