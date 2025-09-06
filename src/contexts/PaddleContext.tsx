@@ -71,19 +71,13 @@ export function PaddleProvider({ children }: { children: ReactNode }) {
           user_id: user.id,
         } : undefined,
         allowLogout: false,
-        displayMode: 'overlay',
-        theme: 'dark',
-        locale: 'en',
+        displayMode: 'overlay' as const,
+        theme: 'dark' as const,
+        locale: 'en' as const,
         // Success URL - redirect after successful payment
         successUrl: `${window.location.origin}/app?payment=success`,
         // Close URL - redirect if user closes checkout
         closeUrl: `${window.location.origin}/pricing`,
-        // Additional checkout configuration
-        settings: {
-          displayMode: 'overlay',
-          theme: 'dark',
-          locale: 'en',
-        },
       }
 
       // Open Paddle checkout
