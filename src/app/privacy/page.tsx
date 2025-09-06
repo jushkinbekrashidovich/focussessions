@@ -18,7 +18,7 @@ export default function PrivacyPage() {
           <div className="space-y-6 text-gray-300">
             <div>
               <h2 className="text-xl font-semibold text-white mb-3">1. Information We Collect</h2>
-              <p>We collect information you provide directly to us, such as when you create an account, use our services, or contact us. This may include your name, email address, and usage data related to your focus activities and productivity tracking.</p>
+              <p>We collect information you provide directly to us, such as when you create an account, use our services, or contact us. This may include your name, email address, and usage data related to your focus sessions and productivity activities.</p>
             </div>
 
             <div>
