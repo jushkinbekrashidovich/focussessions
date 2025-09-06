@@ -88,10 +88,14 @@ async function handleSuccessfulPayment(eventData: Record<string, unknown>) {
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('🔔 Webhook received from Paddle')
     const body = await request.text()
     const signature = request.headers.get('paddle-signature')
     
+    console.log('🔔 Webhook signature present:', !!signature)
+    
     if (!signature) {
+      console.log('❌ Webhook missing signature')
       return NextResponse.json({ error: 'Missing signature' }, { status: 400 })
     }
 
@@ -106,7 +110,8 @@ export async function POST(request: NextRequest) {
     }
 
     const event = JSON.parse(body)
-    console.log('Received Paddle webhook:', event.event_type)
+    console.log('🔔 Received Paddle webhook:', event.event_type)
+    console.log('🔔 Webhook data:', JSON.stringify(event, null, 2))
 
     // Handle different event types
     switch (event.event_type) {

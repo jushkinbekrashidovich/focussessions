@@ -78,6 +78,12 @@ export function PaddleProvider({ children }: { children: ReactNode }) {
         successUrl: `${window.location.origin}/app?payment=success`,
         // Close URL - redirect if user closes checkout
         closeUrl: `${window.location.origin}/pricing`,
+        // Additional checkout configuration
+        settings: {
+          displayMode: 'overlay',
+          theme: 'dark',
+          locale: 'en',
+        },
       }
 
       // Open Paddle checkout
