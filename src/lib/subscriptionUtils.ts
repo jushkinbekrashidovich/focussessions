@@ -6,7 +6,8 @@ export function useSubscriptionStatus() {
   
   // For now, we'll assume free users don't have a subscription record
   // In the future, you can check the user_subscriptions table
-  const isPro = user?.subscription_status === 'active' || user?.plan_type !== 'free'
+  // Since Supabase User doesn't have subscription fields, we'll default to free
+  const isPro = false // TODO: Implement actual subscription checking
   
   return {
     isPro,
