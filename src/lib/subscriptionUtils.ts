@@ -32,6 +32,8 @@ export function useSubscriptionStatus() {
         .select('*')
         .eq('user_id', user.id)
         .eq('status', 'active')
+        .order('created_at', { ascending: false })
+        .limit(1)
         .single()
       
       if (error && error.code !== 'PGRST116') { // PGRST116 = no rows found

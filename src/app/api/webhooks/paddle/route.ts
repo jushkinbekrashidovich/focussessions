@@ -146,10 +146,6 @@ export async function POST(request: NextRequest) {
 
     // Handle different event types
     switch (event.event_type) {
-      case 'transaction.completed':
-        await handleSuccessfulPayment(event.data)
-        break
-      
       case 'subscription.created':
         await handleSuccessfulPayment(event.data)
         break
