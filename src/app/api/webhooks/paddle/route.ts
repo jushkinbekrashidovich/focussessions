@@ -68,11 +68,11 @@ async function handleSuccessfulPayment(eventData: Record<string, unknown>) {
   const userId = customData.user_id
   const productId = items?.[0]?.price?.product_id
 
-  // Determine plan type based on product ID (Sandbox)
+  // Determine plan type based on price ID (Sandbox)
   let planType = 'free'
-  if (productId === 'pro_01k4ew8qegv120sq7xzesbrrjm') planType = 'pro_monthly'
-  else if (productId === 'pro_01k4ewb3saqmm58dn9v7rwp433') planType = 'pro_yearly'
-  else if (productId === 'pro_01k4ewcvnkm62hhf4ar6kjycxs') planType = 'lifetime'
+  if (productId === 'pri_01k4exn0p4wy4w7k0h6tv1tb4d') planType = 'pro_monthly'
+  else if (productId === 'pri_01k4exnwjgfxannn0cm6pgc734') planType = 'pro_yearly'
+  else if (productId === 'pri_01k4expr4yywz3g9sste7t34px') planType = 'lifetime'
 
   // Update user subscription
   await updateUserSubscription(userId, {
