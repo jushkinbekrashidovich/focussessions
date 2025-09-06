@@ -6,11 +6,11 @@ export const paddle = initializePaddle({
   token: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN!,
 })
 
-// Product IDs for your pricing plans
+// Product IDs for your pricing plans (Sandbox)
 export const PRODUCT_IDS = {
-  PRO_MONTHLY: 'pro_01k4as74sfrrnyc04sty41fg57',
-  PRO_YEARLY: 'pro_01k4as8tj871xh2tsm7zxqpk6h',
-  LIFETIME: 'pro_01k4as9xbf715yb60v2ttq7yt6',
+  PRO_MONTHLY: 'pro_01k4ew8qegv120sq7xzesbrrjm',
+  PRO_YEARLY: 'pro_01k4ewb3saqmm58dn9v7rwp433',
+  LIFETIME: 'pro_01k4ewcvnkm62hhf4ar6kjycxs',
 } as const
 
 // Pricing configuration
