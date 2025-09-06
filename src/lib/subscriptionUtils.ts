@@ -15,7 +15,13 @@ export function useSubscriptionStatus() {
   }
 }
 
-export function getSubscriptionStatus(user: any) {
+interface User {
+  id?: string
+  subscription_status?: string
+  plan_type?: string
+}
+
+export function getSubscriptionStatus(user: User | null | undefined) {
   if (!user) return 'free'
   
   // Check if user has active subscription
