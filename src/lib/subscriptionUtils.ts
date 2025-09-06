@@ -24,6 +24,8 @@ export function useSubscriptionStatus() {
     queryFn: async () => {
       if (!user?.id) return null
       
+      console.log('🔍 Debug: Fetching subscription for user:', user.id)
+      
       const supabase = getSupabaseClient()
       const { data, error } = await supabase
         .from('user_subscriptions')
@@ -37,6 +39,7 @@ export function useSubscriptionStatus() {
         return null
       }
       
+      console.log('🔍 Debug: Subscription data:', data)
       return data
     },
     enabled: !!user?.id,
@@ -46,6 +49,13 @@ export function useSubscriptionStatus() {
   // Check if subscription is active and not expired
   const isPro = subscription && isSubscriptionActive(subscription)
   const isLoading = userLoading || subscriptionLoading
+  
+  console.log('🔍 Debug: Subscription status check:', {
+    user: user?.id,
+    subscription,
+    isPro,
+    isLoading
+  })
   
   return {
     isPro,
@@ -70,12 +80,16 @@ interface Subscription {
 
 // Check if subscription is currently active
 function isSubscriptionActive(subscription: Subscription | null): boolean {
+  console.log('🔍 Debug: isSubscriptionActive called with:', subscription)
+  
   if (!subscription || subscription.status !== 'active') {
+    console.log('🔍 Debug: Subscription not active or null:', { subscription, status: subscription?.status })
     return false
   }
   
   // For lifetime plans, always active
   if (subscription.plan_type === 'lifetime') {
+    console.log('🔍 Debug: Lifetime plan - always active')
     return true
   }
   
@@ -83,9 +97,19 @@ function isSubscriptionActive(subscription: Subscription | null): boolean {
   if (subscription.current_period_end) {
     const now = new Date()
     const endDate = new Date(subscription.current_period_end)
-    return endDate > now
+    const isActive = endDate > now
+    
+    console.log('🔍 Debug: Checking expiration:', {
+      now: now.toISOString(),
+      endDate: endDate.toISOString(),
+      isActive,
+      planType: subscription.plan_type
+    })
+    
+    return isActive
   }
   
+  console.log('🔍 Debug: No end date - assuming active')
   return true
 }
 
