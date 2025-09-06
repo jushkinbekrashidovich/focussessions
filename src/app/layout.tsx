@@ -26,7 +26,7 @@ export const metadata = {
     'concentration habits',
     'focus tracker',
     'productivity tracker',
-    'focus sessions',
+    'focusdot',
     'deep work tracker',
     'focus visualization'
   ],

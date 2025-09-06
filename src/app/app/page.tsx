@@ -10,9 +10,13 @@ import AppNavbar from '@/components/AppNavbar'
 import ActivityFeed from '@/components/ActivityFeed'
 import DeepWorkStats from '@/components/DeepWorkStats'
 import DeepWorkHeatmap from '@/components/DeepWorkHeatmap'
+import PricingContent from '@/components/PricingContent'
+
+type ViewType = 'dashboard' | 'goals' | 'pricing'
 
 export default function HomePage() {
   const [refreshTrigger, setRefreshTrigger] = useState(0)
+  const [currentView, setCurrentView] = useState<ViewType>('dashboard')
   const router = useRouter()
 
   // Check for redirect after login
@@ -28,32 +32,58 @@ export default function HomePage() {
     setRefreshTrigger((prev: number) => prev + 1)
   }
 
-  return (
-    <div className="min-h-screen bg-[#13133c] text-white flex flex-col">
-      <AppNavbar />
+  const handleViewChange = (view: ViewType) => {
+    setCurrentView(view)
+  }
 
-      {/* Body */}
-      <div className="flex flex-col lg:flex-row flex-1 p-4 sm:p-6 lg:p-8 gap-6 lg:gap-12">
-        {/* Timer section - Mobile: full width, Desktop: fixed width */}
-        <div className="w-full lg:w-[330px]">
-          <TimerBox onSessionCompleted={handleSessionCompleted} />
-        </div>
-
-        {/* Main dashboard - Mobile: vertical stack, Desktop: horizontal layout */}
-        <div className="flex-1 space-y-6 lg:space-y-12 overflow-auto">
-          {/* Stats */}
-          <DeepWorkStats refreshTrigger={refreshTrigger} />
-
-          {/* Heatmap */}
-          <DeepWorkHeatmap refreshTrigger={refreshTrigger} />
-
-          {/* Activity Feed */}
-          <div>
-            <h2 className="text-lg lg:text-xl mb-3 lg:mb-4 font-semibold">My Activity</h2>
+  const renderContent = () => {
+    switch (currentView) {
+      case 'pricing':
+        return <PricingContent />
+      case 'goals':
+        return (
+          <div className="flex-1 space-y-6 lg:space-y-12 overflow-auto p-4 sm:p-6 lg:p-8">
+            <h2 className="text-lg lg:text-xl mb-3 lg:mb-4 font-semibold">Personal Goals</h2>
             <ActivityFeed maxItems={10} refreshTrigger={refreshTrigger} />
           </div>
-        </div>
-      </div>
+        )
+      case 'dashboard':
+      default:
+        return (
+          <div className="flex flex-col lg:flex-row flex-1 p-4 sm:p-6 lg:p-8 gap-6 lg:gap-12">
+            {/* Timer section - Mobile: full width, Desktop: fixed width */}
+            <div className="w-full lg:w-[330px]">
+              <TimerBox onSessionCompleted={handleSessionCompleted} />
+            </div>
+
+            {/* Main dashboard - Mobile: vertical stack, Desktop: horizontal layout */}
+            <div className="flex-1 space-y-6 lg:space-y-12 overflow-auto">
+              {/* Stats */}
+              <DeepWorkStats refreshTrigger={refreshTrigger} />
+
+              {/* Heatmap */}
+              <DeepWorkHeatmap refreshTrigger={refreshTrigger} />
+
+              {/* Activity Feed */}
+              <div>
+                <h2 className="text-lg lg:text-xl mb-3 lg:mb-4 font-semibold">My Activity</h2>
+                <ActivityFeed maxItems={10} refreshTrigger={refreshTrigger} />
+              </div>
+            </div>
+          </div>
+        )
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-[#13133c] text-white flex flex-col">
+      <AppNavbar 
+        onUpgradeClick={() => handleViewChange('pricing')}
+        activeView={currentView}
+      />
+
+      {/* Body */}
+      {renderContent()}
     </div>
   )
 }

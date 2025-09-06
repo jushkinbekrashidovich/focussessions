@@ -5,7 +5,12 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { useTheme } from '@/contexts/ThemeContext'
 
-export default function AppNavbar() {
+interface AppNavbarProps {
+  onUpgradeClick?: () => void
+  activeView?: 'dashboard' | 'goals' | 'pricing'
+}
+
+export default function AppNavbar({ onUpgradeClick, activeView = 'dashboard' }: AppNavbarProps) {
   const { theme } = useTheme()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
@@ -20,12 +25,18 @@ export default function AppNavbar() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
-          <Link href="/app" className="hover:text-white transition">
+          <button 
+            onClick={() => onUpgradeClick && onUpgradeClick()}
+            className={`hover:text-white transition ${activeView === 'dashboard' ? 'text-white' : ''}`}
+          >
             Dashboard
-          </Link>
-          <Link href="/activity" className="hover:text-white transition">
+          </button>
+          <button 
+            onClick={() => onUpgradeClick && onUpgradeClick()}
+            className={`hover:text-white transition ${activeView === 'goals' ? 'text-white' : ''}`}
+          >
             Personal Goals
-          </Link>
+          </button>
         </nav>
       </div>
 
@@ -39,6 +50,18 @@ export default function AppNavbar() {
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
           </svg>
+        </button>
+        
+        {/* Desktop Upgrade Button */}
+        <button 
+          onClick={onUpgradeClick}
+          className={`hidden md:block transition px-4 py-2 rounded-md text-sm font-medium ${
+            activeView === 'pricing' 
+              ? 'bg-yellow-500 text-black' 
+              : 'bg-yellow-400 hover:bg-yellow-500 text-black'
+          }`}
+        >
+          Upgrade to pro
         </button>
         
         {/* Desktop Profile Link */}
@@ -64,20 +87,45 @@ export default function AppNavbar() {
             </div>
             
             <nav className="space-y-4">
-              <Link
-                href="/app"
-                className="block py-3 px-4 text-gray-300 hover:text-white hover:bg-[#2a2a58] rounded-lg transition"
-                onClick={() => setIsMobileMenuOpen(false)}
+              <button
+                onClick={() => {
+                  onUpgradeClick && onUpgradeClick()
+                  setIsMobileMenuOpen(false)
+                }}
+                className={`block w-full text-left py-3 px-4 rounded-lg transition ${
+                  activeView === 'dashboard' 
+                    ? 'text-white bg-[#2a2a58]' 
+                    : 'text-gray-300 hover:text-white hover:bg-[#2a2a58]'
+                }`}
               >
                 Dashboard
-              </Link>
-              <Link
-                href="/activity"
-                className="block py-3 px-4 text-gray-300 hover:text-white hover:bg-[#2a2a58] rounded-lg transition"
-                onClick={() => setIsMobileMenuOpen(false)}
+              </button>
+              <button
+                onClick={() => {
+                  onUpgradeClick && onUpgradeClick()
+                  setIsMobileMenuOpen(false)
+                }}
+                className={`block w-full text-left py-3 px-4 rounded-lg transition ${
+                  activeView === 'goals' 
+                    ? 'text-white bg-[#2a2a58]' 
+                    : 'text-gray-300 hover:text-white hover:bg-[#2a2a58]'
+                }`}
               >
                 Personal Goals
-              </Link>
+              </button>
+              <button
+                onClick={() => {
+                  onUpgradeClick && onUpgradeClick()
+                  setIsMobileMenuOpen(false)
+                }}
+                className={`block w-full text-left py-3 px-4 rounded-lg transition ${
+                  activeView === 'pricing' 
+                    ? 'text-black bg-yellow-400' 
+                    : 'text-gray-300 hover:text-white hover:bg-[#2a2a58]'
+                }`}
+              >
+                Upgrade to pro
+              </button>
               <Link
                 href="/profile"
                 className="block py-3 px-4 text-gray-300 hover:text-white hover:bg-[#2a2a58] rounded-lg transition"
