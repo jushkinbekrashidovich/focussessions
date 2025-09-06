@@ -55,8 +55,21 @@ export function useSubscriptionStatus() {
   }
 }
 
+// Subscription interface
+interface Subscription {
+  id: string
+  user_id: string
+  paddle_subscription_id: string
+  status: 'active' | 'canceled' | 'expired' | 'paused'
+  plan_type: 'free' | 'pro_monthly' | 'pro_yearly' | 'lifetime'
+  current_period_start?: string
+  current_period_end?: string
+  created_at: string
+  updated_at: string
+}
+
 // Check if subscription is currently active
-function isSubscriptionActive(subscription: any): boolean {
+function isSubscriptionActive(subscription: Subscription | null): boolean {
   if (!subscription || subscription.status !== 'active') {
     return false
   }
