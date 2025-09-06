@@ -11,6 +11,8 @@ import EditGoalModal from '@/components/EditGoalModal'
 import DeleteConfirmationModal from '@/components/DeleteConfirmationModal'
 import { Skill } from '@/lib/skillsService'
 import { useSkills, useCreateSkill, useUpdateSkill, useDeleteSkill } from '@/lib/hooks'
+import { useSubscriptionStatus } from '@/lib/subscriptionUtils'
+import { useRouter } from 'next/navigation'
 
 export default function ActivityPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -24,6 +26,8 @@ export default function ActivityPage() {
   const createSkillMutation = useCreateSkill()
   const updateSkillMutation = useUpdateSkill()
   const deleteSkillMutation = useDeleteSkill()
+  const { isPro } = useSubscriptionStatus()
+  const router = useRouter()
 
   const handleAddSkill = async (skillName: string, targetHours: number, description: string) => {
     try {
@@ -36,6 +40,16 @@ export default function ActivityPage() {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const handleAddGoalClick = () => {
+    // Check if user is free and already has 1 goal
+    if (!isPro && skills.length >= 1) {
+      router.push('/pricing')
+      return
+    }
+    
+    setIsModalOpen(true)
   }
 
   const handleEditSkill = (skill: Skill) => {
@@ -84,9 +98,19 @@ export default function ActivityPage() {
       <div className="flex-1 px-10 py-8">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl font-bold">My Goals</h1>
+          <div>
+            <h1 className="text-2xl font-bold">My Goals</h1>
+            {!isPro && (
+              <p className="text-sm text-gray-400 mt-1">
+                Free plan: {skills.length}/1 goal used
+                {skills.length >= 1 && (
+                  <span className="text-purple-400 ml-2">• Upgrade to add more goals</span>
+                )}
+              </p>
+            )}
+          </div>
           <button 
-            onClick={() => setIsModalOpen(true)}
+            onClick={handleAddGoalClick}
             className="bg-[#4A42E4] hover:bg-[#3b35c6] px-5 py-2 rounded-lg text-sm font-semibold"
           >
             Add new goal

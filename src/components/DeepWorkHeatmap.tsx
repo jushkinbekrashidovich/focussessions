@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react'
 import { Session } from '@/lib/skillsService'
 import { getUserCurrentTimezone } from '@/lib/timezoneUtils'
 import { useSessions } from '@/lib/hooks'
+import { useSubscriptionStatus } from '@/lib/subscriptionUtils'
+import { useRouter } from 'next/navigation'
 
 interface DeepWorkHeatmapProps {
   refreshTrigger?: number
@@ -19,6 +21,8 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
   const [heatmapData, setHeatmapData] = useState<DayData[]>([])
   const [userTimezone, setUserTimezone] = useState<string>('')
   const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear())
+  const { isPro } = useSubscriptionStatus()
+  const router = useRouter()
 
   useEffect(() => {
     // Get user's current timezone automatically
@@ -271,8 +275,26 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
           <p className="text-xs sm:text-sm mt-2">Complete your first session to see your activity heatmap!</p>
         </div>
       ) : (
-        <div className="overflow-x-auto">
-          {renderHeatmapGrid()}
+        <div className="relative">
+          <div className={`overflow-x-auto ${!isPro ? 'blur-sm' : ''}`}>
+            {renderHeatmapGrid()}
+          </div>
+          
+          {/* Pro Upgrade Overlay for Free Users */}
+          {!isPro && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/20 rounded-lg">
+              <div className="text-center bg-[#1d1d4e] p-6 rounded-xl border border-purple-500/30">
+                <h3 className="text-lg font-semibold text-white mb-2">Upgrade to Pro</h3>
+                <p className="text-gray-300 text-sm mb-4">Unlock detailed analytics and insights</p>
+                <button
+                  onClick={() => router.push('/pricing')}
+                  className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-lg transition"
+                >
+                  Upgrade Now
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
