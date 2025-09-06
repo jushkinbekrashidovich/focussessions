@@ -68,6 +68,8 @@ async function updateUserSubscription(userId: string, subscriptionData: Record<s
       current_period_end: billingPeriod?.ends_at,
       created_at: subscriptionData.created_at as string,
       updated_at: new Date().toISOString(),
+    }, {
+      onConflict: 'user_id'  // Specify which column to use for conflict resolution
     })
     .select()
 

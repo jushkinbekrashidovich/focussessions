@@ -34,9 +34,9 @@ export function useSubscriptionStatus() {
         .eq('status', 'active')
         .order('created_at', { ascending: false })
         .limit(1)
-        .single()
+        .maybeSingle()  // Use maybeSingle() instead of single() to handle no records gracefully
       
-      if (error && error.code !== 'PGRST116') { // PGRST116 = no rows found
+      if (error) {
         console.error('Error fetching subscription:', error)
         return null
       }
