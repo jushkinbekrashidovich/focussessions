@@ -16,15 +16,32 @@ function getSupabaseClient() {
 
 // Verify Paddle webhook signature
 function verifyPaddleSignature(payload: string, signature: string, secret: string): boolean {
-  const expectedSignature = crypto
-    .createHmac('sha256', secret)
-    .update(payload)
-    .digest('hex')
-  
-  return crypto.timingSafeEqual(
-    Buffer.from(signature, 'hex'),
-    Buffer.from(expectedSignature, 'hex')
-  )
+  try {
+    // Paddle signature format: "ts=timestamp;h1=hash"
+    const signatureParts = signature.split(';')
+    const timestamp = signatureParts.find(part => part.startsWith('ts='))?.split('=')[1]
+    const hash = signatureParts.find(part => part.startsWith('h1='))?.split('=')[1]
+    
+    if (!timestamp || !hash) {
+      console.log('❌ Invalid signature format:', signature)
+      return false
+    }
+    
+    // Create expected signature using Paddle's format: timestamp:payload
+    const expectedSignature = crypto
+      .createHmac('sha256', secret)
+      .update(timestamp + ':' + payload)
+      .digest('hex')
+    
+    // Compare signatures
+    return crypto.timingSafeEqual(
+      Buffer.from(hash, 'hex'),
+      Buffer.from(expectedSignature, 'hex')
+    )
+  } catch (error) {
+    console.log('❌ Signature verification error:', error)
+    return false
+  }
 }
 
 // Update user subscription in Supabase
