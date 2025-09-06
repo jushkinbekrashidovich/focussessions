@@ -83,6 +83,28 @@ export function useSubscriptionStatus() {
     queryError
   })
   
+  // If user is still loading, return loading state
+  if (userLoading) {
+    console.log('🔍 Debug: User still loading, returning loading state')
+    return {
+      isPro: false,
+      isLoading: true,
+      user,
+      subscription
+    }
+  }
+  
+  // If no user after loading, return free state
+  if (!user) {
+    console.log('🔍 Debug: No user after loading, returning free state')
+    return {
+      isPro: false,
+      isLoading: false,
+      user,
+      subscription
+    }
+  }
+  
   return {
     isPro,
     isLoading,

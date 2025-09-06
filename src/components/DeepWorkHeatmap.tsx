@@ -21,7 +21,7 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
   const [heatmapData, setHeatmapData] = useState<DayData[]>([])
   const [userTimezone, setUserTimezone] = useState<string>('')
   const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear())
-  const { isPro } = useSubscriptionStatus()
+  const { isPro, isLoading } = useSubscriptionStatus()
   const router = useRouter()
 
   useEffect(() => {
@@ -276,12 +276,12 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
         </div>
       ) : (
         <div className="relative">
-          <div className={`overflow-x-auto ${!isPro ? 'blur-sm' : ''}`}>
+          <div className={`overflow-x-auto ${!isLoading && !isPro ? 'blur-sm' : ''}`}>
             {renderHeatmapGrid()}
           </div>
           
           {/* Pro Upgrade Overlay for Free Users */}
-          {!isPro && (
+          {!isLoading && !isPro && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/20 rounded-lg">
               <div className="text-center bg-[#1d1d4e] p-6 rounded-xl border border-purple-500/30">
                 <h3 className="text-lg font-semibold text-white mb-2">Upgrade to Pro</h3>
