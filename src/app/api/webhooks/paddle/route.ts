@@ -156,6 +156,7 @@ export async function POST(request: NextRequest) {
       
       case 'subscription.updated':
         // Handle subscription changes (upgrades, downgrades, etc.)
+        console.log('🔔 Subscription updated:', event.data)
         if (event.data.custom_data?.user_id) {
           await updateUserSubscription(event.data.custom_data.user_id, event.data)
         }
@@ -163,10 +164,33 @@ export async function POST(request: NextRequest) {
       
       case 'subscription.canceled':
         // Handle subscription cancellation
+        console.log('🔔 Subscription canceled:', event.data)
         if (event.data.custom_data?.user_id) {
           await updateUserSubscription(event.data.custom_data.user_id, {
             ...event.data,
             status: 'canceled'
+          })
+        }
+        break
+      
+      case 'subscription.paused':
+        // Handle subscription pause
+        console.log('🔔 Subscription paused:', event.data)
+        if (event.data.custom_data?.user_id) {
+          await updateUserSubscription(event.data.custom_data.user_id, {
+            ...event.data,
+            status: 'paused'
+          })
+        }
+        break
+      
+      case 'subscription.resumed':
+        // Handle subscription resume
+        console.log('🔔 Subscription resumed:', event.data)
+        if (event.data.custom_data?.user_id) {
+          await updateUserSubscription(event.data.custom_data.user_id, {
+            ...event.data,
+            status: 'active'
           })
         }
         break
