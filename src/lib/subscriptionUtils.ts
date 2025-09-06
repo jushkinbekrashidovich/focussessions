@@ -18,15 +18,29 @@ function getSupabaseClient() {
 export function useSubscriptionStatus() {
   const { data: user, isLoading: userLoading } = useUser()
   
+  console.log('🔍 Debug: useSubscriptionStatus called', {
+    user: user?.id,
+    userLoading,
+    hasUser: !!user
+  })
+  
   // Query user subscription from database
-  const { data: subscription, isLoading: subscriptionLoading } = useQuery({
+  const { data: subscription, isLoading: subscriptionLoading, error: queryError } = useQuery({
     queryKey: ['user-subscription', user?.id],
     queryFn: async () => {
-      if (!user?.id) return null
+      if (!user?.id) {
+        console.log('🔍 Debug: No user ID, returning null')
+        return null
+      }
       
-      console.log('🔍 Debug: Fetching subscription for user:', user.id)
+      console.log('🔍 Debug: Starting subscription query for user:', user.id)
+      
+      // Debug: Check all subscriptions first
+      await debugUserSubscriptions(user.id)
       
       const supabase = getSupabaseClient()
+      console.log('🔍 Debug: Supabase client created')
+      
       const { data, error } = await supabase
         .from('user_subscriptions')
         .select('*')
@@ -34,14 +48,21 @@ export function useSubscriptionStatus() {
         .eq('status', 'active')
         .order('created_at', { ascending: false })
         .limit(1)
-        .maybeSingle()  // Use maybeSingle() instead of single() to handle no records gracefully
+        .maybeSingle()
+      
+      console.log('🔍 Debug: Query executed', {
+        data,
+        error,
+        errorCode: error?.code,
+        errorMessage: error?.message
+      })
       
       if (error) {
-        console.error('Error fetching subscription:', error)
+        console.error('❌ Error fetching subscription:', error)
         return null
       }
       
-      console.log('🔍 Debug: Subscription data:', data)
+      console.log('🔍 Debug: Query successful, data:', data)
       return data
     },
     enabled: !!user?.id,
@@ -52,11 +73,14 @@ export function useSubscriptionStatus() {
   const isPro = subscription && isSubscriptionActive(subscription)
   const isLoading = userLoading || subscriptionLoading
   
-  console.log('🔍 Debug: Subscription status check:', {
+  console.log('🔍 Debug: Final subscription status check:', {
     user: user?.id,
     subscription,
     isPro,
-    isLoading
+    isLoading,
+    userLoading,
+    subscriptionLoading,
+    queryError
   })
   
   return {
@@ -130,4 +154,19 @@ export function getSubscriptionStatus(user: User | null | undefined) {
   }
   
   return 'free'
+}
+
+// Debug function to check all subscriptions for a user
+export async function debugUserSubscriptions(userId: string) {
+  console.log('🔍 Debug: Checking all subscriptions for user:', userId)
+  
+  const supabase = getSupabaseClient()
+  const { data, error } = await supabase
+    .from('user_subscriptions')
+    .select('*')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false })
+  
+  console.log('🔍 Debug: All user subscriptions:', { data, error })
+  return { data, error }
 }

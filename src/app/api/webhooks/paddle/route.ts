@@ -46,8 +46,19 @@ function verifyPaddleSignature(payload: string, signature: string, secret: strin
 
 // Update user subscription in Supabase
 async function updateUserSubscription(userId: string, subscriptionData: Record<string, unknown>) {
+  console.log('🔍 Debug: updateUserSubscription called', {
+    userId,
+    subscriptionData: JSON.stringify(subscriptionData, null, 2)
+  })
+  
   const items = subscriptionData.items as Array<{ price: { id: string } }> | undefined
   const billingPeriod = subscriptionData.current_billing_period as { starts_at: string; ends_at: string } | undefined
+  
+  console.log('🔍 Debug: Parsed data', {
+    items,
+    billingPeriod,
+    priceId: items?.[0]?.price?.id
+  })
   
   // Determine plan type based on price ID
   let planType = 'free'
@@ -56,25 +67,33 @@ async function updateUserSubscription(userId: string, subscriptionData: Record<s
   else if (priceId === 'pri_01k4exnwjgfxannn0cm6pgc734') planType = 'pro_yearly'
   else if (priceId === 'pri_01k4expr4yywz3g9sste7t34px') planType = 'lifetime'
   
+  console.log('🔍 Debug: Determined plan type', { planType, priceId })
+  
   const supabase = getSupabaseClient()
+  const upsertData = {
+    user_id: userId,
+    paddle_subscription_id: subscriptionData.id as string,
+    status: subscriptionData.status as string,
+    plan_type: planType,
+    current_period_start: billingPeriod?.starts_at,
+    current_period_end: billingPeriod?.ends_at,
+    created_at: subscriptionData.created_at as string,
+    updated_at: new Date().toISOString(),
+  }
+  
+  console.log('🔍 Debug: Upsert data', upsertData)
+  
   const { data, error } = await supabase
     .from('user_subscriptions')
-    .upsert({
-      user_id: userId,
-      paddle_subscription_id: subscriptionData.id as string,
-      status: subscriptionData.status as string,
-      plan_type: planType,
-      current_period_start: billingPeriod?.starts_at,
-      current_period_end: billingPeriod?.ends_at,
-      created_at: subscriptionData.created_at as string,
-      updated_at: new Date().toISOString(),
-    }, {
+    .upsert(upsertData, {
       onConflict: 'user_id'  // Specify which column to use for conflict resolution
     })
     .select()
 
+  console.log('🔍 Debug: Upsert result', { data, error })
+
   if (error) {
-    console.error('Error updating user subscription:', error)
+    console.error('❌ Error updating user subscription:', error)
     throw error
   }
 
