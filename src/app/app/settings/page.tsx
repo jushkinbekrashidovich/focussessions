@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import AppNavbar from '@/components/AppNavbar'
 import { useSubscriptionStatus } from '@/lib/subscriptionUtils'
@@ -11,7 +11,7 @@ import { openCustomerPortal, cancelSubscription } from '@/lib/paddleCustomerPort
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState('general')
-  const { isPro, isSubscriptionLoading, subscription } = useSubscriptionStatus()
+  const { isPro, subscription } = useSubscriptionStatus()
   const { data: user } = useUser()
   const { data: sessions = [] } = useSessions()
   const { data: skills = [] } = useSkills()
@@ -66,17 +66,9 @@ export default function SettingsPage() {
   const handleCancelSubscription = async () => {
     if (confirm('Are you sure you want to cancel your subscription? You will lose access to Pro features at the end of your current billing period.')) {
       try {
-        if (subscription?.paddle_subscription_id) {
-          await cancelSubscription(subscription.paddle_subscription_id)
-          alert('Your subscription has been canceled. You will retain access to Pro features until the end of your current billing period.')
-          // Refresh the page to update subscription status
-          window.location.reload()
-        } else {
-          alert('Unable to find subscription details. Please contact support.')
-        }
+        await cancelSubscription(subscription?.paddle_subscription_id || '')
       } catch (error) {
         console.error('Error canceling subscription:', error)
-        alert('Failed to cancel subscription. Please try again or contact support.')
       }
     }
   }
@@ -89,7 +81,6 @@ export default function SettingsPage() {
       })
     } catch (error) {
       console.error('Error opening customer portal:', error)
-      alert('Unable to open payment management. Please try again or contact support.')
     }
   }
 
