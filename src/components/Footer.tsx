@@ -69,7 +69,7 @@ export default function Footer() {
               <Link href="/refund" className="block text-gray-400 hover:text-white transition text-sm">
                 Refund Policy
               </Link>
-              <Link href="mailto:support@focusdot.app" className="block text-gray-400 hover:text-white transition text-sm">
+              <Link href="mailto:jushkinbek.co@gmail.com" className="block text-gray-400 hover:text-white transition text-sm">
                 Contact Support
               </Link>
             </div>

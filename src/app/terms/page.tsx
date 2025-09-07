@@ -53,7 +53,7 @@ export default function TermsPage() {
 
             <div>
               <h2 className="text-xl font-semibold text-white mb-3">8. Contact Information</h2>
-              <p>If you have any questions about these Terms of Service, please contact us at support@focusdot.app</p>
+              <p>If you have any questions about these Terms of Service, please contact us at jushkinbek.co@gmail.com</p>
             </div>
 
             <div className="pt-4 text-sm text-gray-400">

@@ -21,17 +21,17 @@ export const PRODUCT_IDS = {
 // Pricing configuration
 export const PRICING = {
   PRO_MONTHLY: {
-    price: '1.90',
+    price: '1.99',
     currency: 'USD',
     interval: 'month',
   },
   PRO_YEARLY: {
-    price: '20.00',
+    price: '9.99',
     currency: 'USD',
     interval: 'year',
   },
   LIFETIME: {
-    price: '44.00',
+    price: '24.99',
     currency: 'USD',
     interval: 'once',
   },

@@ -53,7 +53,7 @@ export default function Home() {
                 "@type": "Offer",
                 "price": "0",
                 "priceCurrency": "USD",
-                "description": "Free tier available with Pro plans starting at $1.90/month"
+                "description": "Free tier available with Pro plans starting at $1.99/month"
               },
               "aggregateRating": {
                 "@type": "AggregateRating",
@@ -374,7 +374,7 @@ export default function Home() {
               {isYearly ? 'Pro Yearly' : 'Pro Monthly'}
             </h3>
             <p className="text-2xl sm:text-3xl font-bold text-white mb-1 text-center">
-              {isYearly ? '$20' : '$1.9'}
+              {isYearly ? '$9.99' : '$1.99'}
             </p>
             <p className="text-sm text-gray-400 mb-4 sm:mb-6 text-center">
               {isYearly ? 'per year' : 'per month'}
@@ -432,7 +432,7 @@ export default function Home() {
               <span className="inline-block bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full mb-3">LIMITED</span>
             </div>
             <h3 className="text-lg sm:text-xl font-semibold text-white mb-2 text-center">Lifetime</h3>
-            <p className="text-2xl sm:text-3xl font-bold text-white mb-1 text-center">$44</p>
+            <p className="text-2xl sm:text-3xl font-bold text-white mb-1 text-center">$24.99</p>
             <p className="text-sm text-gray-400 mb-4 sm:mb-6 text-center">One-time payment</p>
             <ul className="space-y-2 text-gray-400 text-sm mb-4 sm:mb-6">
               <li className="flex items-center">

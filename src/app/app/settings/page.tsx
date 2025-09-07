@@ -35,9 +35,9 @@ export default function SettingsPage() {
 
   const getPlanPrice = (planType: string) => {
     switch (planType) {
-      case 'pro_monthly': return '$1.90/month'
-      case 'pro_yearly': return '$20.00/year'
-      case 'lifetime': return '$44.00 (one-time)'
+      case 'pro_monthly': return '$1.99/month'
+      case 'pro_yearly': return '$9.99/year'
+      case 'lifetime': return '$24.99 (one-time)'
       default: return 'Free'
     }
   }
@@ -164,23 +164,24 @@ export default function SettingsPage() {
                     {!isPro ? (
                       <button
                         onClick={handleChangePlan}
-                        className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition"
+                        className="px-6 py-3 border border-gray-300 text-white rounded-lg hover:bg-gray-800 transition flex items-center"
                       >
                         Upgrade to Pro
+                        <span className="ml-2">↗</span>
                       </button>
                     ) : (
                       <>
                         <button
                           onClick={handleCancelSubscription}
-                          className="px-4 py-2 border border-red-500 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition"
+                          className="px-6 py-3 border border-gray-300 text-white rounded-lg hover:bg-gray-800 transition"
                         >
                           Cancel subscription
                         </button>
                         <button
                           onClick={handleManagePayments}
-                          className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition flex items-center"
+                          className="px-6 py-3 border border-gray-300 text-white rounded-lg hover:bg-gray-800 transition flex items-center"
                         >
-                          Manage payments
+                          Manage Subscription
                           <span className="ml-2">↗</span>
                         </button>
                       </>
@@ -219,7 +220,7 @@ export default function SettingsPage() {
                     </div>
                     <button
                       onClick={handleChangePlan}
-                      className="px-4 py-2 border border-purple-500 text-purple-500 rounded-lg hover:bg-purple-500 hover:text-white transition"
+                      className="px-6 py-3 border border-gray-300 text-white rounded-lg hover:bg-gray-800 transition"
                     >
                       Change plan
                     </button>

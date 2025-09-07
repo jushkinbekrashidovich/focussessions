@@ -53,7 +53,7 @@ export default function RefundPage() {
 
             <div>
               <h2 className="text-xl font-semibold text-white mb-3">8. How to Request a Refund</h2>
-              <p>To request a refund, please contact our support team at support@focusdot.app with your account details and the reason for your request. We will review your request and respond within 5 business days.</p>
+              <p>To request a refund, please contact our support team at jushkinbek.co@gmail.com with your account details and the reason for your request. We will review your request and respond within 5 business days.</p>
             </div>
 
             <div>
@@ -63,7 +63,7 @@ export default function RefundPage() {
 
             <div>
               <h2 className="text-xl font-semibold text-white mb-3">10. Contact Information</h2>
-              <p>For questions about this refund policy or to request a refund, please contact us at support@focusdot.app</p>
+              <p>For questions about this refund policy or to request a refund, please contact us at jushkinbek.co@gmail.com</p>
             </div>
 
             <div className="pt-4 text-sm text-gray-400">

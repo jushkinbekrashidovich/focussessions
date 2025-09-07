@@ -35,7 +35,7 @@ export default function PricingContent() {
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
-                Yearly -20%
+                Yearly -58%
               </button>
               <button 
                 onClick={() => setIsYearly(false)}
@@ -102,7 +102,7 @@ export default function PricingContent() {
             </h3>
             <div className="flex items-baseline mb-4">
               <span className="text-5xl font-bold text-white">
-                {isYearly ? '$20' : '$1.9'}
+                {isYearly ? '$9.99' : '$1.99'}
               </span>
               <span className="text-gray-400 ml-2">
                 {isYearly ? '/year' : '/month'}
@@ -160,7 +160,7 @@ export default function PricingContent() {
           <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-8 shadow-sm">
             <h3 className="text-2xl font-bold text-white mb-2">Lifetime</h3>
             <div className="flex items-baseline mb-4">
-              <span className="text-5xl font-bold text-white">$44</span>
+              <span className="text-5xl font-bold text-white">$24.99</span>
               <span className="text-gray-400 ml-2">one-time</span>
             </div>
             <p className="text-gray-400 mb-6">Pay once, use forever with all features</p>
