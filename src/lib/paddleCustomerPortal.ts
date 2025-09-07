@@ -14,17 +14,38 @@ export interface CustomerPortalOptions {
  * - Cancel subscriptions
  * - Download invoices
  * - View billing history
- * 
- * Note: This is a placeholder implementation. 
- * The actual Paddle Customer Portal integration will be added later.
  */
 export async function openCustomerPortal(options: CustomerPortalOptions = {}) {
   try {
-    console.log('🔍 Debug: Customer Portal requested with options:', options)
+    console.log('🔍 Debug: Opening Customer Portal with options:', options)
     
-    // TODO: Implement actual Paddle Customer Portal integration
-    // For now, show a placeholder message
-    alert('Payment management will be available soon. Please contact support for subscription changes.')
+    if (!options.email) {
+      throw new Error('Customer email is required')
+    }
+
+    // Create customer portal session via our API
+    const response = await fetch('/api/paddle/customer-portal', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        customerEmail: options.email,
+        returnUrl: options.returnUrl || `${window.location.origin}/app/settings`
+      }),
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json()
+      throw new Error(errorData.error || 'Failed to create customer portal session')
+    }
+
+    const { portalUrl } = await response.json()
+    
+    console.log('✅ Customer Portal URL created:', portalUrl)
+    
+    // Open customer portal in new tab
+    window.open(portalUrl, '_blank')
     
     return true
   } catch (error) {
@@ -56,20 +77,34 @@ export async function getCustomerInfo(customerEmail: string) {
 
 /**
  * Cancel subscription via Paddle API
- * This should be called from a backend API endpoint for security
- * 
- * Note: This is a placeholder implementation.
- * The actual subscription cancellation will be added later.
+ * This calls our backend API which handles Paddle integration securely
  */
 export async function cancelSubscription(subscriptionId: string) {
   try {
-    console.log('🔍 Debug: Subscription cancellation requested:', subscriptionId)
+    console.log('🔍 Debug: Canceling subscription:', subscriptionId)
     
-    // TODO: Implement actual subscription cancellation
-    // For now, show a placeholder message
-    alert('Subscription cancellation will be available soon. Please contact support to cancel your subscription.')
+    if (!subscriptionId) {
+      throw new Error('Subscription ID is required')
+    }
+
+    // Call our backend API to cancel subscription
+    const response = await fetch('/api/subscriptions/cancel', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ subscriptionId }),
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json()
+      throw new Error(errorData.error || 'Failed to cancel subscription')
+    }
+
+    const result = await response.json()
+    console.log('✅ Subscription canceled successfully:', result)
     
-    return { success: true, message: 'Placeholder response' }
+    return result
   } catch (error) {
     console.error('❌ Error canceling subscription:', error)
     throw error

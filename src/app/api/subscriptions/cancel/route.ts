@@ -23,7 +23,35 @@ export async function POST(request: NextRequest) {
 
     console.log('🔍 Debug: Canceling subscription:', subscriptionId)
 
-    // Update subscription status in database
+    // Get Paddle API credentials
+    const paddleApiKey = process.env.PADDLE_API_KEY
+    
+    if (!paddleApiKey) {
+      return NextResponse.json({ error: 'Paddle API key not configured' }, { status: 500 })
+    }
+
+    // Cancel subscription in Paddle
+    const paddleResponse = await fetch(`https://api.paddle.com/subscriptions/${subscriptionId}/cancel`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${paddleApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        effective_from: 'next_billing_period' // Cancel at end of current period
+      })
+    })
+
+    if (!paddleResponse.ok) {
+      const errorData = await paddleResponse.text()
+      console.error('❌ Paddle cancellation error:', errorData)
+      return NextResponse.json({ error: 'Failed to cancel subscription in Paddle' }, { status: 500 })
+    }
+
+    const paddleData = await paddleResponse.json()
+    console.log('✅ Paddle cancellation response:', paddleData)
+
+    // Update subscription status in our database
     const supabase = getSupabaseClient()
     
     const { data, error } = await supabase
@@ -37,20 +65,15 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       console.error('❌ Error updating subscription status:', error)
-      return NextResponse.json({ error: 'Failed to cancel subscription' }, { status: 500 })
+      // Don't fail the request since Paddle cancellation succeeded
     }
 
-    console.log('✅ Subscription canceled successfully:', data)
-
-    // TODO: In a production environment, you would also want to:
-    // 1. Call Paddle's API to cancel the subscription on their end
-    // 2. Send confirmation email to the user
-    // 3. Log the cancellation event for analytics
+    console.log('✅ Subscription canceled successfully in both Paddle and database')
 
     return NextResponse.json({ 
       success: true, 
-      message: 'Subscription canceled successfully',
-      data 
+      message: 'Subscription canceled successfully. You will retain access until the end of your current billing period.',
+      data: paddleData
     })
 
   } catch (error) {

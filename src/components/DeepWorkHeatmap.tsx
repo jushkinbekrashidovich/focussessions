@@ -218,13 +218,13 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
               <div key={weekIndex} className="flex flex-col space-y-0.5">
                 {week.map((dayData, dayIndex) => {
                   if (!dayData || !dayData.date) {
-                    return <div key={dayIndex} className="w-3 h-3 rounded-sm bg-transparent" />
+                    return <div key={dayIndex} className="w-3 h-3 sm:w-4 sm:h-4 rounded-sm bg-transparent" />
                   }
                   
                   return (
                     <div
                       key={dayIndex}
-                      className={`w-3 h-3 rounded-sm transition-colors duration-200 ${getIntensityColor(dayData.intensity)}`}
+                      className={`w-3 h-3 sm:w-4 sm:h-4 rounded-sm transition-colors duration-200 ${getIntensityColor(dayData.intensity)}`}
                       title={`${dayData.date}: ${dayData.count < 60 ? `${dayData.count} min` : `${Math.floor(dayData.count / 60)}h ${dayData.count % 60}m`} of deep work`}
                     />
                   )
@@ -238,10 +238,10 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
         <div className="flex justify-end items-center space-x-1 mt-2">
           <span className="text-xs text-gray-400">Less</span>
           <div className="flex space-x-0.5">
-            <div className="w-3 h-3 rounded-sm bg-[#9195DE]"></div>
-            <div className="w-3 h-3 rounded-sm bg-[#7A7FD8]"></div>
-            <div className="w-3 h-3 rounded-sm bg-[#6369D2]"></div>
-            <div className="w-3 h-3 rounded-sm bg-[#555AB5]"></div>
+            <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-sm bg-[#9195DE]"></div>
+            <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-sm bg-[#7A7FD8]"></div>
+            <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-sm bg-[#6369D2]"></div>
+            <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-sm bg-[#555AB5]"></div>
           </div>
           <span className="text-xs text-gray-400">More</span>
         </div>

@@ -45,9 +45,13 @@ export default function SettingsPage() {
   const handleCancelSubscription = async () => {
     if (confirm('Are you sure you want to cancel your subscription? You will lose access to Pro features at the end of your current billing period.')) {
       try {
-        await cancelSubscription(subscription?.paddle_subscription_id || '')
+        const result = await cancelSubscription(subscription?.paddle_subscription_id || '')
+        alert(result.message || 'Subscription canceled successfully!')
+        // Refresh the page to update subscription status
+        window.location.reload()
       } catch (error) {
         console.error('Error canceling subscription:', error)
+        alert('Failed to cancel subscription. Please try again or contact support.')
       }
     }
   }
@@ -60,6 +64,7 @@ export default function SettingsPage() {
       })
     } catch (error) {
       console.error('Error opening customer portal:', error)
+      alert('Unable to open payment management. Please try again or contact support.')
     }
   }
 
