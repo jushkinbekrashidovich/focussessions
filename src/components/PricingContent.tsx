@@ -156,60 +156,6 @@ export default function PricingContent() {
             </button>
           </div>
 
-          {/* Lifetime Plan */}
-          <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-8 shadow-sm">
-            <h3 className="text-2xl font-bold text-white mb-2">Lifetime</h3>
-            <div className="flex items-baseline mb-4">
-              <span className="text-5xl font-bold text-white">$24.99</span>
-              <span className="text-gray-400 ml-2">one-time</span>
-            </div>
-            <p className="text-gray-400 mb-6">Pay once, use forever with all features</p>
-            <ul className="space-y-3 text-gray-300 text-sm mb-6">
-              <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                Everything in Free
-              </li>
-              <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                Advanced analytics & insights
-              </li>
-              <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                Unlimited focus categories
-              </li>
-              <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                Early access to new features
-              </li>
-              <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                Priority support
-              </li>
-            </ul>
-            <button 
-              onClick={() => {
-                if (!user) {
-                  router.push('/login?redirect=/pricing')
-                } else {
-                  openCheckout('LIFETIME', user.email)
-                }
-              }}
-              disabled={isPaddleLoading}
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 px-6 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isPaddleLoading ? 'Loading...' : 'Purchase Plan'}
-            </button>
-          </div>
         </div>
       </div>
     </div>

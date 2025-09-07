@@ -28,7 +28,6 @@ export default function SettingsPage() {
     switch (planType) {
       case 'pro_monthly': return 'Pro Monthly'
       case 'pro_yearly': return 'Pro Yearly'
-      case 'lifetime': return 'Lifetime'
       default: return 'Free'
     }
   }
@@ -37,7 +36,6 @@ export default function SettingsPage() {
     switch (planType) {
       case 'pro_monthly': return '$1.99/month'
       case 'pro_yearly': return '$9.99/year'
-      case 'lifetime': return '$24.99 (one-time)'
       default: return 'Free'
     }
   }

@@ -30,6 +30,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Paddle API key not configured' }, { status: 500 })
     }
 
+    // Debug: Log API key format (first few characters only for security)
+    console.log('🔍 Debug: Paddle API key format:', paddleApiKey.substring(0, 10) + '...')
+    
+    // Validate API key format
+    if (!paddleApiKey.startsWith('pdl_')) {
+      console.error('❌ Invalid Paddle API key format. Should start with "pdl_"')
+      return NextResponse.json({ error: 'Invalid Paddle API key format' }, { status: 500 })
+    }
+
     // Cancel subscription in Paddle
     const paddleResponse = await fetch(`https://api.paddle.com/subscriptions/${subscriptionId}/cancel`, {
       method: 'POST',
@@ -45,7 +54,13 @@ export async function POST(request: NextRequest) {
     if (!paddleResponse.ok) {
       const errorData = await paddleResponse.text()
       console.error('❌ Paddle cancellation error:', errorData)
-      return NextResponse.json({ error: 'Failed to cancel subscription in Paddle' }, { status: 500 })
+      console.error('❌ Response status:', paddleResponse.status)
+      console.error('❌ Response headers:', Object.fromEntries(paddleResponse.headers.entries()))
+      return NextResponse.json({ 
+        error: 'Failed to cancel subscription in Paddle', 
+        details: errorData,
+        status: paddleResponse.status 
+      }, { status: paddleResponse.status })
     }
 
     const paddleData = await paddleResponse.json()

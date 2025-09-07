@@ -18,6 +18,8 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
   const [showPrompt, setShowPrompt] = useState(false)
   const [note, setNote] = useState('')
   const [isSaving, setIsSaving] = useState(false)
+  const [isPageVisible, setIsPageVisible] = useState(true)
+  const [lastUpdateTime, setLastUpdateTime] = useState<number>(Date.now())
 
   // Use React Query hooks
   const { data: skills = [], isLoading: isLoadingSkills } = useSkills()
@@ -27,6 +29,35 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
   useEffect(() => {
     if ('Notification' in window && Notification.permission === 'default') {
       Notification.requestPermission()
+    }
+  }, [])
+
+  // Handle page visibility changes to keep timer running in background
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      setIsPageVisible(!document.hidden)
+      if (!document.hidden) {
+        setLastUpdateTime(Date.now())
+      }
+    }
+
+    const handleFocus = () => {
+      setIsPageVisible(true)
+      setLastUpdateTime(Date.now())
+    }
+
+    const handleBlur = () => {
+      setIsPageVisible(false)
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    window.addEventListener('focus', handleFocus)
+    window.addEventListener('blur', handleBlur)
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+      window.removeEventListener('focus', handleFocus)
+      window.removeEventListener('blur', handleBlur)
     }
   }, [])
 
@@ -151,26 +182,40 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
 
   useEffect(() => {
     if (!running) return
-    const interval = setInterval(() => {
-      setSecondsLeft((prev) => {
-        // For Long deep work (value 0), count up from 00:00
-        if (minutes === 0) {
-          return prev + 1
-        }
-        
-        // For regular timers, count down
-        if (prev === 0) {
-          clearInterval(interval)
-          setRunning(false)
-          setShowPrompt(true)
-          showTimerFinishedNotification()
-          return prev
-        }
-        return prev - 1
-      })
-    }, 1000)
+
+    const updateTimer = () => {
+      const now = Date.now()
+      const timeDiff = Math.floor((now - lastUpdateTime) / 1000)
+      
+      if (timeDiff > 0) {
+        setLastUpdateTime(now)
+        setSecondsLeft((prev) => {
+          // For Long deep work (value 0), count up from 00:00
+          if (minutes === 0) {
+            return prev + timeDiff
+          }
+          
+          // For regular timers, count down
+          const newValue = prev - timeDiff
+          if (newValue <= 0) {
+            setRunning(false)
+            setShowPrompt(true)
+            showTimerFinishedNotification()
+            return 0
+          }
+          return newValue
+        })
+      }
+    }
+
+    // Update immediately when page becomes visible
+    if (isPageVisible) {
+      updateTimer()
+    }
+
+    const interval = setInterval(updateTimer, 1000)
     return () => clearInterval(interval)
-  }, [running, minutes, showTimerFinishedNotification])
+  }, [running, minutes, showTimerFinishedNotification, isPageVisible, lastUpdateTime])
 
   const format = (s: number) => {
     const m = Math.floor(s / 60).toString().padStart(2, '0')
@@ -249,15 +294,25 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
 
       </div>
 
-      {/* Flip Mode Overlay */}
+      {/* Flip Mode Overlay - Full Screen */}
       {showFlipMode && running && (
-        <div className="fixed top-0 left-0 w-screen h-screen bg-black z-[9999] flex flex-col items-center justify-center" style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh' }}>
+        <div 
+          className="fixed inset-0 bg-black z-[9999] flex flex-col items-center justify-center"
+          style={{ 
+            position: 'fixed', 
+            top: 0, 
+            left: 0, 
+            width: '100vw', 
+            height: '100vh',
+            zIndex: 9999
+          }}
+        >
           {/* Flip Clock Display */}
-          <div className="flex items-center space-x-3 sm:space-x-6 mb-16">
+          <div className="flex items-center space-x-4 sm:space-x-8 lg:space-x-12 mb-20">
             {/* Hours */}
             <div className="relative">
-              <div className="bg-gray-800 rounded-lg p-4 sm:p-8 shadow-2xl border border-gray-700">
-                <div className="text-6xl sm:text-8xl lg:text-9xl font-bold text-white font-mono tracking-wider">
+              <div className="bg-gray-900 rounded-2xl p-6 sm:p-12 lg:p-16 shadow-2xl border-2 border-gray-700">
+                <div className="text-7xl sm:text-9xl lg:text-[12rem] font-bold text-white font-mono tracking-wider">
                   {minutes === 0 
                     ? Math.floor(secondsLeft / 3600).toString().padStart(2, '0')
                     : Math.floor(secondsLeft / 3600).toString().padStart(2, '0')
@@ -267,39 +322,49 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
             </div>
             
             {/* First Colon */}
-            <div className="flex flex-col space-y-2 sm:space-y-3">
-              <div className="w-3 h-3 sm:w-4 sm:h-4 bg-white rounded-full shadow-lg"></div>
-              <div className="w-3 h-3 sm:w-4 sm:h-4 bg-white rounded-full shadow-lg"></div>
+            <div className="flex flex-col space-y-4 sm:space-y-6">
+              <div className="w-4 h-4 sm:w-6 sm:h-6 lg:w-8 lg:h-8 bg-white rounded-full shadow-lg"></div>
+              <div className="w-4 h-4 sm:w-6 sm:h-6 lg:w-8 lg:h-8 bg-white rounded-full shadow-lg"></div>
             </div>
             
             {/* Minutes */}
             <div className="relative">
-              <div className="bg-gray-800 rounded-lg p-4 sm:p-8 shadow-2xl border border-gray-700">
-                <div className="text-6xl sm:text-8xl lg:text-9xl font-bold text-white font-mono tracking-wider">
+              <div className="bg-gray-900 rounded-2xl p-6 sm:p-12 lg:p-16 shadow-2xl border-2 border-gray-700">
+                <div className="text-7xl sm:text-9xl lg:text-[12rem] font-bold text-white font-mono tracking-wider">
                   {Math.floor((secondsLeft % 3600) / 60).toString().padStart(2, '0')}
                 </div>
               </div>
             </div>
             
             {/* Second Colon */}
-            <div className="flex flex-col space-y-2 sm:space-y-3">
-              <div className="w-3 h-3 sm:w-4 sm:h-4 bg-white rounded-full shadow-lg"></div>
-              <div className="w-3 h-3 sm:w-4 sm:h-4 bg-white rounded-full shadow-lg"></div>
+            <div className="flex flex-col space-y-4 sm:space-y-6">
+              <div className="w-4 h-4 sm:w-6 sm:h-6 lg:w-8 lg:h-8 bg-white rounded-full shadow-lg"></div>
+              <div className="w-4 h-4 sm:w-6 sm:h-6 lg:w-8 lg:h-8 bg-white rounded-full shadow-lg"></div>
             </div>
             
             {/* Seconds */}
             <div className="relative">
-              <div className="bg-gray-800 rounded-lg p-4 sm:p-8 shadow-2xl border border-gray-700">
-                <div className="text-6xl sm:text-8xl lg:text-9xl font-bold text-white font-mono tracking-wider">
+              <div className="bg-gray-900 rounded-2xl p-6 sm:p-12 lg:p-16 shadow-2xl border-2 border-gray-700">
+                <div className="text-7xl sm:text-9xl lg:text-[12rem] font-bold text-white font-mono tracking-wider">
                   {(secondsLeft % 60).toString().padStart(2, '0')}
                 </div>
               </div>
             </div>
           </div>
 
+          {/* Session Info */}
+          <div className="text-center mb-8">
+            <div className="text-gray-400 text-lg sm:text-xl mb-2">
+              {minutes === 0 ? 'Long Deep Work Session' : `${minutes}-minute Focus Session`}
+            </div>
+            <div className="text-gray-500 text-sm sm:text-base">
+              {skills.find(s => s.id === selectedSkill)?.name || 'Focus Session'}
+            </div>
+          </div>
+
           {/* Instructions */}
           <div className="text-gray-300 text-lg sm:text-xl text-center">
-            Press ESC to quit
+            Press <span className="bg-gray-700 px-2 py-1 rounded">ESC</span> to quit
           </div>
         </div>
       )}

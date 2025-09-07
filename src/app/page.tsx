@@ -426,60 +426,6 @@ export default function Home() {
             </button>
           </div>
 
-          {/* Lifetime Plan */}
-          <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8 shadow-sm">
-            <div className="text-center mb-4">
-              <span className="inline-block bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full mb-3">LIMITED</span>
-            </div>
-            <h3 className="text-lg sm:text-xl font-semibold text-white mb-2 text-center">Lifetime</h3>
-            <p className="text-2xl sm:text-3xl font-bold text-white mb-1 text-center">$24.99</p>
-            <p className="text-sm text-gray-400 mb-4 sm:mb-6 text-center">One-time payment</p>
-            <ul className="space-y-2 text-gray-400 text-sm mb-4 sm:mb-6">
-              <li className="flex items-center">
-                <svg className="w-4 h-4 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                Everything in Free
-              </li>
-              <li className="flex items-center">
-                <svg className="w-4 h-4 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                Advanced analytics & insights
-              </li>
-              <li className="flex items-center">
-                <svg className="w-4 h-4 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                Unlimited focus categories
-              </li>
-              <li className="flex items-center">
-                <svg className="w-4 h-4 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                Early access to new features
-              </li>
-              <li className="flex items-center">
-                <svg className="w-4 h-4 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                Priority support
-              </li>
-            </ul>
-            <button 
-              onClick={() => {
-                if (!user) {
-                  router.push('/login?redirect=/pricing')
-                } else {
-                  openCheckout('LIFETIME', user.email)
-                }
-              }}
-              disabled={isPaddleLoading}
-              className="w-full border border-white text-white font-medium py-2 rounded-md hover:bg-white hover:text-black transition disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isPaddleLoading ? 'Loading...' : 'Get Lifetime'}
-            </button>
-          </div>
         </div>
       </section>
       
