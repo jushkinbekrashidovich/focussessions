@@ -306,7 +306,7 @@ export default function Home() {
                     : 'text-gray-400 hover:text-white'
                 }`}
               >
-                Yearly -20%
+                Yearly -58%
               </button>
               <button 
                 onClick={() => setIsYearly(false)}
@@ -322,7 +322,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
           {/* Basic Plan */}
           <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8 shadow-sm">
             <div className="text-center mb-4">

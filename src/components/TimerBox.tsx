@@ -371,21 +371,22 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
 
       {/* Popup */}
       {showPrompt && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 p-4">
-          <div className="bg-[#1D1D4E] rounded-xl p-4 sm:p-6 w-full max-w-sm sm:w-[400px]">
-            <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
-              {minutes === 0 ? 'Long Session' : 'Session'} Completed for <span className="font-bold">{skills.find(s => s.id === selectedSkill)?.name || 'Unknown Skill'}</span>
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 p-4 z-[10000]">
+          <div className="bg-[#1D1D4E] rounded-xl p-4 sm:p-6 w-full max-w-sm sm:w-[400px] border border-gray-600 shadow-2xl">
+            <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-white">
+              {minutes === 0 ? 'Long Session' : 'Session'} Completed for <span className="font-bold text-purple-300">{skills.find(s => s.id === selectedSkill)?.name || 'Unknown Skill'}</span>
             </h2>
-            <label className="text-sm">What did you accomplish?</label>
+            <label className="text-sm text-gray-300 block mb-2">What did you accomplish?</label>
             <textarea
               value={note}
               onChange={(e) => setNote(e.target.value)}
               placeholder="Describe your progress..."
-              className="w-full h-24 sm:h-32 mt-2 p-3 rounded-lg bg-[#26265e] text-white resize-none text-sm"
+              className="w-full h-24 sm:h-32 mt-2 p-3 rounded-lg bg-[#26265e] text-white resize-none text-sm border border-gray-600 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+              autoFocus
             />
             <button
               onClick={handleSave}
-              className="mt-3 sm:mt-4 w-full bg-[#5046E5] text-white py-2 rounded-lg disabled:opacity-50 text-sm"
+              className="mt-3 sm:mt-4 w-full bg-[#5046E5] text-white py-2 rounded-lg disabled:opacity-50 text-sm hover:bg-[#4338CA] transition-colors"
               disabled={!note.trim() || isSaving}
             >
               {isSaving ? 'Saving...' : 'Save Session'}
