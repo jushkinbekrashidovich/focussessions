@@ -188,13 +188,28 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
         
         {/* Main grid with day labels */}
         <div className="flex">
-          {/* Day labels on the left - Tue, Thu, Sat */}
-          <div className="flex flex-col mr-0.5 sm:mr-1 space-y-0.5 sm:space-y-1">
-            {['Tue', 'Thu', 'Sat'].map((day, i) => (
-              <div key={i} className="h-3 sm:h-4 text-xs text-gray-400 w-8 sm:w-10 text-right leading-none">
-                {day}
-              </div>
-            ))}
+          {/* Day labels on the left - positioned to align with correct rows */}
+          <div className="flex flex-col mr-1 space-y-0.5">
+            {/* Empty space for row 1 (Sun) */}
+            <div className="h-3 sm:h-4"></div>
+            {/* Tue - row 2 */}
+            <div className="h-3 sm:h-4 text-xs text-gray-400 w-8 sm:w-10 text-right leading-none flex items-center justify-end">
+              Tue
+            </div>
+            {/* Empty space for row 3 (Wed) */}
+            <div className="h-3 sm:h-4"></div>
+            {/* Thu - row 4 */}
+            <div className="h-3 sm:h-4 text-xs text-gray-400 w-8 sm:w-10 text-right leading-none flex items-center justify-end">
+              Thu
+            </div>
+            {/* Empty space for row 5 (Fri) */}
+            <div className="h-3 sm:h-4"></div>
+            {/* Sat - row 6 */}
+            <div className="h-3 sm:h-4 text-xs text-gray-400 w-8 sm:w-10 text-right leading-none flex items-center justify-end">
+              Sat
+            </div>
+            {/* Empty space for row 7 (Sun) */}
+            <div className="h-3 sm:h-4"></div>
           </div>
           
           {/* Heatmap grid - each column is a week */}
@@ -203,13 +218,13 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
               <div key={weekIndex} className="flex flex-col space-y-0.5">
                 {week.map((dayData, dayIndex) => {
                   if (!dayData || !dayData.date) {
-                    return <div key={dayIndex} className="w-3 h-3 sm:w-4 sm:h-4 rounded-sm bg-transparent" />
+                    return <div key={dayIndex} className="w-3 h-3 rounded-sm bg-transparent" />
                   }
                   
                   return (
                     <div
                       key={dayIndex}
-                      className={`w-3 h-3 sm:w-4 sm:h-4 rounded-sm transition-colors duration-200 ${getIntensityColor(dayData.intensity)}`}
+                      className={`w-3 h-3 rounded-sm transition-colors duration-200 ${getIntensityColor(dayData.intensity)}`}
                       title={`${dayData.date}: ${dayData.count < 60 ? `${dayData.count} min` : `${Math.floor(dayData.count / 60)}h ${dayData.count % 60}m`} of deep work`}
                     />
                   )
@@ -220,13 +235,13 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
         </div>
 
         {/* Color intensity legend - bottom right */}
-        <div className="flex justify-end items-center space-x-1 sm:space-x-2 mt-2 sm:mt-4">
+        <div className="flex justify-end items-center space-x-1 mt-2">
           <span className="text-xs text-gray-400">Less</span>
-          <div className="flex space-x-0.5 sm:space-x-1">
-            <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-sm bg-[#9195DE]"></div>
-            <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-sm bg-[#7A7FD8]"></div>
-            <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-sm bg-[#6369D2]"></div>
-            <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-sm bg-[#555AB5]"></div>
+          <div className="flex space-x-0.5">
+            <div className="w-3 h-3 rounded-sm bg-[#9195DE]"></div>
+            <div className="w-3 h-3 rounded-sm bg-[#7A7FD8]"></div>
+            <div className="w-3 h-3 rounded-sm bg-[#6369D2]"></div>
+            <div className="w-3 h-3 rounded-sm bg-[#555AB5]"></div>
           </div>
           <span className="text-xs text-gray-400">More</span>
         </div>
