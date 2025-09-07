@@ -64,7 +64,12 @@ export default function DeepWorkStats({ refreshTrigger }: DeepWorkStatsProps) {
     <div className="grid grid-cols-3 gap-3 sm:gap-6">
       {/* Deep Work This Month */}
       <div className="bg-[#1d1d4e] p-3 sm:p-6 rounded-xl">
-        <p className="text-xs sm:text-sm mb-1 sm:mb-2 text-gray-300">Deep Work This Month</p>
+        <div className="flex items-center space-x-3 mb-2">
+          <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+            <span className="text-purple-600">⏱️</span>
+          </div>
+          <p className="text-xs sm:text-sm text-gray-300">Deep Work This Month</p>
+        </div>
         <h3 className="text-lg sm:text-2xl font-bold">
           {formatMonthlyTime(stats.monthlyHours, stats.monthlyMinutes)}
         </h3>
@@ -81,7 +86,12 @@ export default function DeepWorkStats({ refreshTrigger }: DeepWorkStatsProps) {
 
       {/* Deep Work Streak */}
       <div className="bg-[#1d1d4e] p-3 sm:p-6 rounded-xl">
-        <p className="text-xs sm:text-sm mb-1 sm:mb-2 text-gray-300">Deep Work Streak</p>
+        <div className="flex items-center space-x-3 mb-2">
+          <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+            <span className="text-blue-600">🔥</span>
+          </div>
+          <p className="text-xs sm:text-sm text-gray-300">Deep Work Streak</p>
+        </div>
         <h3 className="text-lg sm:text-2xl font-bold">{stats.streak} days</h3>
         <p className="text-xs text-gray-400 mt-1">
           {stats.streak === 0 ? 'Start your streak today!' : 
@@ -94,7 +104,12 @@ export default function DeepWorkStats({ refreshTrigger }: DeepWorkStatsProps) {
 
       {/* Longest Focus Session */}
       <div className="bg-[#1d1d4e] p-3 sm:p-6 rounded-xl">
-        <p className="text-xs sm:text-sm mb-1 sm:mb-2 text-gray-300">Longest Focus Session</p>
+        <div className="flex items-center space-x-3 mb-2">
+          <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+            <span className="text-green-600">🏆</span>
+          </div>
+          <p className="text-xs sm:text-sm text-gray-300">Longest Focus Session</p>
+        </div>
         {stats.longestSession ? (
           <>
             <h3 className="text-lg sm:text-2xl font-bold">

@@ -13,8 +13,6 @@ import { useRouter } from 'next/navigation'
 import { useUser, useSkills } from '@/lib/hooks'
 
 export default function ProfilePage() {
-  const [showLogoutModal, setShowLogoutModal] = useState(false)
-  const [isLoggingOut, setIsLoggingOut] = useState(false)
   const router = useRouter()
 
   // Use React Query hooks
@@ -22,19 +20,6 @@ export default function ProfilePage() {
   const { data: skills = [], isLoading: isLoadingSkills } = useSkills()
   
   const isLoading = isLoadingUser || isLoadingSkills
-
-  const handleLogout = async () => {
-    setIsLoggingOut(true)
-    try {
-      // For now, just redirect to login
-      router.push('/login')
-    } catch (error) {
-      console.error('Error logging out:', error)
-    } finally {
-      setIsLoggingOut(false)
-      setShowLogoutModal(false)
-    }
-  }
 
   if (isLoading) {
     return (
@@ -106,14 +91,6 @@ export default function ProfilePage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               </button>
-
-              {/* Logout Button */}
-              <button 
-                onClick={() => setShowLogoutModal(true)}
-                className="px-2 sm:px-3 py-1 sm:py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-medium rounded-md transition-colors"
-              >
-                Logout
-              </button>
             </div>
           </div>
         </div>
@@ -163,47 +140,6 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      {/* Logout Confirmation Modal */}
-      {showLogoutModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-4">
-          <div className="bg-[#2A2A3A] rounded-xl p-4 sm:p-6 w-full max-w-sm sm:max-w-md mx-4 transition-colors duration-200">
-            <div className="text-center">
-              {/* Warning Icon */}
-              <div className="mx-auto flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-red-100 mb-3 sm:mb-4">
-                <svg className="h-5 w-5 sm:h-6 sm:w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                </svg>
-              </div>
-              
-              {/* Title */}
-              <h3 className="text-base sm:text-lg font-medium text-white mb-2">Logout</h3>
-              
-              {/* Message */}
-              <p className="text-sm sm:text-base text-gray-300 mb-4 sm:mb-6">
-                Are you sure you want to logout? You&apos;ll need to sign in again to access your profile.
-              </p>
-              
-              {/* Buttons */}
-              <div className="flex gap-2 sm:gap-3">
-                <button 
-                  onClick={() => setShowLogoutModal(false)}
-                  className="flex-1 px-3 sm:px-4 py-2 border border-[#3A3A4A] text-gray-300 rounded-lg hover:bg-[#3A3A4A] transition-colors text-sm"
-                  disabled={isLoggingOut}
-                >
-                  Cancel
-                </button>
-                <button 
-                  onClick={handleLogout}
-                  className="flex-1 px-3 sm:px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-colors disabled:opacity-50 text-sm"
-                  disabled={isLoggingOut}
-                >
-                  {isLoggingOut ? 'Logging out...' : 'Yes, Logout'}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }

@@ -5,37 +5,18 @@ import { useRouter } from 'next/navigation'
 import AppNavbar from '@/components/AppNavbar'
 import { useSubscriptionStatus } from '@/lib/subscriptionUtils'
 import { useUser } from '@/lib/hooks/useAuth'
-import { useSessions } from '@/lib/hooks/useSessions'
-import { useSkills } from '@/lib/hooks/useSkills'
 import { openCustomerPortal, cancelSubscription } from '@/lib/paddleCustomerPortal'
+import { supabase } from '@/lib/supabaseClient'
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState('general')
   const { isPro, subscription } = useSubscriptionStatus()
   const { data: user } = useUser()
-  const { data: sessions = [] } = useSessions()
-  const { data: skills = [] } = useSkills()
   const router = useRouter()
-
-  // Calculate usage statistics
-  const currentMonth = new Date().getMonth()
-  const currentYear = new Date().getFullYear()
-  
-  const monthlySessions = sessions.filter(session => {
-    const sessionDate = new Date(session.created_at)
-    return sessionDate.getMonth() === currentMonth && sessionDate.getFullYear() === currentYear
-  })
-  
-  const monthlyHours = monthlySessions.reduce((total, session) => total + (session.duration_min || 0), 0) / 60
-  const totalSessions = sessions.length
-  const totalSkills = skills.length
-
-  // Free plan limits
-  const freePlanLimits = {
-    monthlyHours: 10,
-    totalSessions: 50,
-    skills: 3
-  }
+  const [displayName, setDisplayName] = useState(user?.user_metadata?.full_name || '')
+  const [isUpdatingName, setIsUpdatingName] = useState(false)
+  const [showLogoutModal, setShowLogoutModal] = useState(false)
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -88,6 +69,44 @@ export default function SettingsPage() {
     router.push('/pricing')
   }
 
+  const handleUpdateDisplayName = async () => {
+    if (!displayName.trim()) {
+      alert('Please enter a display name')
+      return
+    }
+
+    setIsUpdatingName(true)
+    try {
+      const { error } = await supabase.auth.updateUser({
+        data: { full_name: displayName.trim() }
+      })
+
+      if (error) {
+        throw error
+      }
+
+      alert('Display name updated successfully!')
+    } catch (error) {
+      console.error('Error updating display name:', error)
+      alert('Failed to update display name. Please try again.')
+    } finally {
+      setIsUpdatingName(false)
+    }
+  }
+
+  const handleLogout = async () => {
+    setIsLoggingOut(true)
+    try {
+      await supabase.auth.signOut()
+      router.push('/login')
+    } catch (error) {
+      console.error('Error logging out:', error)
+    } finally {
+      setIsLoggingOut(false)
+      setShowLogoutModal(false)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-[#13133c] text-white">
       <AppNavbar />
@@ -111,28 +130,12 @@ export default function SettingsPage() {
                     : 'text-gray-300 hover:bg-gray-700'
                 }`}
               >
-                <span className="flex items-center">
-                  <span className="mr-3">😊</span>
-                  General
-                </span>
-              </button>
-              <button
-                onClick={() => setActiveTab('password')}
-                className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
-                  activeTab === 'password' 
-                    ? 'bg-purple-600 text-white' 
-                    : 'text-gray-300 hover:bg-gray-700'
-                }`}
-              >
-                <span className="flex items-center">
-                  <span className="mr-3">🔒</span>
-                  Password
-                </span>
+                General
               </button>
             </div>
 
             <div className="space-y-1 mt-6">
-              <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Organization</h3>
+              <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Subscription</h3>
               <button
                 onClick={() => setActiveTab('plan-billing')}
                 className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
@@ -141,10 +144,7 @@ export default function SettingsPage() {
                     : 'text-gray-300 hover:bg-gray-700'
                 }`}
               >
-                <span className="flex items-center">
-                  <span className="mr-3">📄</span>
-                  Plan & Billing
-                </span>
+                Plan & Billing
               </button>
             </div>
           </div>
@@ -167,50 +167,36 @@ export default function SettingsPage() {
                     </div>
                     <div>
                       <label className="block text-sm font-medium mb-2">Display Name</label>
-                      <input
-                        type="text"
-                        value={user?.user_metadata?.full_name || ''}
-                        className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                      />
+                      <div className="flex gap-3">
+                        <input
+                          type="text"
+                          value={displayName}
+                          onChange={(e) => setDisplayName(e.target.value)}
+                          className="flex-1 px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          placeholder="Enter your display name"
+                        />
+                        <button
+                          onClick={handleUpdateDisplayName}
+                          disabled={isUpdatingName}
+                          className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {isUpdatingName ? 'Updating...' : 'Update'}
+                        </button>
+                      </div>
+                    </div>
+                    <div className="pt-4 border-t border-gray-600">
+                      <button
+                        onClick={() => setShowLogoutModal(true)}
+                        className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition"
+                      >
+                        Logout
+                      </button>
                     </div>
                   </div>
                 </div>
               </div>
             )}
 
-            {activeTab === 'password' && (
-              <div className="space-y-6">
-                <h2 className="text-2xl font-semibold">Password Settings</h2>
-                <div className="bg-[#1d1d4e] p-6 rounded-xl">
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Current Password</label>
-                      <input
-                        type="password"
-                        className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2">New Password</label>
-                      <input
-                        type="password"
-                        className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Confirm New Password</label>
-                      <input
-                        type="password"
-                        className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                      />
-                    </div>
-                    <button className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-lg transition">
-                      Update Password
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
 
             {activeTab === 'plan-billing' && (
               <div className="space-y-6">
@@ -278,93 +264,53 @@ export default function SettingsPage() {
                   </div>
                 </div>
 
-                {/* Usage */}
-                <div className="bg-[#1d1d4e] p-6 rounded-xl">
-                  <h3 className="text-lg font-semibold mb-4">Usage</h3>
-                  <p className="text-gray-400 text-sm mb-6">Your usage is renewed every month</p>
-                  
-                  <div className="space-y-6">
-                    {/* Monthly Focus Hours */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                          <span className="text-purple-600">⏱️</span>
-                        </div>
-                        <div>
-                          <div className="font-medium">Focus Hours</div>
-                          <div className="text-sm text-gray-400">
-                            {monthlyHours.toFixed(1)} of {isPro ? 'Unlimited' : freePlanLimits.monthlyHours}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="w-32">
-                        <div className="w-full bg-gray-700 rounded-full h-2">
-                          <div 
-                            className="bg-purple-500 h-2 rounded-full transition-all duration-300"
-                            style={{ 
-                              width: isPro ? '100%' : `${Math.min((monthlyHours / freePlanLimits.monthlyHours) * 100, 100)}%` 
-                            }}
-                          ></div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Total Sessions */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                          <span className="text-blue-600">📊</span>
-                        </div>
-                        <div>
-                          <div className="font-medium">Focus Sessions</div>
-                          <div className="text-sm text-gray-400">
-                            {totalSessions} of {isPro ? 'Unlimited' : freePlanLimits.totalSessions}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="w-32">
-                        <div className="w-full bg-gray-700 rounded-full h-2">
-                          <div 
-                            className="bg-blue-500 h-2 rounded-full transition-all duration-300"
-                            style={{ 
-                              width: isPro ? '100%' : `${Math.min((totalSessions / freePlanLimits.totalSessions) * 100, 100)}%` 
-                            }}
-                          ></div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Skills/Categories */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                          <span className="text-green-600">🎯</span>
-                        </div>
-                        <div>
-                          <div className="font-medium">Focus Categories</div>
-                          <div className="text-sm text-gray-400">
-                            {totalSkills} of {isPro ? 'Unlimited' : freePlanLimits.skills}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="w-32">
-                        <div className="w-full bg-gray-700 rounded-full h-2">
-                          <div 
-                            className="bg-green-500 h-2 rounded-full transition-all duration-300"
-                            style={{ 
-                              width: isPro ? '100%' : `${Math.min((totalSkills / freePlanLimits.skills) * 100, 100)}%` 
-                            }}
-                          ></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             )}
           </div>
         </div>
       </div>
+
+      {/* Logout Confirmation Modal */}
+      {showLogoutModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-4">
+          <div className="bg-[#2A2A3A] rounded-xl p-4 sm:p-6 w-full max-w-sm sm:max-w-md mx-4 transition-colors duration-200">
+            <div className="text-center">
+              {/* Warning Icon */}
+              <div className="mx-auto flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-red-100 mb-3 sm:mb-4">
+                <svg className="h-5 w-5 sm:h-6 sm:w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                </svg>
+              </div>
+              
+              {/* Title */}
+              <h3 className="text-base sm:text-lg font-medium text-white mb-2">Logout</h3>
+              
+              {/* Message */}
+              <p className="text-sm sm:text-base text-gray-300 mb-4 sm:mb-6">
+                Are you sure you want to logout? You&apos;ll need to sign in again to access your account.
+              </p>
+              
+              {/* Buttons */}
+              <div className="flex gap-2 sm:gap-3">
+                <button 
+                  onClick={() => setShowLogoutModal(false)}
+                  className="flex-1 px-3 sm:px-4 py-2 border border-[#3A3A4A] text-gray-300 rounded-lg hover:bg-[#3A3A4A] transition-colors text-sm"
+                  disabled={isLoggingOut}
+                >
+                  Cancel
+                </button>
+                <button 
+                  onClick={handleLogout}
+                  className="flex-1 px-3 sm:px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-colors disabled:opacity-50 text-sm"
+                  disabled={isLoggingOut}
+                >
+                  {isLoggingOut ? 'Logging out...' : 'Yes, Logout'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
