@@ -230,6 +230,25 @@ export default function SettingsPage() {
                   </div>
                 </div>
 
+                {/* Support Message */}
+                <div className="bg-[#1d1d4e] p-6 rounded-xl">
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold mb-3 text-white">Need Help?</h3>
+                    <p className="text-gray-400 mb-4">
+                      If you have any issues or concerns, please don&apos;t hesitate to reach out. We&apos;re here to help and will respond as soon as possible.
+                    </p>
+                    <div className="flex items-center justify-center space-x-2">
+                      <span className="text-gray-300">Email us at:</span>
+                      <a 
+                        href="mailto:jushkinbek.co@gmail.com"
+                        className="text-purple-400 hover:text-purple-300 font-medium transition-colors"
+                      >
+                        jushkinbek.co@gmail.com
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             )}
           </div>

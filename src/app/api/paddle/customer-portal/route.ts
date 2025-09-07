@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
     const authHeader = `Bearer ${paddleApiKey}`
     console.log('🔍 Debug: Auth header format:', authHeader.substring(0, 20) + '...')
     
-    const customerResponse = await fetch(`https://api.paddle.com/v1/customers?email=${encodeURIComponent(customerEmail)}`, {
+    const customerResponse = await fetch(`https://api.paddle.com/customers?email=${encodeURIComponent(customerEmail)}`, {
       method: 'GET',
       headers: {
         'Authorization': authHeader,
@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
     console.log('🔍 Debug: Found customer:', customer.id)
 
     // Create customer portal session
-    const portalResponse = await fetch(`https://api.paddle.com/v1/customers/${customer.id}/portal-session`, {
+    const portalResponse = await fetch(`https://api.paddle.com/customers/${customer.id}/portal-session`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${paddleApiKey}`,

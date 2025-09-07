@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Cancel subscription in Paddle
-    const paddleResponse = await fetch(`https://api.paddle.com/v1/subscriptions/${subscriptionId}/cancel`, {
+    const paddleResponse = await fetch(`https://api.paddle.com/subscriptions/${subscriptionId}/cancel`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${paddleApiKey}`,
