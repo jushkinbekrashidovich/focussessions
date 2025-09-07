@@ -6,7 +6,7 @@ import { useUser } from '@/lib/hooks/useAuth'
 
 interface PaddleContextType {
   isPaddleReady: boolean
-  openCheckout: (planType: 'PRO_MONTHLY' | 'PRO_YEARLY' | 'LIFETIME', userEmail?: string) => Promise<void>
+  openCheckout: (planType: 'PRO_MONTHLY' | 'PRO_YEARLY', userEmail?: string) => Promise<void>
   isLoading: boolean
 }
 
@@ -42,7 +42,7 @@ export function PaddleProvider({ children }: { children: ReactNode }) {
     initPaddle()
   }, [])
 
-  const openCheckout = async (planType: 'PRO_MONTHLY' | 'PRO_YEARLY' | 'LIFETIME', userEmail?: string) => {
+  const openCheckout = async (planType: 'PRO_MONTHLY' | 'PRO_YEARLY', userEmail?: string) => {
     console.log('🔍 Debug: openCheckout called with:', { planType, userEmail, isPaddleReady })
     
     if (!isPaddleReady) {
