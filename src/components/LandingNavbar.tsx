@@ -38,12 +38,6 @@ export default function LandingNavbar({ user }: LandingNavbarProps) {
           >
             Features
           </Link>
-          <Link
-            href="#pricing"
-            className="text-[0.94rem] font-bold text-[#5F5F5F] hover:text-white transition"
-          >
-            Pricing
-          </Link>
         </nav>
 
         {/* Desktop Auth Buttons */}
@@ -93,13 +87,6 @@ export default function LandingNavbar({ user }: LandingNavbarProps) {
             onClick={() => setIsMenuOpen(false)}
           >
             Features
-          </Link>
-          <Link
-            href="#pricing"
-            className="px-6 py-3 text-[0.94rem] font-bold text-[#5F5F5F] hover:text-white transition hover:bg-gray-800"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Pricing
           </Link>
           <div className="border-t border-gray-700 mt-2 pt-2">
             {user ? (
