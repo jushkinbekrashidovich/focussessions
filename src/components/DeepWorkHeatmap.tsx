@@ -280,19 +280,15 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
             {renderHeatmapGrid()}
           </div>
           
-          {/* Pro Upgrade Overlay for Free Users */}
+          {/* Pro Upgrade Button for Free Users */}
           {!isSubscriptionLoading && !isPro && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black/20 rounded-lg">
-              <div className="text-center bg-[#1d1d4e] p-6 rounded-xl border border-purple-500/30">
-                <h3 className="text-lg font-semibold text-white mb-2">Upgrade to Pro</h3>
-                <p className="text-gray-300 text-sm mb-4">Unlock detailed analytics and insights</p>
-                <button
-                  onClick={() => router.push('/pricing')}
-                  className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-lg transition"
-                >
-                  Upgrade Now
-                </button>
-              </div>
+            <div className="absolute top-4 right-4">
+              <button
+                onClick={() => router.push('/pricing')}
+                className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-lg transition text-sm shadow-lg"
+              >
+                Upgrade to Pro
+              </button>
             </div>
           )}
         </div>
