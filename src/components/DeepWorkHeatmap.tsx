@@ -188,9 +188,9 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
         
         {/* Main grid with day labels */}
         <div className="flex">
-          {/* Day labels on the left - Mon, Tue, Thu, Sat */}
+          {/* Day labels on the left - Tue, Thu, Sat */}
           <div className="flex flex-col mr-0.5 sm:mr-1 space-y-0.5 sm:space-y-1">
-            {['Mon', 'Tue', 'Thu', 'Sat'].map((day, i) => (
+            {['Tue', 'Thu', 'Sat'].map((day, i) => (
               <div key={i} className="h-3 sm:h-4 text-xs text-gray-400 w-8 sm:w-10 text-right leading-none">
                 {day}
               </div>
@@ -202,14 +202,6 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
             {grid.map((week, weekIndex) => (
               <div key={weekIndex} className="flex flex-col space-y-0.5">
                 {week.map((dayData, dayIndex) => {
-                  // Only show Mon (1), Tue (2), Thu (4), Sat (6)
-                  const dayOfWeek = (dayIndex + 1) % 7 // Convert to 0-6 where 0=Sunday
-                  const showDay = dayOfWeek === 1 || dayOfWeek === 2 || dayOfWeek === 4 || dayOfWeek === 6
-                  
-                  if (!showDay) {
-                    return <div key={dayIndex} className="w-3 h-3 sm:w-4 sm:h-4 rounded-sm bg-transparent" />
-                  }
-                  
                   if (!dayData || !dayData.date) {
                     return <div key={dayIndex} className="w-3 h-3 sm:w-4 sm:h-4 rounded-sm bg-transparent" />
                   }
