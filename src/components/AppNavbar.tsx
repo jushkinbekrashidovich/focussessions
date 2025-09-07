@@ -26,9 +26,6 @@ export default function AppNavbar() {
           <Link href="/activity" className="hover:text-white transition">
             Personal Goals
           </Link>
-          <Link href="/pricing" className="hover:text-white transition">
-            Pricing
-          </Link>
         </nav>
       </div>
 
@@ -80,13 +77,6 @@ export default function AppNavbar() {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Personal Goals
-              </Link>
-              <Link
-                href="/pricing"
-                className="block py-3 px-4 text-gray-300 hover:text-white hover:bg-[#2a2a58] rounded-lg transition"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Pricing
               </Link>
               <Link
                 href="/profile"

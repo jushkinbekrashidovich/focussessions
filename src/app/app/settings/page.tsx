@@ -13,8 +13,6 @@ export default function SettingsPage() {
   const { isPro, subscription } = useSubscriptionStatus()
   const { data: user } = useUser()
   const router = useRouter()
-  const [displayName, setDisplayName] = useState(user?.user_metadata?.full_name || '')
-  const [isUpdatingName, setIsUpdatingName] = useState(false)
   const [showLogoutModal, setShowLogoutModal] = useState(false)
   const [isLoggingOut, setIsLoggingOut] = useState(false)
 
@@ -69,30 +67,6 @@ export default function SettingsPage() {
     router.push('/pricing')
   }
 
-  const handleUpdateDisplayName = async () => {
-    if (!displayName.trim()) {
-      alert('Please enter a display name')
-      return
-    }
-
-    setIsUpdatingName(true)
-    try {
-      const { error } = await supabase.auth.updateUser({
-        data: { full_name: displayName.trim() }
-      })
-
-      if (error) {
-        throw error
-      }
-
-      alert('Display name updated successfully!')
-    } catch (error) {
-      console.error('Error updating display name:', error)
-      alert('Failed to update display name. Please try again.')
-    } finally {
-      setIsUpdatingName(false)
-    }
-  }
 
   const handleLogout = async () => {
     setIsLoggingOut(true)
@@ -165,25 +139,6 @@ export default function SettingsPage() {
                         className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300"
                       />
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Display Name</label>
-                      <div className="flex gap-3">
-                        <input
-                          type="text"
-                          value={displayName}
-                          onChange={(e) => setDisplayName(e.target.value)}
-                          className="flex-1 px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                          placeholder="Enter your display name"
-                        />
-                        <button
-                          onClick={handleUpdateDisplayName}
-                          disabled={isUpdatingName}
-                          className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                          {isUpdatingName ? 'Updating...' : 'Update'}
-                        </button>
-                      </div>
-                    </div>
                     <div className="pt-4 border-t border-gray-600">
                       <button
                         onClick={() => setShowLogoutModal(true)}
@@ -206,7 +161,14 @@ export default function SettingsPage() {
                     <p className="text-gray-400">Manage your plan and payments</p>
                   </div>
                   <div className="flex gap-3">
-                    {isPro && (
+                    {!isPro ? (
+                      <button
+                        onClick={handleChangePlan}
+                        className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition"
+                      >
+                        Upgrade to Pro
+                      </button>
+                    ) : (
                       <>
                         <button
                           onClick={handleCancelSubscription}
