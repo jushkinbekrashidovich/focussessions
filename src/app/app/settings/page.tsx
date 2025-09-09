@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import AppNavbar from '@/components/AppNavbar'
 import { useSubscriptionStatus } from '@/lib/subscriptionUtils'
 import { useUser } from '@/lib/hooks/useAuth'
-import { openCustomerPortal, cancelSubscription } from '@/lib/paddleCustomerPortal'
+import { openCustomerPortal } from '@/lib/paddleCustomerPortal'
 import { supabase } from '@/lib/supabaseClient'
 
 export default function SettingsPage() {
@@ -40,19 +40,6 @@ export default function SettingsPage() {
     }
   }
 
-  const handleCancelSubscription = async () => {
-    if (confirm('Are you sure you want to cancel your subscription? You will lose access to Pro features at the end of your current billing period.')) {
-      try {
-        const result = await cancelSubscription(subscription?.paddle_subscription_id || '')
-        alert(result.message || 'Subscription canceled successfully!')
-        // Refresh the page to update subscription status
-        window.location.reload()
-      } catch (error) {
-        console.error('Error canceling subscription:', error)
-        alert('Failed to cancel subscription. Please try again or contact support.')
-      }
-    }
-  }
 
   const handleManagePayments = async () => {
     try {
@@ -173,21 +160,13 @@ export default function SettingsPage() {
                         <span className="ml-2">↗</span>
                       </button>
                     ) : (
-                      <>
-                        <button
-                          onClick={handleCancelSubscription}
-                          className="px-6 py-3 border border-gray-300 text-white rounded-lg hover:bg-gray-800 transition"
-                        >
-                          Cancel subscription
-                        </button>
-                        <button
-                          onClick={handleManagePayments}
-                          className="px-6 py-3 border border-gray-300 text-white rounded-lg hover:bg-gray-800 transition flex items-center"
-                        >
-                          Manage Subscription
-                          <span className="ml-2">↗</span>
-                        </button>
-                      </>
+                      <button
+                        onClick={handleManagePayments}
+                        className="px-6 py-3 border border-gray-300 text-white rounded-lg hover:bg-gray-800 transition flex items-center"
+                      >
+                        Manage Subscription
+                        <span className="ml-2">↗</span>
+                      </button>
                     )}
                   </div>
                 </div>

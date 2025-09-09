@@ -49,7 +49,15 @@ export default function HomePage() {
 
           {/* Activity Feed */}
           <div>
-            <h2 className="text-lg lg:text-xl mb-3 lg:mb-4 font-semibold">My Activity</h2>
+            <div className="flex justify-between items-center mb-3 lg:mb-4">
+              <h2 className="text-lg lg:text-xl font-semibold">My Activity</h2>
+              <button
+                onClick={() => router.push('/logs')}
+                className="text-sm text-gray-400 hover:text-white transition-colors"
+              >
+                See all
+              </button>
+            </div>
             <ActivityFeed maxItems={10} refreshTrigger={refreshTrigger} />
           </div>
         </div>
