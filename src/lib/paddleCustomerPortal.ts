@@ -19,30 +19,15 @@ export async function openCustomerPortal(options: CustomerPortalOptions = {}) {
   try {
     console.log('🔍 Debug: Opening Customer Portal with options:', options)
     
-    if (!options.email) {
-      throw new Error('Customer email is required')
-    }
-
-    // Create customer portal session via our API
-    const response = await fetch('/api/paddle/customer-portal', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        customerEmail: options.email,
-        returnUrl: options.returnUrl || `${window.location.origin}/app/settings`
-      }),
-    })
-
-    if (!response.ok) {
-      const errorData = await response.json()
-      throw new Error(errorData.error || 'Failed to create customer portal session')
-    }
-
-    const { portalUrl } = await response.json()
+    // Use static customer portal link from environment variables
+    const portalUrl = process.env.NEXT_PUBLIC_PADDLE_CUSTOMER_PORTAL_URL
     
-    console.log('✅ Customer Portal URL created:', portalUrl)
+    if (!portalUrl) {
+      console.error('❌ Customer portal URL not configured')
+      throw new Error('Customer portal URL not configured. Please set NEXT_PUBLIC_PADDLE_CUSTOMER_PORTAL_URL environment variable.')
+    }
+
+    console.log('✅ Opening Customer Portal:', portalUrl)
     
     // Open customer portal in new tab
     window.open(portalUrl, '_blank')
