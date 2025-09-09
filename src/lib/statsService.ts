@@ -61,11 +61,11 @@ export const statsService = {
       })
       
       // Calculate streak
-      const streak = this.calculateStreak(sessions)
+      const streak = statsService.calculateStreak(sessions)
       console.log('🔍 Debug: Streak calculated:', streak)
       
       // Calculate longest focus session
-      const longestSession = this.calculateLongestSession(sessions)
+      const longestSession = statsService.calculateLongestSession(sessions)
       console.log('🔍 Debug: Longest session:', longestSession)
       
       // Calculate current month progress
