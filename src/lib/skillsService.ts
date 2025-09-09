@@ -153,6 +153,13 @@ export const sessionsService = {
 
   // Create a new session
   async createSession(skillId: string, startTime: string, endTime: string, note?: string): Promise<Session> {
+    console.log('🔍 Debug: Creating session with data:', {
+      skillId,
+      startTime,
+      endTime,
+      note
+    })
+    
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) throw new Error('User not authenticated')
 
@@ -160,20 +167,31 @@ export const sessionsService = {
     const end = new Date(endTime)
     const durationMin = Math.round((end.getTime() - start.getTime()) / (1000 * 60))
 
+    console.log('🔍 Debug: Calculated duration:', durationMin, 'minutes')
+
+    const sessionData = {
+      user_id: user.id,
+      skill_id: skillId,
+      start_time: startTime,
+      end_time: endTime,
+      duration_min: durationMin,
+      note
+    }
+    
+    console.log('🔍 Debug: Inserting session data:', sessionData)
+
     const { data, error } = await supabase
       .from('sessions')
-      .insert([{
-        user_id: user.id,
-        skill_id: skillId,
-        start_time: startTime,
-        end_time: endTime,
-        duration_min: durationMin,
-        note
-      }])
+      .insert([sessionData])
       .select()
       .single()
 
-    if (error) throw error
+    if (error) {
+      console.error('❌ Error creating session:', error)
+      throw error
+    }
+    
+    console.log('✅ Session created successfully:', data)
     return data
   },
 

@@ -152,17 +152,32 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
   }
 
   const handleSave = async () => {
-    if (!selectedSkill || !sessionStart) return
+    if (!selectedSkill || !sessionStart) {
+      console.log('❌ Cannot save session: missing selectedSkill or sessionStart', {
+        selectedSkill,
+        sessionStart
+      })
+      return
+    }
     
     try {
       setIsSaving(true)
       const duration = Math.floor((new Date().getTime() - sessionStart.getTime()) / (1000 * 60))
       
-      await createSessionMutation.mutateAsync({
+      console.log('🔍 Debug: Saving session with data:', {
+        selectedSkill,
+        duration,
+        note,
+        sessionStart: sessionStart.toISOString()
+      })
+      
+      const result = await createSessionMutation.mutateAsync({
         skillId: selectedSkill,
         duration,
         note
       })
+      
+      console.log('✅ Session saved successfully:', result)
       
       setShowPrompt(false)
       setNote('')
@@ -170,10 +185,11 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
       
       // Notify parent component that a session was completed
       if (onSessionCompleted) {
+        console.log('🔍 Debug: Notifying parent of session completion')
         onSessionCompleted()
       }
     } catch (error) {
-      console.error('Error saving session:', error)
+      console.error('❌ Error saving session:', error)
       // You could add a toast notification here
     } finally {
       setIsSaving(false)
