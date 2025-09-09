@@ -18,33 +18,18 @@ export const statsService = {
   // Calculate all deep work statistics
   async getDeepWorkStats(): Promise<DeepWorkStats> {
     try {
-      console.log('🔍 Debug: Getting deep work stats...')
       const sessions = await sessionsService.getUserSessions()
-      console.log('🔍 Debug: Total sessions found:', sessions.length)
-      console.log('🔍 Debug: Sessions data:', sessions)
       
       const now = new Date()
       const currentYear = now.getFullYear()
       const currentMonth = now.getMonth()
       
-      console.log('🔍 Debug: Current date info:', { currentYear, currentMonth, now: now.toISOString() })
-      
       // Filter sessions for current month
       const currentMonthSessions = sessions.filter(session => {
         const sessionDate = new Date(session.created_at)
-        const isCurrentMonth = sessionDate.getFullYear() === currentYear && 
+        return sessionDate.getFullYear() === currentYear && 
                sessionDate.getMonth() === currentMonth
-        console.log('🔍 Debug: Session date check:', {
-          sessionId: session.id,
-          sessionDate: sessionDate.toISOString(),
-          sessionYear: sessionDate.getFullYear(),
-          sessionMonth: sessionDate.getMonth(),
-          isCurrentMonth
-        })
-        return isCurrentMonth
       })
-      
-      console.log('🔍 Debug: Current month sessions:', currentMonthSessions.length)
       
       // Calculate monthly stats
       const totalMonthlyMinutes = currentMonthSessions.reduce((total, session) => {
@@ -54,19 +39,11 @@ export const statsService = {
       const monthlyHours = Math.floor(totalMonthlyMinutes / 60)
       const monthlyMinutes = totalMonthlyMinutes % 60
       
-      console.log('🔍 Debug: Monthly stats calculated:', {
-        totalMonthlyMinutes,
-        monthlyHours,
-        monthlyMinutes
-      })
-      
       // Calculate streak
       const streak = statsService.calculateStreak(sessions)
-      console.log('🔍 Debug: Streak calculated:', streak)
       
       // Calculate longest focus session
       const longestSession = statsService.calculateLongestSession(sessions)
-      console.log('🔍 Debug: Longest session:', longestSession)
       
       // Calculate current month progress
       const currentMonthTotalDays = new Date(currentYear, currentMonth + 1, 0).getDate()
@@ -76,7 +53,7 @@ export const statsService = {
       // Ensure progress doesn't exceed 100%
       const clampedProgress = Math.min(currentMonthProgress, 100)
       
-      const result = {
+      return {
         monthlyHours,
         monthlyMinutes,
         totalMonthlyMinutes,
@@ -86,9 +63,6 @@ export const statsService = {
         currentMonthTotalDays,
         currentMonthPassedDays
       }
-      
-      console.log('🔍 Debug: Final stats result:', result)
-      return result
     } catch (error) {
       console.error('Error calculating stats:', error)
       // Return default values on error
