@@ -254,17 +254,17 @@ export default function SettingsPage() {
                 </div>
 
                 {/* Support Message */}
-                <div className="bg-[#1d1d4e] p-6 rounded-xl">
+                <div className="bg-[#1d1d4e] p-4 rounded-lg mt-6">
                   <div className="text-center">
-                    <h3 className="text-lg font-semibold mb-3 text-white">Need Help?</h3>
-                    <p className="text-gray-400 mb-4">
+                    <h3 className="text-base font-semibold mb-2 text-white">Need Help?</h3>
+                    <p className="text-gray-400 mb-3 text-sm">
                       If you have any issues or concerns, please don&apos;t hesitate to reach out. We&apos;re here to help and will respond as soon as possible.
                     </p>
                     <div className="flex items-center justify-center space-x-2">
-                      <span className="text-gray-300">Email us at:</span>
+                      <span className="text-gray-300 text-sm">Email us at:</span>
                       <a 
                         href="mailto:jushkinbek.co@gmail.com"
-                        className="text-purple-400 hover:text-purple-300 font-medium transition-colors"
+                        className="text-purple-400 hover:text-purple-300 font-medium transition-colors text-sm"
                       >
                         jushkinbek.co@gmail.com
                       </a>

@@ -240,9 +240,9 @@ export default function Home() {
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 sm:p-8">
-              <h3 className="text-lg sm:text-xl font-semibold text-white mb-4">Anyone building deep focus skills</h3>
+              <h3 className="text-lg sm:text-xl font-semibold text-white mb-4">People with ADHD who struggle with focus</h3>
               <p className="text-gray-400 text-sm sm:text-base">
-                For complex work or study sessions that require sustained concentration and mental discipline.
+                For those whose minds jump between tasks or get easily distracted. This tool helps train your brain to focus better, little by little.
               </p>
             </div>
 
