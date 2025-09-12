@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import Head from 'next/head'
 
 // Force dynamic rendering to avoid SSG issues with Supabase
 export const dynamic = 'force-dynamic'
@@ -29,8 +30,61 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#13133c] text-white flex flex-col">
-      <AppNavbar />
+    <>
+      <Head>
+        <title>Focus Dashboard - Track Your Deep Work Sessions | FocusDot</title>
+        <meta name="description" content="Your personal focus dashboard. Track deep work sessions, view progress with visual heatmaps, and build unbreakable concentration habits. Start your focus journey today." />
+        <meta name="keywords" content="focus dashboard, deep work tracker, concentration timer, productivity dashboard, focus sessions, study timer, work focus, focus habits" />
+        <link rel="canonical" href="https://focusdot.app/app" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Focus Dashboard - Track Your Deep Work Sessions" />
+        <meta property="og:description" content="Your personal focus dashboard. Track deep work sessions, view progress with visual heatmaps, and build unbreakable concentration habits." />
+        <meta property="og:url" content="https://focusdot.app/app" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://focusdot.app/dashboard.jpg" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Focus Dashboard - Track Your Deep Work Sessions" />
+        <meta name="twitter:description" content="Your personal focus dashboard. Track deep work sessions, view progress with visual heatmaps, and build unbreakable concentration habits." />
+        <meta name="twitter:image" content="https://focusdot.app/dashboard.jpg" />
+        
+        {/* Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              "name": "FocusDot Dashboard",
+              "description": "Personal focus dashboard for tracking deep work sessions and building concentration habits",
+              "url": "https://focusdot.app/app",
+              "applicationCategory": "ProductivityApplication",
+              "operatingSystem": "Web Browser",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD",
+                "description": "Free dashboard with Pro features available"
+              },
+              "featureList": [
+                "Focus Timer",
+                "Deep Work Heatmap",
+                "Progress Tracking",
+                "Session Analytics",
+                "Activity Feed"
+              ],
+              "author": {
+                "@type": "Organization",
+                "name": "FocusDot Team"
+              }
+            })
+          }}
+        />
+      </Head>
+      <div className="min-h-screen bg-[#13133c] text-white flex flex-col">
+        <AppNavbar />
 
       {/* Body */}
       <div className="flex flex-col lg:flex-row flex-1 p-4 sm:p-6 lg:p-8 gap-6 lg:gap-12">
@@ -62,6 +116,7 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   )
 }

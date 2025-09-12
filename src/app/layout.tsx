@@ -28,7 +28,17 @@ export const metadata = {
     'productivity tracker',
     'focus sessions',
     'deep work tracker',
-    'focus visualization'
+    'focus visualization',
+    'time management',
+    'study habits',
+    'work productivity',
+    'focus techniques',
+    'concentration training',
+    'mindfulness timer',
+    'study focus',
+    'work sessions',
+    'productivity tools',
+    'focus management'
   ],
   authors: [{ name: 'FocusDot Team' }],
   creator: 'FocusDot',
@@ -77,9 +87,18 @@ export const metadata = {
     },
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
     shortcut: '/favicon.ico',
-    apple: '/logo.svg',
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
+  verification: {
+    google: 'your-google-verification-code', // Add your Google Search Console verification code
   },
 }
 
@@ -91,6 +110,12 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/manifest.json" />
+      </head>
       <body className={inter.className} suppressHydrationWarning={true}>
         <Providers>
           <main className="bg-[#151515] transition-colors duration-200">

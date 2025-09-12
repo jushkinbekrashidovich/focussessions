@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Head from 'next/head'
 import AppNavbar from '@/components/AppNavbar'
 import { useSubscriptionStatus } from '@/lib/subscriptionUtils'
 import { useUser } from '@/lib/hooks/useAuth'
@@ -72,8 +73,51 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#13133c] text-white">
-      <AppNavbar />
+    <>
+      <Head>
+        <title>Settings - Manage Your FocusDot Account | FocusDot</title>
+        <meta name="description" content="Manage your FocusDot account settings, subscription, and billing. Update your plan, view subscription details, and access customer support." />
+        <meta name="keywords" content="focus app settings, account management, subscription settings, billing management, focus tracker settings, productivity app account" />
+        <link rel="canonical" href="https://focusdot.app/app/settings" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="FocusDot Settings - Manage Your Account" />
+        <meta property="og:description" content="Manage your FocusDot account settings, subscription, and billing. Update your plan and view subscription details." />
+        <meta property="og:url" content="https://focusdot.app/app/settings" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://focusdot.app/dashboard.jpg" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="FocusDot Settings - Manage Your Account" />
+        <meta name="twitter:description" content="Manage your FocusDot account settings, subscription, and billing." />
+        <meta name="twitter:image" content="https://focusdot.app/dashboard.jpg" />
+        
+        {/* Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "FocusDot Settings",
+              "description": "Account management and settings page for FocusDot users",
+              "url": "https://focusdot.app/app/settings",
+              "isPartOf": {
+                "@type": "WebApplication",
+                "name": "FocusDot",
+                "url": "https://focusdot.app"
+              },
+              "author": {
+                "@type": "Organization",
+                "name": "FocusDot Team"
+              }
+            })
+          }}
+        />
+      </Head>
+      <div className="min-h-screen bg-[#13133c] text-white">
+        <AppNavbar />
       
       <div className="max-w-6xl mx-auto p-6">
         <div className="mb-8">
@@ -275,6 +319,7 @@ export default function SettingsPage() {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </>
   )
 }

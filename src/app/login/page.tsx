@@ -7,13 +7,57 @@ export const dynamic = 'force-dynamic'
 import { signInWithGoogle } from '@/lib/auth'
 import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
+import Head from 'next/head'
 
 function LoginForm() {
   const searchParams = useSearchParams()
   const redirectTo = searchParams.get('redirect') || '/app'
   
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
+    <>
+      <Head>
+        <title>Sign In - FocusDot | Secure Login for Focus Tracking</title>
+        <meta name="description" content="Sign in to FocusDot to access your focus tracking dashboard. Secure Google OAuth2 authentication for your productivity journey." />
+        <meta name="keywords" content="focus app login, sign in focus tracker, productivity app login, deep work app access, focus timer login, study app sign in" />
+        <link rel="canonical" href="https://focusdot.app/login" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Sign In to FocusDot - Focus Tracking App" />
+        <meta property="og:description" content="Sign in to FocusDot to access your focus tracking dashboard. Secure Google OAuth2 authentication." />
+        <meta property="og:url" content="https://focusdot.app/login" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://focusdot.app/dashboard.jpg" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Sign In to FocusDot - Focus Tracking App" />
+        <meta name="twitter:description" content="Sign in to FocusDot to access your focus tracking dashboard. Secure Google OAuth2 authentication." />
+        <meta name="twitter:image" content="https://focusdot.app/dashboard.jpg" />
+        
+        {/* Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "FocusDot Login",
+              "description": "Secure login page for FocusDot focus tracking application",
+              "url": "https://focusdot.app/login",
+              "isPartOf": {
+                "@type": "WebApplication",
+                "name": "FocusDot",
+                "url": "https://focusdot.app"
+              },
+              "author": {
+                "@type": "Organization",
+                "name": "FocusDot Team"
+              }
+            })
+          }}
+        />
+      </Head>
+      <div className="min-h-screen flex items-center justify-center px-4">
       <div className="bg-white rounded-xl shadow-md p-6 sm:p-8 md:p-10 w-full max-w-sm sm:max-w-md text-center">
         <div className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 sm:mb-6 bg-blue-100 rounded-full">
           <svg
@@ -60,7 +104,8 @@ function LoginForm() {
         </button>
         <p className="text-gray-400 text-xs mt-4 sm:mt-6">Protected by secure OAuth2</p>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 

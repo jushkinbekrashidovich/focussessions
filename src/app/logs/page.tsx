@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import Head from 'next/head'
 import AppNavbar from '@/components/AppNavbar'
 import { useRecentSessions, useUser } from '@/lib/hooks'
 import { Session } from '@/lib/skillsService'
@@ -192,8 +193,51 @@ export default function LogsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#13133c] text-white">
-      <AppNavbar />
+    <>
+      <Head>
+        <title>Activity Logs - View Your Focus Session History | FocusDot</title>
+        <meta name="description" content="View your complete focus session history and activity logs. Track your deep work progress, session durations, and productivity patterns over time." />
+        <meta name="keywords" content="focus session logs, activity history, deep work tracking, session analytics, productivity logs, focus timer history, study session logs" />
+        <link rel="canonical" href="https://focusdot.app/logs" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Activity Logs - View Your Focus Session History" />
+        <meta property="og:description" content="View your complete focus session history and activity logs. Track your deep work progress and productivity patterns." />
+        <meta property="og:url" content="https://focusdot.app/logs" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://focusdot.app/dashboard.jpg" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Activity Logs - View Your Focus Session History" />
+        <meta name="twitter:description" content="View your complete focus session history and activity logs. Track your deep work progress and productivity patterns." />
+        <meta name="twitter:image" content="https://focusdot.app/dashboard.jpg" />
+        
+        {/* Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "FocusDot Activity Logs",
+              "description": "Activity logs and session history for FocusDot users",
+              "url": "https://focusdot.app/logs",
+              "isPartOf": {
+                "@type": "WebApplication",
+                "name": "FocusDot",
+                "url": "https://focusdot.app"
+              },
+              "author": {
+                "@type": "Organization",
+                "name": "FocusDot Team"
+              }
+            })
+          }}
+        />
+      </Head>
+      <div className="min-h-screen bg-[#13133c] text-white">
+        <AppNavbar />
       
       <div className="max-w-4xl mx-auto p-6">
         <div className="mb-8">
@@ -267,6 +311,7 @@ export default function LogsPage() {
             })}
         </div>
       </div>
-    </div>
+      </div>
+    </>
   )
 }
