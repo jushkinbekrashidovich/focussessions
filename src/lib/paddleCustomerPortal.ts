@@ -19,8 +19,8 @@ export async function openCustomerPortal(options: CustomerPortalOptions = {}) {
   try {
     console.log('🔍 Debug: Opening Customer Portal with options:', options)
     
-    // Use static customer portal link from environment variables
-    const portalUrl = process.env.NEXT_PUBLIC_PADDLE_CUSTOMER_PORTAL_URL
+            // Use static customer portal link from environment variables
+            const portalUrl = process.env.NEXT_PUBLIC_PADDLE_CUSTOMER_PORTAL_URL || 'https://customer-portal.paddle.com/cpl_01k324ctze3tse1vv5gbv4xjc3'
     
     if (!portalUrl) {
       console.error('❌ Customer portal URL not configured')

@@ -11,10 +11,10 @@ export const paddle = initializePaddle({
   environment: process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT === 'sandbox' ? 'sandbox' : 'production',
 })
 
-// Price IDs for your pricing plans (Sandbox)
+// Price IDs for your pricing plans (Production)
 export const PRODUCT_IDS = {
-  PRO_MONTHLY: 'pri_01k4exn0p4wy4w7k0h6tv1tb4d',
-  PRO_YEARLY: 'pri_01k4exnwjgfxannn0cm6pgc734',
+  PRO_MONTHLY: 'pri_01k50r1ab8xr3vzbh8q4rgt06s',
+  PRO_YEARLY: 'pri_01k50r48tjn4ppyxmq6tkmrxaa',
 } as const
 
 // Pricing configuration

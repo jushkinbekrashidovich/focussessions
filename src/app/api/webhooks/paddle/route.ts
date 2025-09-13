@@ -63,8 +63,8 @@ async function updateUserSubscription(userId: string, subscriptionData: Record<s
   // Determine plan type based on price ID
   let planType = 'free'
   const priceId = items?.[0]?.price?.id
-  if (priceId === 'pri_01k4exn0p4wy4w7k0h6tv1tb4d') planType = 'pro_monthly'
-  else if (priceId === 'pri_01k4exnwjgfxannn0cm6pgc734') planType = 'pro_yearly'
+  if (priceId === 'pri_01k50r1ab8xr3vzbh8q4rgt06s') planType = 'pro_monthly'
+  else if (priceId === 'pri_01k50r48tjn4ppyxmq6tkmrxaa') planType = 'pro_yearly'
   else if (priceId === 'pri_01k4expr4yywz3g9sste7t34px') planType = 'lifetime'
   
   console.log('🔍 Debug: Determined plan type', { planType, priceId })
@@ -116,8 +116,8 @@ async function handleSuccessfulPayment(eventData: Record<string, unknown>) {
 
   // Determine plan type based on price ID (Sandbox)
   let planType = 'free'
-  if (priceId === 'pri_01k4exn0p4wy4w7k0h6tv1tb4d') planType = 'pro_monthly'
-  else if (priceId === 'pri_01k4exnwjgfxannn0cm6pgc734') planType = 'pro_yearly'
+  if (priceId === 'pri_01k50r1ab8xr3vzbh8q4rgt06s') planType = 'pro_monthly'
+  else if (priceId === 'pri_01k50r48tjn4ppyxmq6tkmrxaa') planType = 'pro_yearly'
   else if (priceId === 'pri_01k4expr4yywz3g9sste7t34px') planType = 'lifetime'
 
   console.log(`🔔 Processing subscription for user ${userId}, price ID: ${priceId}, plan: ${planType}`)
