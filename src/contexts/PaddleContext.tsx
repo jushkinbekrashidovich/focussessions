@@ -80,7 +80,10 @@ export function PaddleProvider({ children }: { children: ReactNode }) {
       }
 
       // Open Paddle checkout
-      console.log('🔍 Debug: Opening Paddle checkout with data:', checkoutData)
+      console.log('🔍 Debug: Opening Paddle checkout with data:', JSON.stringify(checkoutData, null, 2))
+      console.log('🔍 Debug: Product ID:', productId)
+      console.log('🔍 Debug: User email:', userEmail)
+      console.log('🔍 Debug: User ID:', user?.id)
       console.log('🔍 Debug: Current environment:', process.env.NODE_ENV)
       console.log('🔍 Debug: Paddle environment:', process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT)
       
