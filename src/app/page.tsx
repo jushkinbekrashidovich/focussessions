@@ -229,6 +229,34 @@ export default function Home() {
       {/* Spacing between sections */}
       <div className="h-16 sm:h-20 md:h-24"></div>
 
+      {/* Features Section Part 4 - Focus Score */}
+      <section className="w-full flex justify-center bg-[#151515] px-4 sm:px-6 py-12 sm:py-16 md:py-20">
+        <div className="max-w-6xl w-full flex flex-col-reverse md:flex-row items-center md:items-start gap-8 sm:gap-12">
+          
+          {/* Left: Focus Score Image */}
+          <div className="flex-1 max-w-2xl sm:max-w-4xl md:max-w-6xl">
+            <img
+              src="/focusscore.jpg"
+              alt="Focus Score Analytics"
+              className="rounded-2xl sm:rounded-3xl shadow-xl border-2 border-gray-700 w-full"
+            />
+          </div>
+
+          {/* Right: Text */}
+          <div className="flex-1 text-center md:text-left">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-4 sm:mb-6 leading-snug">
+              Focus Score
+            </h2>
+            <p className="text-gray-400 text-base sm:text-lg max-w-md mx-auto md:mx-0">
+              Get a personalized Focus Score that shows how well you can concentrate. Track your progress as you build stronger attention skills through longer focus sessions and consistent practice.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Spacing between sections */}
+      <div className="h-16 sm:h-20 md:h-24"></div>
+
       {/* Who This Is For Section */}
       <section id="who-this-is-for" className="w-full px-4 sm:px-6 md:px-40 py-12 sm:py-16 md:py-20 bg-[#151515]">
         <div className="text-center mb-12 sm:mb-16">
