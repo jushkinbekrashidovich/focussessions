@@ -1,8 +1,10 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import AppNavbar from '@/components/AppNavbar'
 import { useUser } from '@/lib/hooks'
+import { useSubscriptionStatus } from '@/lib/subscriptionUtils'
 import { supabase } from '@/lib/supabaseClient'
 
 interface FocusScoreData {
@@ -15,9 +17,11 @@ interface FocusScoreData {
 
 export default function FocusScorePage() {
   const { data: user } = useUser()
+  const { isPro, isSubscriptionLoading } = useSubscriptionStatus()
   const [focusScoreData, setFocusScoreData] = useState<FocusScoreData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [showHelp, setShowHelp] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
     if (user?.id) {
@@ -156,7 +160,7 @@ export default function FocusScorePage() {
       
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Focus Score Card */}
-        <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-8 shadow-lg">
+        <div className="relative bg-[#1e1e1e] border border-gray-700 rounded-2xl p-8 shadow-lg">
           {/* Header */}
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-2xl font-bold text-white uppercase tracking-wider">
@@ -200,7 +204,7 @@ export default function FocusScorePage() {
           )}
 
           {/* Main Content */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className={`grid grid-cols-1 md:grid-cols-2 gap-8 ${!isSubscriptionLoading && !isPro ? 'blur-sm' : ''}`}>
             {/* Left Side - Concentration Power Score */}
             <div className="space-y-4">
               <div className="text-gray-400 text-sm uppercase tracking-wider">
@@ -260,6 +264,18 @@ export default function FocusScorePage() {
               </div>
             </div>
           </div>
+
+          {/* Pro Upgrade Button for Free Users */}
+          {!isSubscriptionLoading && !isPro && (
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <button
+                onClick={() => router.push('/pricing')}
+                className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-lg transition text-sm shadow-lg"
+              >
+                Upgrade to Pro
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
