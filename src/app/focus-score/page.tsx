@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import AppNavbar from '@/components/AppNavbar'
 import { useUser } from '@/lib/hooks'
-import { supabaseClient } from '@/lib/supabaseClient'
+import { supabase } from '@/lib/supabaseClient'
 
 interface FocusScoreData {
   concentrationPowerScore: number
@@ -32,7 +32,7 @@ export default function FocusScorePage() {
       const sevenDaysAgo = new Date()
       sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
       
-      const { data: currentWeekSessions, error: currentError } = await supabaseClient
+      const { data: currentWeekSessions, error: currentError } = await supabase
         .from('sessions')
         .select('duration_min, created_at')
         .eq('user_id', userId)
@@ -48,7 +48,7 @@ export default function FocusScorePage() {
       const fourteenDaysAgo = new Date()
       fourteenDaysAgo.setDate(fourteenDaysAgo.getDate() - 14)
       
-      const { data: previousWeekSessions, error: previousError } = await supabaseClient
+      const { data: previousWeekSessions, error: previousError } = await supabase
         .from('sessions')
         .select('duration_min, created_at')
         .eq('user_id', userId)
@@ -81,7 +81,7 @@ export default function FocusScorePage() {
     }
   }
 
-  const calculateConcentrationPowerScore = (sessions: any[]) => {
+  const calculateConcentrationPowerScore = (sessions: { duration_min: number | null; created_at: string }[]) => {
     if (!sessions || sessions.length === 0) {
       return {
         concentrationPowerScore: 0,
