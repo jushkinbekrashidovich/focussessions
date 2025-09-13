@@ -204,7 +204,7 @@ export default function FocusScorePage() {
           )}
 
           {/* Main Content */}
-          <div className={`grid grid-cols-1 md:grid-cols-2 gap-8 ${!isSubscriptionLoading && !isPro ? 'blur-sm' : ''}`}>
+          <div className={`grid grid-cols-1 md:grid-cols-2 gap-8 ${!isSubscriptionLoading && !isPro ? 'blur-md' : ''}`}>
             {/* Left Side - Concentration Power Score */}
             <div className="space-y-4">
               <div className="text-gray-400 text-sm uppercase tracking-wider">
@@ -242,7 +242,7 @@ export default function FocusScorePage() {
           </div>
 
           {/* Footer - Additional Stats */}
-          <div className="mt-8 pt-6 border-t border-gray-700">
+          <div className={`mt-8 pt-6 border-t border-gray-700 ${!isSubscriptionLoading && !isPro ? 'blur-md' : ''}`}>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
               <div>
                 <div className="text-2xl font-bold text-purple-400">
