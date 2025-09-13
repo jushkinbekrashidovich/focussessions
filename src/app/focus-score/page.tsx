@@ -195,7 +195,7 @@ export default function FocusScorePage() {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
                     <div className="text-4xl font-bold text-white mb-2">
-                      {focusScoreData?.changeFromLastWeek > 0 ? '+' : ''}{focusScoreData?.changeFromLastWeek?.toFixed(1) || 0}
+                      {(focusScoreData?.changeFromLastWeek || 0) > 0 ? '+' : ''}{(focusScoreData?.changeFromLastWeek || 0).toFixed(1)}
                     </div>
                     <div className="text-sm text-gray-300">
                       vs. last week
