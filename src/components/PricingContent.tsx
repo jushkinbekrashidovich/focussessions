@@ -52,7 +52,7 @@ export default function PricingContent() {
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
           {/* Basic Plan */}
           <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-8 shadow-sm">
             <h3 className="text-2xl font-bold text-white mb-2">Basic</h3>

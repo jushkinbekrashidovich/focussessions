@@ -297,7 +297,7 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
           
           {/* Pro Upgrade Button for Free Users */}
           {!isSubscriptionLoading && !isPro && (
-            <div className="absolute top-4 right-4">
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
               <button
                 onClick={() => router.push('/pricing')}
                 className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-lg transition text-sm shadow-lg"

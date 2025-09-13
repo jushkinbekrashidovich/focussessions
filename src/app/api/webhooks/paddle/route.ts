@@ -120,8 +120,6 @@ async function handleSuccessfulPayment(eventData: Record<string, unknown>) {
   else if (priceId === 'pri_01k50r48tjn4ppyxmq6tkmrxaa') planType = 'pro_yearly'
   else if (priceId === 'pri_01k4expr4yywz3g9sste7t34px') planType = 'lifetime'
 
-  console.log(`🔔 Processing subscription for user ${userId}, price ID: ${priceId}, plan: ${planType}`)
-
   // Update user subscription
   await updateUserSubscription(userId, {
     id: eventData.id,
@@ -130,24 +128,14 @@ async function handleSuccessfulPayment(eventData: Record<string, unknown>) {
     current_billing_period: eventData.current_billing_period,
     created_at: eventData.created_at,
   })
-
-  console.log(`✅ Payment successful for user ${userId}, plan: ${planType}`)
 }
 
 export async function POST(request: NextRequest) {
   try {
-    console.log('🔔 Webhook received from Paddle')
-    console.log('🔔 Request headers:', Object.fromEntries(request.headers.entries()))
-    
     const body = await request.text()
-    console.log('🔔 Webhook body:', body)
-    
     const signature = request.headers.get('paddle-signature')
-    console.log('🔔 Webhook signature present:', !!signature)
-    console.log('🔔 Webhook signature value:', signature)
     
     if (!signature) {
-      console.log('❌ Webhook missing signature')
       return NextResponse.json({ error: 'Missing signature' }, { status: 400 })
     }
 
@@ -162,8 +150,6 @@ export async function POST(request: NextRequest) {
     }
 
     const event = JSON.parse(body)
-    console.log('🔔 Received Paddle webhook:', event.event_type)
-    console.log('🔔 Webhook data:', JSON.stringify(event, null, 2))
 
     // Handle different event types
     switch (event.event_type) {
@@ -173,7 +159,6 @@ export async function POST(request: NextRequest) {
       
       case 'subscription.updated':
         // Handle subscription changes (upgrades, downgrades, etc.)
-        console.log('🔔 Subscription updated:', event.data)
         if (event.data.custom_data?.user_id) {
           await updateUserSubscription(event.data.custom_data.user_id, event.data)
         }
@@ -181,7 +166,6 @@ export async function POST(request: NextRequest) {
       
       case 'subscription.canceled':
         // Handle subscription cancellation
-        console.log('🔔 Subscription canceled:', event.data)
         if (event.data.custom_data?.user_id) {
           await updateUserSubscription(event.data.custom_data.user_id, {
             ...event.data,
@@ -192,7 +176,6 @@ export async function POST(request: NextRequest) {
       
       case 'subscription.paused':
         // Handle subscription pause
-        console.log('🔔 Subscription paused:', event.data)
         if (event.data.custom_data?.user_id) {
           await updateUserSubscription(event.data.custom_data.user_id, {
             ...event.data,
@@ -203,7 +186,6 @@ export async function POST(request: NextRequest) {
       
       case 'subscription.resumed':
         // Handle subscription resume
-        console.log('🔔 Subscription resumed:', event.data)
         if (event.data.custom_data?.user_id) {
           await updateUserSubscription(event.data.custom_data.user_id, {
             ...event.data,
@@ -213,7 +195,8 @@ export async function POST(request: NextRequest) {
         break
       
       default:
-        console.log(`Unhandled event type: ${event.event_type}`)
+        // Unhandled event type
+        break
     }
 
     return NextResponse.json({ success: true })
