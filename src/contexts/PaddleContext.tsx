@@ -54,6 +54,8 @@ export function PaddleProvider({ children }: { children: ReactNode }) {
     try {
       const productId = PRODUCT_IDS[planType]
       console.log('🔍 Debug: Using product ID:', productId)
+      console.log('🔍 Debug: Plan type:', planType)
+      console.log('🔍 Debug: Available product IDs:', PRODUCT_IDS)
 
       // Prepare checkout data
       const checkoutData = {
