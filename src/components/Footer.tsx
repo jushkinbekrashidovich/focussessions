@@ -22,20 +22,20 @@ export default function Footer() {
             </p>
             <div className="flex space-x-3">
               {/* Social Media Icons */}
-              <a href="#" className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center hover:bg-gray-600 transition">
-                <Image src="/telegram.svg" alt="Telegram" width={16} height={16} />
-              </a>
-              <a href="#" className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center hover:bg-gray-600 transition">
-                <Image src="/instagram.svg" alt="Instagram" width={16} height={16} />
-              </a>
-              <a href="#" className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center hover:bg-gray-600 transition">
+              <a href="https://www.linkedin.com/company/focusdot/?viewAsMember=true" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center hover:bg-gray-600 transition">
                 <Image src="/linkedin.svg" alt="LinkedIn" width={16} height={16} />
               </a>
-              <a href="#" className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center hover:bg-gray-600 transition">
-                <Image src="/tiktok.svg" alt="TikTok" width={16} height={16} />
-              </a>
-              <a href="#" className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center hover:bg-gray-600 transition">
+              <a href="https://x.com/focusdot_app?t=GdrKmoH2AfseMXzNvWHjMw&s=09" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center hover:bg-gray-600 transition">
                 <Image src="/x.svg" alt="X (Twitter)" width={16} height={16} />
+              </a>
+              <a href="https://www.instagram.com/focusdot.app?igsh=eGh2ejAxYm9qeWVw" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center hover:bg-gray-600 transition">
+                <Image src="/instagram.svg" alt="Instagram" width={16} height={16} />
+              </a>
+              <a href="https://www.youtube.com/@focusdot_app" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center hover:bg-gray-600 transition">
+                <Image src="/globe.svg" alt="YouTube" width={16} height={16} />
+              </a>
+              <a href="#" className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center hover:bg-gray-600 transition opacity-50 cursor-not-allowed" title="TikTok coming soon">
+                <Image src="/tiktok.svg" alt="TikTok" width={16} height={16} />
               </a>
             </div>
           </div>
