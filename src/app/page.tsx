@@ -413,9 +413,6 @@ export default function Home() {
             </ul>
             <button 
               onClick={() => {
-                console.log('🔍 Debug: Get Pro button clicked!')
-                console.log('🔍 Debug: User:', user)
-                console.log('🔍 Debug: isYearly:', isYearly)
                 if (!user) {
                   router.push('/login?redirect=/pricing')
                 } else {

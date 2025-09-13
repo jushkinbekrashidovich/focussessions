@@ -23,14 +23,9 @@ export function PaddleProvider({ children }: { children: ReactNode }) {
       try {
         console.log('🔍 Debug: Initializing Paddle...')
         console.log('🔍 Debug: Paddle token:', process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN ? 'Present' : 'Missing')
-        console.log('🔍 Debug: Paddle environment:', process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT)
-        console.log('🔍 Debug: Token format:', process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN?.substring(0, 15))
-        console.log('🔍 Debug: Full token:', process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN)
         
         const paddleInstance = await paddle
         console.log('🔍 Debug: Paddle instance received:', paddleInstance)
-        console.log('🔍 Debug: Paddle instance type:', typeof paddleInstance)
-        console.log('🔍 Debug: Paddle instance methods:', Object.keys(paddleInstance || {}))
         
         if (paddleInstance) {
           console.log('✅ Debug: Paddle initialized successfully')
@@ -40,8 +35,6 @@ export function PaddleProvider({ children }: { children: ReactNode }) {
         }
       } catch (error) {
         console.error('❌ Failed to initialize Paddle:', error)
-        console.error('❌ Error details:', JSON.stringify(error, null, 2))
-        console.error('❌ Error stack:', error.stack)
       }
     }
 
@@ -50,11 +43,6 @@ export function PaddleProvider({ children }: { children: ReactNode }) {
 
   const openCheckout = async (planType: 'PRO_MONTHLY' | 'PRO_YEARLY', userEmail?: string) => {
     console.log('🔍 Debug: openCheckout called with:', { planType, userEmail, isPaddleReady })
-    console.log('🔍 Debug: Environment variables:', {
-      PADDLE_ENV: process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT,
-      CLIENT_TOKEN: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN ? 'Present' : 'Missing',
-      CLIENT_TOKEN_START: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN?.substring(0, 15)
-    })
     
     if (!isPaddleReady) {
       console.error('❌ Paddle is not ready')
