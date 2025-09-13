@@ -181,7 +181,7 @@ export default function FocusScorePage() {
                   <h3 className="text-lg font-semibold text-green-400 mb-3">📈 What Makes Focus Score Higher</h3>
                   <ul className="space-y-2 text-sm text-gray-300">
                     <li>• <strong>Long Sessions:</strong> 90+ minutes = maximum points</li>
-                    <li>• <strong>Daily Practice:</strong> Don't miss any days</li>
+                    <li>• <strong>Daily Practice:</strong> Don&apos;t miss any days</li>
                     <li>• <strong>Complete Sessions:</strong> Finish what you start</li>
                     <li>• <strong>Consistency:</strong> Even 30min daily helps</li>
                   </ul>
