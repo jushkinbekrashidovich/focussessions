@@ -17,6 +17,7 @@ export default function FocusScorePage() {
   const { data: user } = useUser()
   const [focusScoreData, setFocusScoreData] = useState<FocusScoreData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [showHelp, setShowHelp] = useState(false)
 
   useEffect(() => {
     if (user?.id) {
@@ -157,11 +158,46 @@ export default function FocusScorePage() {
         {/* Focus Score Card */}
         <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-8 shadow-lg">
           {/* Header */}
-          <div className="mb-8">
+          <div className="flex justify-between items-center mb-8">
             <h1 className="text-2xl font-bold text-white uppercase tracking-wider">
               Focus Score
             </h1>
+            <button
+              onClick={() => setShowHelp(!showHelp)}
+              className="w-8 h-8 rounded-full bg-gray-700 hover:bg-gray-600 flex items-center justify-center text-gray-300 hover:text-white transition-colors"
+              title="How Focus Score works"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </button>
           </div>
+
+          {/* Help Information */}
+          {showHelp && (
+            <div className="mb-8 p-6 bg-[#2a2a3a] rounded-lg border border-gray-600">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <h3 className="text-lg font-semibold text-green-400 mb-3">📈 What Makes Focus Score Higher</h3>
+                  <ul className="space-y-2 text-sm text-gray-300">
+                    <li>• <strong>Long Sessions:</strong> 90+ minutes = maximum points</li>
+                    <li>• <strong>Daily Practice:</strong> Don't miss any days</li>
+                    <li>• <strong>Complete Sessions:</strong> Finish what you start</li>
+                    <li>• <strong>Consistency:</strong> Even 30min daily helps</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-red-400 mb-3">📉 What Decreases Focus Score</h3>
+                  <ul className="space-y-2 text-sm text-gray-300">
+                    <li>• <strong>Missing Days:</strong> Each day off hurts score</li>
+                    <li>• <strong>Short Sessions:</strong> Under 10min = 0 points</li>
+                    <li>• <strong>Incomplete Sessions:</strong> Starting 2h, doing 30min</li>
+                    <li>• <strong>Inconsistent Practice:</strong> Only 2-3 days/week</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Main Content */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
