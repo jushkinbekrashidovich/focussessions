@@ -140,7 +140,7 @@ export default function FocusScorePage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#0a0a1a]">
+      <div className="min-h-screen bg-[#191847]">
         <AppNavbar />
         <div className="flex items-center justify-center min-h-[calc(100vh-80px)]">
           <div className="text-white text-lg">Loading Focus Score...</div>
@@ -150,22 +150,17 @@ export default function FocusScorePage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a1a]">
+    <div className="min-h-screen bg-[#191847]">
       <AppNavbar />
       
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Focus Score Card */}
         <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-8 shadow-lg">
           {/* Header */}
-          <div className="flex justify-between items-center mb-8">
+          <div className="mb-8">
             <h1 className="text-2xl font-bold text-white uppercase tracking-wider">
               Focus Score
             </h1>
-            <div className="text-gray-400">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </div>
           </div>
 
           {/* Main Content */}
