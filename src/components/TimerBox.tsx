@@ -278,10 +278,10 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
 
       </div>
 
-      {/* Flip Mode Overlay - Modal */}
+      {/* Flip Mode Overlay - Full Screen */}
       {showFlipMode && running && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-[9999] flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black z-[9999] flex flex-col items-center justify-center"
           style={{ 
             position: 'fixed', 
             top: 0, 
@@ -291,71 +291,69 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
             zIndex: 9999
           }}
         >
-          <div className="bg-[#1D1D4E] rounded-2xl p-6 sm:p-8 max-w-2xl w-full border border-gray-600 shadow-2xl">
-            {/* Flip Clock Display */}
-            <div className="flex items-center justify-center space-x-3 sm:space-x-6 mb-8">
-              {/* Hours */}
-              <div className="relative">
-                <div className="bg-gray-900 rounded-xl p-4 sm:p-6 shadow-2xl border-2 border-gray-700">
-                  <div className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white font-mono tracking-wider">
-                    {minutes === 0 
-                      ? Math.floor(secondsLeft / 3600).toString().padStart(2, '0')
-                      : Math.floor(secondsLeft / 3600).toString().padStart(2, '0')
-                    }
-                  </div>
-                </div>
-              </div>
-              
-              {/* First Colon */}
-              <div className="flex flex-col space-y-2 sm:space-y-3">
-                <div className="w-3 h-3 sm:w-4 sm:h-4 bg-white rounded-full shadow-lg"></div>
-                <div className="w-3 h-3 sm:w-4 sm:h-4 bg-white rounded-full shadow-lg"></div>
-              </div>
-              
-              {/* Minutes */}
-              <div className="relative">
-                <div className="bg-gray-900 rounded-xl p-4 sm:p-6 shadow-2xl border-2 border-gray-700">
-                  <div className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white font-mono tracking-wider">
-                    {Math.floor((secondsLeft % 3600) / 60).toString().padStart(2, '0')}
-                  </div>
-                </div>
-              </div>
-              
-              {/* Second Colon */}
-              <div className="flex flex-col space-y-2 sm:space-y-3">
-                <div className="w-3 h-3 sm:w-4 sm:h-4 bg-white rounded-full shadow-lg"></div>
-                <div className="w-3 h-3 sm:w-4 sm:h-4 bg-white rounded-full shadow-lg"></div>
-              </div>
-              
-              {/* Seconds */}
-              <div className="relative">
-                <div className="bg-gray-900 rounded-xl p-4 sm:p-6 shadow-2xl border-2 border-gray-700">
-                  <div className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white font-mono tracking-wider">
-                    {(secondsLeft % 60).toString().padStart(2, '0')}
-                  </div>
+          {/* Flip Clock Display */}
+          <div className="flex items-center space-x-2 sm:space-x-4 md:space-x-8 lg:space-x-12 mb-12 sm:mb-16 md:mb-20">
+            {/* Hours */}
+            <div className="relative">
+              <div className="bg-gray-900 rounded-xl sm:rounded-2xl p-3 sm:p-6 md:p-12 lg:p-16 shadow-2xl border-2 border-gray-700">
+                <div className="text-4xl sm:text-6xl md:text-7xl lg:text-9xl xl:text-[12rem] font-bold text-white font-mono tracking-wider">
+                  {minutes === 0 
+                    ? Math.floor(secondsLeft / 3600).toString().padStart(2, '0')
+                    : Math.floor(secondsLeft / 3600).toString().padStart(2, '0')
+                  }
                 </div>
               </div>
             </div>
+            
+            {/* First Colon */}
+            <div className="flex flex-col space-y-2 sm:space-y-4 md:space-y-6">
+              <div className="w-2 h-2 sm:w-4 sm:h-4 md:w-6 md:h-6 lg:w-8 lg:h-8 bg-white rounded-full shadow-lg"></div>
+              <div className="w-2 h-2 sm:w-4 sm:h-4 md:w-6 md:h-6 lg:w-8 lg:h-8 bg-white rounded-full shadow-lg"></div>
+            </div>
+            
+            {/* Minutes */}
+            <div className="relative">
+              <div className="bg-gray-900 rounded-xl sm:rounded-2xl p-3 sm:p-6 md:p-12 lg:p-16 shadow-2xl border-2 border-gray-700">
+                <div className="text-4xl sm:text-6xl md:text-7xl lg:text-9xl xl:text-[12rem] font-bold text-white font-mono tracking-wider">
+                  {Math.floor((secondsLeft % 3600) / 60).toString().padStart(2, '0')}
+                </div>
+              </div>
+            </div>
+            
+            {/* Second Colon */}
+            <div className="flex flex-col space-y-2 sm:space-y-4 md:space-y-6">
+              <div className="w-2 h-2 sm:w-4 sm:h-4 md:w-6 md:h-6 lg:w-8 lg:h-8 bg-white rounded-full shadow-lg"></div>
+              <div className="w-2 h-2 sm:w-4 sm:h-4 md:w-6 md:h-6 lg:w-8 lg:h-8 bg-white rounded-full shadow-lg"></div>
+            </div>
+            
+            {/* Seconds */}
+            <div className="relative">
+              <div className="bg-gray-900 rounded-xl sm:rounded-2xl p-3 sm:p-6 md:p-12 lg:p-16 shadow-2xl border-2 border-gray-700">
+                <div className="text-4xl sm:text-6xl md:text-7xl lg:text-9xl xl:text-[12rem] font-bold text-white font-mono tracking-wider">
+                  {(secondsLeft % 60).toString().padStart(2, '0')}
+                </div>
+              </div>
+            </div>
+          </div>
 
-            {/* Session Info */}
-            <div className="text-center mb-6">
-              <div className="text-gray-400 text-base sm:text-lg mb-1">
-                {minutes === 0 ? 'Long Deep Work Session' : `${minutes}-minute Focus Session`}
-              </div>
-              <div className="text-gray-500 text-sm">
-                {skills.find(s => s.id === selectedSkill)?.name || 'Focus Session'}
-              </div>
+          {/* Session Info */}
+          <div className="text-center mb-6 sm:mb-8">
+            <div className="text-gray-400 text-sm sm:text-base md:text-lg lg:text-xl mb-1 sm:mb-2">
+              {minutes === 0 ? 'Long Deep Work Session' : `${minutes}-minute Focus Session`}
             </div>
+            <div className="text-gray-500 text-xs sm:text-sm md:text-base">
+              {skills.find(s => s.id === selectedSkill)?.name || 'Focus Session'}
+            </div>
+          </div>
 
-            {/* Cancel Button */}
-            <div className="flex justify-center">
-              <button
-                onClick={() => setShowFlipMode(false)}
-                className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors"
-              >
-                Cancel
-              </button>
-            </div>
+          {/* Cancel Button */}
+          <div className="flex justify-center">
+            <button
+              onClick={() => setShowFlipMode(false)}
+              className="bg-gray-600 hover:bg-gray-700 text-white px-4 sm:px-6 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors"
+            >
+              Cancel
+            </button>
           </div>
         </div>
       )}
