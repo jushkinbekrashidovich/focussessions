@@ -248,7 +248,7 @@ export default function Home() {
               Focus Score
             </h2>
             <p className="text-gray-400 text-base sm:text-lg max-w-md mx-auto md:mx-0">
-              Get a personalized Focus Score that shows how well you can concentrate. Track your progress as you build stronger attention skills through longer focus sessions and consistent practice.
+              Focus Score shows your progress as you build stronger attention skills through longer focus sessions and consistent practice.
             </p>
           </div>
         </div>
