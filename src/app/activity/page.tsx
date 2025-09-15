@@ -93,39 +93,78 @@ export default function ActivityPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#191847] text-white flex flex-col">
+    <div className="min-h-screen bg-[#13133c] text-white flex flex-col">
       <AppNavbar />
-      <div className="flex-1 px-10 py-8">
+      <div className="flex-1 px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-2xl font-bold">My Goals</h1>
-            {!isSubscriptionLoading && !isPro && (
-              <p className="text-sm text-gray-400 mt-1">
-                Free plan: {skills.length}/1 goal used
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-white mb-2">My Goals</h1>
+          <p className="text-gray-400 text-lg">Create and manage your focus goals to track progress</p>
+          {!isSubscriptionLoading && !isPro && (
+            <div className="mt-4 p-4 bg-[#1d1d4e] rounded-lg border border-gray-700">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-white">
+                    Free plan: {skills.length}/1 goal used
+                  </p>
+                  {skills.length >= 1 && (
+                    <p className="text-xs text-gray-400 mt-1">
+                      Upgrade to Pro to add unlimited goals
+                    </p>
+                  )}
+                </div>
                 {skills.length >= 1 && (
-                  <span className="text-purple-400 ml-2">• Upgrade to add more goals</span>
+                  <button
+                    onClick={() => router.push('/pricing')}
+                    className="px-4 py-2 bg-[#4A42E4] hover:bg-[#3b35c6] active:bg-[#2d1b69] text-white rounded-lg text-sm font-medium transition-colors"
+                  >
+                    Upgrade to Pro
+                  </button>
                 )}
-              </p>
-            )}
-          </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Add Goal Button */}
+        <div className="mb-8">
           <button 
             onClick={handleAddGoalClick}
-            className="bg-[#4A42E4] hover:bg-[#3b35c6] active:bg-[#2d1b69] px-5 py-2 rounded-lg text-sm font-semibold transition-colors"
+            className="bg-[#4A42E4] hover:bg-[#3b35c6] active:bg-[#2d1b69] px-6 py-3 rounded-lg text-sm font-semibold transition-colors flex items-center space-x-2"
           >
-            Add new goal
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            <span>Add new goal</span>
           </button>
         </div>
 
         {/* Skills Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {isLoadingSkills ? (
-            <div className="col-span-full text-center text-gray-400 py-8">
-              Loading goals...
+            <div className="col-span-full">
+              <div className="bg-[#1d1d4e] rounded-xl p-8 text-center">
+                <div className="animate-spin w-8 h-8 border-2 border-[#4A42E4] border-t-transparent rounded-full mx-auto mb-4"></div>
+                <p className="text-gray-400">Loading goals...</p>
+              </div>
             </div>
           ) : skills.length === 0 ? (
-            <div className="col-span-full text-center text-gray-400 py-8">
-              No goals yet. Add your first goal to get started!
+            <div className="col-span-full">
+              <div className="bg-[#1d1d4e] rounded-xl p-12 text-center">
+                <div className="w-16 h-16 bg-[#2a2a58] rounded-full flex items-center justify-center mx-auto mb-6">
+                  <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">No goals yet</h3>
+                <p className="text-gray-400 mb-6">Add your first goal to start tracking your focus progress</p>
+                <button 
+                  onClick={handleAddGoalClick}
+                  className="bg-[#4A42E4] hover:bg-[#3b35c6] active:bg-[#2d1b69] px-6 py-3 rounded-lg text-sm font-medium transition-colors"
+                >
+                  Create your first goal
+                </button>
+              </div>
             </div>
           ) : (
             skills.map((skill) => (
