@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { Skill } from '@/lib/skillsService'
-import { useSkills, useCreateSession } from '@/lib/hooks'
+import { useSkills, useCreateSession, useCreateSkill } from '@/lib/hooks'
 import AddSkillModal from './AddSkillModal'
 
 interface TimerBoxProps {
@@ -23,10 +23,12 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
   const [lastUpdateTime, setLastUpdateTime] = useState<number>(Date.now())
   const [showAddGoalModal, setShowAddGoalModal] = useState(false)
   const [showNoGoalModal, setShowNoGoalModal] = useState(false)
+  const [isAddingGoal, setIsAddingGoal] = useState(false)
 
   // Use React Query hooks
   const { data: skills = [], isLoading: isLoadingSkills } = useSkills()
   const createSessionMutation = useCreateSession()
+  const createSkillMutation = useCreateSkill()
 
   // Request notification permission on component mount
   useEffect(() => {
@@ -129,14 +131,16 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
     setShowFlipMode(true)
   }
 
-  const handleAddGoal = async (goalName: string) => {
+  const handleAddGoal = async (skillName: string, targetHours: number, description: string) => {
     try {
-      // This will be handled by the AddSkillModal component
-      // The modal will close and skills will refresh automatically
+      setIsAddingGoal(true)
+      await createSkillMutation.mutateAsync({ name: skillName, targetHours, description })
       setShowAddGoalModal(false)
     } catch (error) {
       console.error('Error adding goal:', error)
       // The AddSkillModal will handle its own error states
+    } finally {
+      setIsAddingGoal(false)
     }
   }
 
@@ -413,7 +417,7 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
         isOpen={showAddGoalModal}
         onClose={() => setShowAddGoalModal(false)}
         onAddSkill={handleAddGoal}
-        isLoading={false}
+        isLoading={isAddingGoal}
       />
 
       {/* No Goal Modal */}
