@@ -119,40 +119,71 @@ export default function SettingsPage() {
       <div className="min-h-screen bg-[#13133c] text-white">
         <AppNavbar />
       
-      <div className="max-w-6xl mx-auto p-6">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Settings</h1>
-          <p className="text-gray-400">Manage your account and subscription</p>
-        </div>
-
+      <div className="max-w-7xl mx-auto p-6">
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Sidebar Navigation */}
-          <div className="lg:w-64 space-y-2">
+          {/* Left Sidebar Navigation */}
+          <div className="lg:w-80 space-y-6">
+            {/* User Profile Section */}
+            <div className="bg-[#1d1d4e] rounded-xl p-6">
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full flex items-center justify-center">
+                  <span className="text-white text-lg font-semibold">
+                    {user?.user_metadata?.full_name?.charAt(0) || user?.email?.charAt(0) || 'U'}
+                  </span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-lg font-semibold text-white truncate">
+                    {user?.user_metadata?.full_name || 'User'}
+                  </h3>
+                  <p className="text-sm text-gray-400 truncate">
+                    {isPro ? 'Pro Plan' : 'Free Plan'}
+                  </p>
+                  <p className="text-xs text-gray-500 truncate">
+                    {user?.email}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Navigation Menu */}
             <div className="space-y-1">
-              <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">My Account</h3>
               <button
                 onClick={() => setActiveTab('general')}
-                className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
+                className={`w-full text-left px-4 py-3 rounded-lg transition-colors flex items-center space-x-3 ${
                   activeTab === 'general' 
-                    ? 'bg-purple-600 text-white' 
-                    : 'text-gray-300 hover:bg-gray-700'
+                    ? 'bg-[#4A42E4] text-white' 
+                    : 'text-gray-300 hover:bg-[#2a2a58]'
                 }`}
               >
-                General
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span>General</span>
+              </button>
+
+              <button
+                onClick={() => setActiveTab('plan-billing')}
+                className={`w-full text-left px-4 py-3 rounded-lg transition-colors flex items-center space-x-3 ${
+                  activeTab === 'plan-billing' 
+                    ? 'bg-[#4A42E4] text-white' 
+                    : 'text-gray-300 hover:bg-[#2a2a58]'
+                }`}
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <span>Billing & Invoices</span>
               </button>
             </div>
 
-            <div className="space-y-1 mt-6">
-              <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Subscription</h3>
-              <button
-                onClick={() => setActiveTab('plan-billing')}
-                className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
-                  activeTab === 'plan-billing' 
-                    ? 'bg-purple-600 text-white' 
-                    : 'text-gray-300 hover:bg-gray-700'
-                }`}
-              >
-                Plan & Billing
+            {/* Support Section */}
+            <div className="pt-6 border-t border-gray-700">
+              <button className="w-full text-left px-4 py-3 rounded-lg transition-colors flex items-center space-x-3 text-gray-300 hover:bg-[#2a2a58]">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+                <span>Contact Us</span>
               </button>
             </div>
           </div>
@@ -160,26 +191,38 @@ export default function SettingsPage() {
           {/* Main Content */}
           <div className="flex-1">
             {activeTab === 'general' && (
-              <div className="space-y-6">
-                <h2 className="text-2xl font-semibold">General Settings</h2>
-                <div className="bg-[#1d1d4e] p-6 rounded-xl">
-                  <div className="space-y-4">
+              <div className="space-y-8">
+                <div>
+                  <h1 className="text-2xl font-bold text-white mb-2">General Settings</h1>
+                  <p className="text-gray-400">Manage your account information and preferences</p>
+                </div>
+
+                <div className="bg-[#1d1d4e] rounded-xl p-8">
+                  <div className="space-y-6">
                     <div>
-                      <label className="block text-sm font-medium mb-2">Email</label>
+                      <label className="block text-sm font-medium text-gray-300 mb-3">Email Address</label>
                       <input
                         type="email"
                         value={user?.email || ''}
                         disabled
-                        className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300"
+                        className="w-full px-4 py-3 bg-[#2a2a58] border border-gray-600 rounded-lg text-gray-300 text-sm"
                       />
+                      <p className="text-xs text-gray-500 mt-2">Your email address cannot be changed</p>
                     </div>
-                    <div className="pt-4 border-t border-gray-600">
-                      <button
-                        onClick={() => setShowLogoutModal(true)}
-                        className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition"
-                      >
-                        Logout
-                      </button>
+                    
+                    <div className="pt-6 border-t border-gray-700">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h3 className="text-sm font-medium text-gray-300 mb-1">Account Actions</h3>
+                          <p className="text-xs text-gray-500">Sign out of your account</p>
+                        </div>
+                        <button
+                          onClick={() => setShowLogoutModal(true)}
+                          className="px-6 py-2.5 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white rounded-lg transition-colors text-sm font-medium"
+                        >
+                          Logout
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -188,90 +231,118 @@ export default function SettingsPage() {
 
 
             {activeTab === 'plan-billing' && (
-              <div className="space-y-6">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h2 className="text-2xl font-semibold">Plan & Billing</h2>
-                    <p className="text-gray-400">Manage your plan and payments</p>
+              <div className="space-y-8">
+                <div>
+                  <h1 className="text-2xl font-bold text-white mb-2">Billing & Invoices</h1>
+                  <p className="text-gray-400">Manage your subscription and view billing history</p>
+                </div>
+
+                {/* Current Plan Summary */}
+                <div className="bg-[#1d1d4e] rounded-xl p-8">
+                  <div className="flex justify-between items-start mb-6">
+                    <div>
+                      <h2 className="text-lg font-semibold text-white mb-2">
+                        {isPro ? getPlanName(subscription?.plan_type || 'free') : 'Free Plan'} Summary
+                      </h2>
+                      {isPro && subscription?.current_period_start && subscription?.current_period_end && (
+                        <p className="text-sm text-gray-400">
+                          {formatDate(subscription.current_period_start)} - {formatDate(subscription.current_period_end)}
+                        </p>
+                      )}
+                    </div>
+                    <button
+                      onClick={isPro ? handleManagePayments : handleChangePlan}
+                      className="px-4 py-2 border border-gray-600 text-gray-300 rounded-lg hover:bg-[#2a2a58] transition-colors text-sm font-medium flex items-center"
+                    >
+                      {isPro ? 'Manage Subscription' : 'Upgrade to Pro'}
+                      <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </button>
                   </div>
-                  <div className="flex gap-3">
-                    {!isPro ? (
-                      <button
-                        onClick={handleChangePlan}
-                        className="px-6 py-3 border border-gray-300 text-white rounded-lg hover:bg-gray-800 transition flex items-center"
-                      >
-                        Upgrade to Pro
-                        <span className="ml-2">↗</span>
-                      </button>
-                    ) : (
-                      <button
-                        onClick={handleManagePayments}
-                        className="px-6 py-3 border border-gray-300 text-white rounded-lg hover:bg-gray-800 transition flex items-center"
-                      >
-                        Manage Subscription
-                        <span className="ml-2">↗</span>
-                      </button>
+
+                  {/* Plan Details Table */}
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-3 gap-4 text-sm">
+                      <div className="text-gray-400">Item</div>
+                      <div className="text-gray-400">Quantity</div>
+                      <div className="text-gray-400">Cost</div>
+                    </div>
+                    
+                    <div className="border-t border-gray-700 pt-4">
+                      <div className="grid grid-cols-3 gap-4 text-sm">
+                        <div className="text-white">
+                          {isPro ? 'Pro Plan Access' : 'Free Plan Access'}
+                        </div>
+                        <div className="text-gray-300">
+                          {isPro ? 'Unlimited' : 'Limited'}
+                        </div>
+                        <div className="text-gray-300">
+                          {isPro ? getPlanPrice(subscription?.plan_type || 'free') : 'Free'}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="border-t border-gray-700 pt-4">
+                      <div className="grid grid-cols-3 gap-4 text-sm font-medium">
+                        <div className="text-white">Total</div>
+                        <div className="text-gray-300">-</div>
+                        <div className="text-white">
+                          {isPro ? getPlanPrice(subscription?.plan_type || 'free') : 'Free'}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {isPro && subscription?.current_period_end && (
+                    <div className="mt-4 text-xs text-gray-500">
+                      * Your plan renews automatically on {formatDate(subscription.current_period_end)}
+                    </div>
+                  )}
+                </div>
+
+                {/* Invoices Section */}
+                <div className="bg-[#1d1d4e] rounded-xl p-8">
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-lg font-semibold text-white">Invoices</h2>
+                    <div className="flex items-center space-x-2">
+                      <label className="text-sm text-gray-400">Period:</label>
+                      <select className="bg-[#2a2a58] border border-gray-600 text-white text-sm px-3 py-1.5 rounded">
+                        <option>Current Period</option>
+                        <option>Previous Period</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="text-center py-8">
+                    <div className="text-3xl font-bold text-white mb-2">
+                      {isPro ? getPlanPrice(subscription?.plan_type || 'free') : '$0.00'}
+                    </div>
+                    <p className="text-sm text-gray-400 mb-6">
+                      {isPro ? 'Current Period Total' : 'No charges for free plan'}
+                    </p>
+                    
+                    {!isPro && (
+                      <div className="space-y-4">
+                        <div className="grid grid-cols-4 gap-4 text-sm text-gray-400">
+                          <div>Type</div>
+                          <div>Cost</div>
+                          <div>Qty</div>
+                          <div>Total</div>
+                        </div>
+                        <div className="grid grid-cols-4 gap-4 text-sm">
+                          <div className="text-gray-300">Subtotal:</div>
+                          <div className="text-gray-300">-</div>
+                          <div className="text-gray-300">-</div>
+                          <div className="text-gray-300">$0.00</div>
+                        </div>
+                        <div className="text-xs text-gray-500 mt-4">
+                          No invoices found for current period
+                        </div>
+                      </div>
                     )}
                   </div>
                 </div>
-
-                {/* Current Plan */}
-                <div className="bg-[#1d1d4e] p-6 rounded-xl">
-                  <h3 className="text-lg font-semibold mb-4">Current plan</h3>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <div>
-                        <div className="text-2xl font-bold">
-                          {isPro ? getPlanPrice(subscription?.plan_type || 'free') : 'Free plan'}
-                        </div>
-                        <div className="flex items-center space-x-2 mt-2">
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                            isPro ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                          }`}>
-                            {isPro ? getPlanName(subscription?.plan_type || 'free') : 'Free'}
-                          </span>
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium flex items-center ${
-                            isPro ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                          }`}>
-                            <span className="w-2 h-2 bg-green-500 rounded-full mr-1"></span>
-                            {isPro ? 'Active' : 'Free'}
-                          </span>
-                        </div>
-                        {isPro && subscription?.current_period_end && (
-                          <div className="text-sm text-gray-400 mt-1">
-                            Renews at {formatDate(subscription.current_period_end)}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <button
-                      onClick={handleChangePlan}
-                      className="px-6 py-3 border border-gray-300 text-white rounded-lg hover:bg-gray-800 transition"
-                    >
-                      Change plan
-                    </button>
-                  </div>
-                </div>
-
-                {/* Support Message */}
-                <div className="bg-[#1d1d4e] p-4 rounded-lg mt-6">
-                  <div className="text-center">
-                    <h3 className="text-base font-semibold mb-2 text-white">Need Help?</h3>
-                    <p className="text-gray-400 mb-3 text-sm">
-                      If you have any issues or concerns, please don&apos;t hesitate to reach out. We&apos;re here to help and will respond as soon as possible.
-                    </p>
-                    <div className="flex items-center justify-center space-x-2">
-                      <span className="text-gray-300 text-sm">Email us at:</span>
-                      <a 
-                        href="mailto:jushkinbek.co@gmail.com"
-                        className="text-purple-400 hover:text-purple-300 font-medium transition-colors text-sm"
-                      >
-                        jushkinbek.co@gmail.com
-                      </a>
-                    </div>
-                  </div>
-                </div>
-
               </div>
             )}
           </div>
