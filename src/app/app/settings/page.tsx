@@ -179,7 +179,14 @@ export default function SettingsPage() {
 
             {/* Support Section */}
             <div className="pt-6 border-t border-gray-700">
-              <button className="w-full text-left px-4 py-3 rounded-lg transition-colors flex items-center space-x-3 text-gray-300 hover:bg-[#2a2a58]">
+              <button 
+                onClick={() => setActiveTab('contact')}
+                className={`w-full text-left px-4 py-3 rounded-lg transition-colors flex items-center space-x-3 ${
+                  activeTab === 'contact' 
+                    ? 'bg-[#4A42E4] text-white' 
+                    : 'text-gray-300 hover:bg-[#2a2a58]'
+                }`}
+              >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
@@ -341,6 +348,99 @@ export default function SettingsPage() {
                         </div>
                       </div>
                     )}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'contact' && (
+              <div className="space-y-8">
+                <div>
+                  <h1 className="text-2xl font-bold text-white mb-2">Contact Us</h1>
+                  <p className="text-gray-400">Get help and support for your FocusDot account</p>
+                </div>
+
+                {/* Contact Information */}
+                <div className="bg-[#1d1d4e] rounded-xl p-8">
+                  <div className="space-y-6">
+                    <div>
+                      <h2 className="text-lg font-semibold text-white mb-4">Get Support</h2>
+                      <p className="text-gray-300 mb-6">
+                        If you have any issues, questions, or feedback about FocusDot, we're here to help. 
+                        Our support team typically responds within 24 hours.
+                      </p>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div className="flex items-center space-x-4 p-4 bg-[#2a2a58] rounded-lg">
+                        <div className="w-10 h-10 bg-[#4A42E4] rounded-lg flex items-center justify-center">
+                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-medium text-white">Email Support</h3>
+                          <p className="text-sm text-gray-400">Send us an email for assistance</p>
+                          <a 
+                            href="mailto:jushkinbek.co@gmail.com"
+                            className="text-[#4A42E4] hover:text-[#3b35c6] font-medium text-sm transition-colors"
+                          >
+                            jushkinbek.co@gmail.com
+                          </a>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center space-x-4 p-4 bg-[#2a2a58] rounded-lg">
+                        <div className="w-10 h-10 bg-[#4A42E4] rounded-lg flex items-center justify-center">
+                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-medium text-white">Response Time</h3>
+                          <p className="text-sm text-gray-400">We typically respond within 24 hours</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Common Issues */}
+                <div className="bg-[#1d1d4e] rounded-xl p-8">
+                  <h2 className="text-lg font-semibold text-white mb-4">Common Issues</h2>
+                  <div className="space-y-4">
+                    <div className="border-l-4 border-[#4A42E4] pl-4">
+                      <h3 className="text-sm font-medium text-white mb-1">Timer not working</h3>
+                      <p className="text-sm text-gray-400">Make sure you have created a goal before starting the timer</p>
+                    </div>
+                    <div className="border-l-4 border-[#4A42E4] pl-4">
+                      <h3 className="text-sm font-medium text-white mb-1">Subscription issues</h3>
+                      <p className="text-sm text-gray-400">Check your billing information in the Billing & Invoices section</p>
+                    </div>
+                    <div className="border-l-4 border-[#4A42E4] pl-4">
+                      <h3 className="text-sm font-medium text-white mb-1">Data not syncing</h3>
+                      <p className="text-sm text-gray-400">Try refreshing the page or logging out and back in</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Feedback Section */}
+                <div className="bg-[#1d1d4e] rounded-xl p-8">
+                  <h2 className="text-lg font-semibold text-white mb-4">Send Feedback</h2>
+                  <p className="text-gray-300 mb-6">
+                    We value your feedback! Whether you have suggestions for new features, 
+                    found a bug, or just want to share your experience, we'd love to hear from you.
+                  </p>
+                  <div className="flex items-center space-x-4">
+                    <a 
+                      href="mailto:jushkinbek.co@gmail.com?subject=FocusDot Feedback"
+                      className="px-6 py-3 bg-[#4A42E4] hover:bg-[#3b35c6] active:bg-[#2d1b69] text-white rounded-lg transition-colors text-sm font-medium flex items-center"
+                    >
+                      Send Feedback
+                      <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
                   </div>
                 </div>
               </div>

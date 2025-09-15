@@ -17,18 +17,14 @@ export interface CustomerPortalOptions {
  */
 export async function openCustomerPortal(options: CustomerPortalOptions = {}) {
   try {
-    console.log('🔍 Debug: Opening Customer Portal with options:', options)
-    
-            // Use static customer portal link from environment variables
-            const portalUrl = process.env.NEXT_PUBLIC_PADDLE_CUSTOMER_PORTAL_URL || 'https://customer-portal.paddle.com/cpl_01k324ctze3tse1vv5gbv4xjc3'
+    // Use static customer portal link from environment variables
+    const portalUrl = process.env.NEXT_PUBLIC_PADDLE_CUSTOMER_PORTAL_URL || 'https://customer-portal.paddle.com/cpl_01k324ctze3tse1vv5gbv4xjc3'
     
     if (!portalUrl) {
       console.error('❌ Customer portal URL not configured')
       throw new Error('Customer portal URL not configured. Please set NEXT_PUBLIC_PADDLE_CUSTOMER_PORTAL_URL environment variable.')
     }
 
-    console.log('✅ Opening Customer Portal:', portalUrl)
-    
     // Open customer portal in new tab
     window.open(portalUrl, '_blank')
     
@@ -45,8 +41,6 @@ export async function openCustomerPortal(options: CustomerPortalOptions = {}) {
  */
 export async function getCustomerInfo(customerEmail: string) {
   try {
-    console.log('🔍 Debug: Getting customer info for:', customerEmail)
-    
     // Note: This would typically require a backend API call to Paddle's API
     // since customer data retrieval requires server-side authentication
     // For now, we'll return a placeholder
@@ -66,8 +60,6 @@ export async function getCustomerInfo(customerEmail: string) {
  */
 export async function cancelSubscription(subscriptionId: string) {
   try {
-    console.log('🔍 Debug: Canceling subscription:', subscriptionId)
-    
     if (!subscriptionId) {
       throw new Error('Subscription ID is required')
     }
@@ -87,7 +79,6 @@ export async function cancelSubscription(subscriptionId: string) {
     }
 
     const result = await response.json()
-    console.log('✅ Subscription canceled successfully:', result)
     
     return result
   } catch (error) {
