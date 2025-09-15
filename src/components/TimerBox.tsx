@@ -22,6 +22,7 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
   const [isPageVisible, setIsPageVisible] = useState(true)
   const [lastUpdateTime, setLastUpdateTime] = useState<number>(Date.now())
   const [showAddGoalModal, setShowAddGoalModal] = useState(false)
+  const [showNoGoalModal, setShowNoGoalModal] = useState(false)
 
   // Use React Query hooks
   const { data: skills = [], isLoading: isLoadingSkills } = useSkills()
@@ -114,6 +115,12 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
   }, [skills, selectedSkill])
 
   const handleStart = () => {
+    // Check if user has no goals and tries to start timer
+    if (skills.length === 0) {
+      setShowNoGoalModal(true)
+      return
+    }
+    
     if (!selectedSkill) return
     setSessionStart(new Date())
     // For Long deep work (value 0), start from 00:00, otherwise use the selected duration
@@ -408,6 +415,28 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
         onAddSkill={handleAddGoal}
         isLoading={false}
       />
+
+      {/* No Goal Modal */}
+      {showNoGoalModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-black border border-gray-700 rounded-lg p-6 max-w-sm mx-4">
+            <div className="text-center">
+              <div className="text-white text-lg font-semibold mb-3">
+                Please create a goal first
+              </div>
+              <div className="text-gray-300 text-sm mb-6">
+                You need to create a goal before starting a timer session.
+              </div>
+              <button
+                onClick={() => setShowNoGoalModal(false)}
+                className="bg-[#5046E5] hover:bg-[#4338CA] text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   )
 }
