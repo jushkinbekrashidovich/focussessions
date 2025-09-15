@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { useRouter } from 'next/navigation'
 import { Skill } from '@/lib/skillsService'
 import { useSkills, useCreateSession } from '@/lib/hooks'
 
@@ -9,6 +10,7 @@ interface TimerBoxProps {
 }
 
 export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
+  const router = useRouter()
   const [minutes, setMinutes] = useState(60)
   const [secondsLeft, setSecondsLeft] = useState(minutes * 60)
   const [running, setRunning] = useState(false)
@@ -112,6 +114,13 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
   }, [skills, selectedSkill])
 
   const handleStart = () => {
+    // If no goals exist, redirect to goals page
+    if (skills.length === 0) {
+      alert('You need to create a goal first! Redirecting to goals page...')
+      router.push('/activity')
+      return
+    }
+    
     if (!selectedSkill) return
     setSessionStart(new Date())
     // For Long deep work (value 0), start from 00:00, otherwise use the selected duration
@@ -263,7 +272,7 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
           <button
             onClick={handleStart}
             className="w-full bg-[#5046E5] text-white py-2.5 sm:py-3 rounded-lg text-sm font-semibold disabled:opacity-50"
-            disabled={!selectedSkill || skills.length === 0}
+            disabled={!selectedSkill && skills.length > 0}
           >
             {minutes === 0 ? '▶ Start Long Session' : '▶ Start Timer'}
           </button>
