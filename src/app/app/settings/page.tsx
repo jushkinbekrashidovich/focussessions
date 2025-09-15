@@ -366,7 +366,7 @@ export default function SettingsPage() {
                     <div>
                       <h2 className="text-lg font-semibold text-white mb-4">Get Support</h2>
                       <p className="text-gray-300 mb-6">
-                        If you have any issues, questions, or feedback about FocusDot, we're here to help. 
+                        If you have any issues, questions, or feedback about FocusDot, we&apos;re here to help. 
                         Our support team typically responds within 24 hours.
                       </p>
                     </div>
@@ -429,7 +429,7 @@ export default function SettingsPage() {
                   <h2 className="text-lg font-semibold text-white mb-4">Send Feedback</h2>
                   <p className="text-gray-300 mb-6">
                     We value your feedback! Whether you have suggestions for new features, 
-                    found a bug, or just want to share your experience, we'd love to hear from you.
+                    found a bug, or just want to share your experience, we&apos;d love to hear from you.
                   </p>
                   <div className="flex items-center space-x-4">
                     <a 
