@@ -112,16 +112,16 @@ export default function ActivityFeed({ maxItems = 10, refreshTrigger }: Activity
   return (
     <div className="relative">
       {/* Vertical timeline line */}
-      <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gray-600"></div>
+      <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-600"></div>
       
-      <div className="space-y-6">
+      <div className="space-y-4">
         {sessions.map((session, index) => (
           <div key={session.id} className="relative flex items-start space-x-4">
             {/* Circular profile icon */}
             <div className="relative z-10 flex-shrink-0">
               {user?.user_metadata?.avatar_url ? (
                 // User's Google OAuth profile picture
-                <div className="w-8 h-8 rounded-full overflow-hidden">
+                <div className="w-5 h-5 rounded-full overflow-hidden">
                   <img 
                     src={user.user_metadata.avatar_url} 
                     alt="Profile" 
@@ -130,7 +130,7 @@ export default function ActivityFeed({ maxItems = 10, refreshTrigger }: Activity
                 </div>
               ) : (
                 // Fallback to gradient avatar with initials
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full flex items-center justify-center">
+                <div className="w-5 h-5 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full flex items-center justify-center">
                   <span className="text-white text-xs font-medium">
                     {user?.user_metadata?.full_name?.charAt(0) || user?.email?.charAt(0) || 'U'}
                   </span>
@@ -140,13 +140,13 @@ export default function ActivityFeed({ maxItems = 10, refreshTrigger }: Activity
 
             {/* Activity content */}
             <div className="flex-1 min-w-0">
-              <div className="text-white">
+              <div className="text-white text-sm">
                 You completed {formatDuration(session.duration_min)} of deep work
                 {session.skills?.name && (
                   <span className="text-gray-300"> in {session.skills.name}</span>
                 )}
               </div>
-              <div className="text-gray-400 text-sm mt-1">
+              <div className="text-gray-400 text-xs mt-1">
                 {formatTimeAgo(session.created_at)}
               </div>
             </div>

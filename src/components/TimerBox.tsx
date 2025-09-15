@@ -1,16 +1,15 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { useRouter } from 'next/navigation'
 import { Skill } from '@/lib/skillsService'
 import { useSkills, useCreateSession } from '@/lib/hooks'
+import AddSkillModal from './AddSkillModal'
 
 interface TimerBoxProps {
   onSessionCompleted?: () => void
 }
 
 export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
-  const router = useRouter()
   const [minutes, setMinutes] = useState(60)
   const [secondsLeft, setSecondsLeft] = useState(minutes * 60)
   const [running, setRunning] = useState(false)
@@ -22,6 +21,7 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
   const [isSaving, setIsSaving] = useState(false)
   const [isPageVisible, setIsPageVisible] = useState(true)
   const [lastUpdateTime, setLastUpdateTime] = useState<number>(Date.now())
+  const [showAddGoalModal, setShowAddGoalModal] = useState(false)
 
   // Use React Query hooks
   const { data: skills = [], isLoading: isLoadingSkills } = useSkills()
@@ -114,19 +114,18 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
   }, [skills, selectedSkill])
 
   const handleStart = () => {
-    // If no goals exist, redirect to goals page
-    if (skills.length === 0) {
-      alert('You need to create a goal first! Redirecting to goals page...')
-      router.push('/activity')
-      return
-    }
-    
     if (!selectedSkill) return
     setSessionStart(new Date())
     // For Long deep work (value 0), start from 00:00, otherwise use the selected duration
     setSecondsLeft(minutes === 0 ? 0 : minutes * 60)
     setRunning(true)
     setShowFlipMode(true)
+  }
+
+  const handleAddGoal = async (goalName: string) => {
+    // This will be handled by the AddSkillModal component
+    // The modal will close and skills will refresh automatically
+    setShowAddGoalModal(false)
   }
 
   // Update timer display when duration changes
@@ -228,9 +227,13 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
             Loading goals...
           </div>
         ) : skills.length === 0 ? (
-          <div className="w-full border rounded-lg p-2 text-sm bg-[#26265e] text-gray-400 text-center">
-            No goals available
-          </div>
+          <button
+            onClick={() => setShowAddGoalModal(true)}
+            className="w-full border rounded-lg p-2 text-sm bg-[#26265e] text-gray-300 hover:text-white hover:bg-[#2a2a6e] transition-colors text-center"
+            disabled={running}
+          >
+            + Create a goal
+          </button>
         ) : (
           <select
             value={selectedSkill}
@@ -392,6 +395,14 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
           </div>
         </div>
       )}
+
+      {/* Add Goal Modal */}
+      <AddSkillModal
+        isOpen={showAddGoalModal}
+        onClose={() => setShowAddGoalModal(false)}
+        onAddSkill={handleAddGoal}
+        isLoading={false}
+      />
     </>
   )
 }
