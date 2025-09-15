@@ -109,14 +109,24 @@ export default function ActivityFeed({ maxItems = 10, refreshTrigger }: Activity
     )
   }
 
+  // Add error state handling
+  if (sessions === null || sessions === undefined) {
+    return (
+      <div className="text-center text-red-400 py-8">
+        <p>Failed to load activity.</p>
+        <p className="text-sm mt-2">Please try refreshing the page.</p>
+      </div>
+    )
+  }
+
   return (
     <div className="relative">
       {/* Vertical timeline line */}
-      <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-600"></div>
+      <div className="absolute left-3 sm:left-4 top-0 bottom-0 w-0.5 bg-gray-600"></div>
       
       <div className="space-y-4">
         {sessions.map((session, index) => (
-          <div key={session.id} className="relative flex items-start space-x-4">
+          <div key={session.id} className="relative flex items-start space-x-3 sm:space-x-4">
             {/* Circular profile icon */}
             <div className="relative z-10 flex-shrink-0">
               {user?.user_metadata?.avatar_url ? (

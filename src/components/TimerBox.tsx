@@ -123,9 +123,14 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
   }
 
   const handleAddGoal = async (goalName: string) => {
-    // This will be handled by the AddSkillModal component
-    // The modal will close and skills will refresh automatically
-    setShowAddGoalModal(false)
+    try {
+      // This will be handled by the AddSkillModal component
+      // The modal will close and skills will refresh automatically
+      setShowAddGoalModal(false)
+    } catch (error) {
+      console.error('Error adding goal:', error)
+      // The AddSkillModal will handle its own error states
+    }
   }
 
   // Update timer display when duration changes
@@ -218,8 +223,8 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
   return (
     <>
       <div className="w-full lg:w-[330px] bg-[#1D1D4E] rounded-xl p-4 sm:p-6 text-center space-y-3 sm:space-y-4">
-        <div className="w-48 h-48 sm:w-56 sm:h-56 lg:w-60 lg:h-60 mx-auto rounded-full border-2 border-gray-300 flex flex-col items-center justify-center">
-          <div className="text-3xl sm:text-4xl lg:text-5xl font-semibold">{format(secondsLeft)}</div>
+        <div className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-60 lg:h-60 mx-auto rounded-full border-2 border-gray-300 flex flex-col items-center justify-center">
+          <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold">{format(secondsLeft)}</div>
         </div>
 
         {isLoadingSkills ? (

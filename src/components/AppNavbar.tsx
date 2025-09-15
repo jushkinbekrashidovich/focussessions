@@ -14,7 +14,7 @@ export default function AppNavbar() {
       <div className="flex items-center gap-4 sm:gap-6 md:gap-8">
         {/* Logo */}
         <span className="flex items-center gap-2 text-lg font-semibold text-white">
-          <Image src="/logo.svg" alt="Logo" width={106} height={106} priority />
+          <Image src="/logo.svg" alt="Logo" width={80} height={80} priority />
           
         </span>
 

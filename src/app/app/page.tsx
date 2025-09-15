@@ -87,14 +87,14 @@ export default function HomePage() {
         <AppNavbar />
 
       {/* Body */}
-      <div className="flex flex-col lg:flex-row flex-1 p-4 sm:p-6 lg:p-8 gap-6 lg:gap-12">
+      <div className="flex flex-col lg:flex-row flex-1 p-4 sm:p-6 lg:p-8 gap-6 lg:gap-8">
         {/* Timer section - Mobile: full width, Desktop: fixed width */}
         <div className="w-full lg:w-[330px]">
           <TimerBox onSessionCompleted={handleSessionCompleted} />
         </div>
 
         {/* Main dashboard - Mobile: vertical stack, Desktop: horizontal layout */}
-        <div className="flex-1 space-y-6 lg:space-y-12 overflow-auto">
+        <div className="flex-1 space-y-6 lg:space-y-8 overflow-auto">
           {/* Stats */}
           <DeepWorkStats refreshTrigger={refreshTrigger} />
 
