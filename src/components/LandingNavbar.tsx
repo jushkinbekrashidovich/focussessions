@@ -51,14 +51,14 @@ export default function LandingNavbar({ user }: LandingNavbarProps) {
           {user ? (
             <Link
               href="/app"
-              className="bg-[#4A42E4] hover:bg-[#3b35c6] px-5 py-2 rounded-lg text-sm font-semibold text-white transition"
+              className="bg-[#4A42E4] hover:bg-[#3b35c6] active:bg-[#2d1b69] px-5 py-2 rounded-lg text-sm font-semibold text-white transition"
             >
               Dashboard
             </Link>
           ) : (
             <Link
               href="/login"
-              className="bg-[#4A42E4] hover:bg-[#3b35c6] px-5 py-2 rounded-lg text-sm font-semibold text-white transition"
+              className="bg-[#4A42E4] hover:bg-[#3b35c6] active:bg-[#2d1b69] px-5 py-2 rounded-lg text-sm font-semibold text-white transition"
             >
               Get Started
             </Link>
@@ -122,7 +122,7 @@ export default function LandingNavbar({ user }: LandingNavbarProps) {
             {!user && (
               <Link
                 href="/login"
-                className="block mx-6 mt-2 bg-[#4A42E4] hover:bg-[#3b35c6] px-5 py-3 rounded-lg text-sm font-semibold text-white transition text-center"
+                className="block mx-6 mt-2 bg-[#4A42E4] hover:bg-[#3b35c6] active:bg-[#2d1b69] px-5 py-3 rounded-lg text-sm font-semibold text-white transition text-center"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Get Started

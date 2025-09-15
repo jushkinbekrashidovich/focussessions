@@ -104,7 +104,7 @@ export default function AddSkillModal({ isOpen, onClose, onAddSkill, isLoading =
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-2 bg-[#4A42E4] hover:bg-[#3b35c6] text-white rounded-lg font-medium transition-colors disabled:opacity-50"
+              className="flex-1 px-4 py-2 bg-[#4A42E4] hover:bg-[#3b35c6] active:bg-[#2d1b69] text-white rounded-lg font-medium transition-colors disabled:opacity-50"
               disabled={!skillName.trim() || !targetHours.trim() || isLoading}
             >
               {isLoading ? 'Adding...' : 'Add Goal'}

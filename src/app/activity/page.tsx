@@ -111,7 +111,7 @@ export default function ActivityPage() {
           </div>
           <button 
             onClick={handleAddGoalClick}
-            className="bg-[#4A42E4] hover:bg-[#3b35c6] px-5 py-2 rounded-lg text-sm font-semibold"
+            className="bg-[#4A42E4] hover:bg-[#3b35c6] active:bg-[#2d1b69] px-5 py-2 rounded-lg text-sm font-semibold transition-colors"
           >
             Add new goal
           </button>

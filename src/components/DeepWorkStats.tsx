@@ -75,7 +75,7 @@ export default function DeepWorkStats({ refreshTrigger }: DeepWorkStatsProps) {
         </h3>
         <div className="h-1.5 sm:h-2 mt-1 sm:mt-2 bg-[#37378a] rounded-full overflow-hidden">
           <div 
-            className="h-full bg-indigo-500 transition-all duration-500"
+            className="h-full bg-[#4A42E4] transition-all duration-500"
             style={{ width: `${stats.currentMonthProgress}%` }}
           />
         </div>

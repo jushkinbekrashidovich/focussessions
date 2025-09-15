@@ -98,7 +98,7 @@ export default function Home() {
                 </p>
                 <button
                   onClick={() => router.push('/app')}
-                  className="bg-[#4A42E4] hover:bg-[#3b35c6] text-white text-sm font-medium px-6 py-3 sm:py-2 rounded-full transition w-full sm:w-auto"
+                  className="bg-[#4A42E4] hover:bg-[#3b35c6] active:bg-[#2d1b69] text-white text-sm font-medium px-6 py-3 sm:py-2 rounded-full transition w-full sm:w-auto"
                 >
                   Go to Dashboard
                 </button>
@@ -109,7 +109,7 @@ export default function Home() {
                   console.log('Try Now clicked')
                   router.push('/login')
                 }}
-                className="bg-white text-black text-sm font-medium px-6 py-3 sm:py-2 rounded-full hover:bg-gray-200 transition w-full sm:w-auto"
+                className="bg-white hover:bg-gray-100 active:bg-gray-200 text-black text-sm font-medium px-6 py-3 sm:py-2 rounded-full transition w-full sm:w-auto"
               >
                 Try now for free
               </button>
@@ -365,7 +365,7 @@ export default function Home() {
                 }
               }}
               disabled={isPaddleLoading}
-              className="w-full border border-white text-white font-medium py-2 rounded-md hover:bg-white hover:text-black transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full border border-white text-white font-medium py-2 rounded-md hover:bg-white hover:text-black active:bg-gray-100 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isPaddleLoading ? 'Loading...' : 'Get Pro'}
             </button>

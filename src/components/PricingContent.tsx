@@ -31,7 +31,7 @@ export default function PricingContent() {
                 onClick={() => setIsYearly(true)}
                 className={`px-4 py-2 text-sm font-medium rounded-md transition ${
                   isYearly 
-                    ? 'text-white bg-purple-600' 
+                    ? 'text-white bg-[#4A42E4]' 
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
@@ -41,7 +41,7 @@ export default function PricingContent() {
                 onClick={() => setIsYearly(false)}
                 className={`px-4 py-2 text-sm font-medium rounded-md transition ${
                   !isYearly 
-                    ? 'text-white bg-purple-600' 
+                    ? 'text-white bg-[#4A42E4]' 
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
@@ -144,7 +144,7 @@ export default function PricingContent() {
                 }
               }}
               disabled={isPaddleLoading}
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 px-6 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-[#4A42E4] hover:bg-[#3b35c6] active:bg-[#2d1b69] text-white font-medium py-3 px-6 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isPaddleLoading ? 'Loading...' : 'Purchase Plan'}
             </button>

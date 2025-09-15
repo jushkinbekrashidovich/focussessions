@@ -288,17 +288,17 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
         </div>
 
         {!running ? (
-          <button
-            onClick={handleStart}
-            className="w-full bg-[#5046E5] text-white py-2.5 sm:py-3 rounded-lg text-sm font-semibold disabled:opacity-50"
-            disabled={!selectedSkill && skills.length > 0}
-          >
-            {minutes === 0 ? '▶ Start Long Session' : '▶ Start Timer'}
-          </button>
+        <button
+          onClick={handleStart}
+          className="w-full bg-[#4A42E4] hover:bg-[#3b35c6] active:bg-[#2d1b69] text-white py-2.5 sm:py-3 rounded-lg text-sm font-semibold disabled:opacity-50 transition-colors"
+          disabled={!selectedSkill && skills.length > 0}
+        >
+          {minutes === 0 ? '▶ Start Long Session' : '▶ Start Timer'}
+        </button>
         ) : (
           <button
             onClick={handleStop}
-            className="w-full bg-red-500 text-white py-2.5 sm:py-3 rounded-lg text-sm font-semibold"
+            className="w-full bg-red-500 hover:bg-red-600 active:bg-red-700 text-white py-2.5 sm:py-3 rounded-lg text-sm font-semibold transition-colors"
           >
             {minutes === 0 ? '⏹ End Long Session' : '⏹ Stop Timer'}
           </button>
@@ -403,7 +403,7 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
             />
             <button
               onClick={handleSave}
-              className="mt-3 sm:mt-4 w-full bg-[#5046E5] text-white py-2 rounded-lg disabled:opacity-50 text-sm hover:bg-[#4338CA] transition-colors"
+              className="mt-3 sm:mt-4 w-full bg-[#4A42E4] hover:bg-[#3b35c6] active:bg-[#2d1b69] text-white py-2 rounded-lg disabled:opacity-50 text-sm transition-colors"
               disabled={!note.trim() || isSaving}
             >
               {isSaving ? 'Saving...' : 'Save Session'}
@@ -433,7 +433,7 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
               </div>
               <button
                 onClick={() => setShowNoGoalModal(false)}
-                className="bg-[#5046E5] hover:bg-[#4338CA] text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors"
+                className="bg-[#4A42E4] hover:bg-[#3b35c6] active:bg-[#2d1b69] text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors"
               >
                 OK
               </button>
