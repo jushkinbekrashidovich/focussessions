@@ -100,10 +100,10 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
   const getIntensityColor = (intensity: number): string => {
     switch (intensity) {
       case 0: return 'bg-[#33325E]' // No sessions - darkest, blends with background
-      case 1: return 'bg-[#4A42E4]' // 1 session - primary purple (lightest)
-      case 2: return 'bg-[#3b35c6]' // 2 sessions - hover state purple
-      case 3: return 'bg-[#2d1b69]' // 3 sessions - active state purple
-      case 4: return 'bg-[#1a0f4a]' // 4+ sessions - darkest purple
+      case 1: return 'bg-[#9195DE]' // 1 session - light purple
+      case 2: return 'bg-[#7A7FD8]' // 2 sessions - medium purple
+      case 3: return 'bg-[#6369D2]' // 3 sessions - darker purple
+      case 4: return 'bg-[#555AB5]' // 4+ sessions - darkest purple
       default: return 'bg-[#33325E]'
     }
   }
@@ -238,10 +238,10 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
         <div className="flex justify-end items-center space-x-1 mt-2">
           <span className="text-xs text-gray-400">Less</span>
           <div className="flex space-x-0.5">
-            <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-sm bg-[#4A42E4]"></div>
-            <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-sm bg-[#3b35c6]"></div>
-            <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-sm bg-[#2d1b69]"></div>
-            <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-sm bg-[#1a0f4a]"></div>
+            <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-sm bg-[#9195DE]"></div>
+            <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-sm bg-[#7A7FD8]"></div>
+            <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-sm bg-[#6369D2]"></div>
+            <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-sm bg-[#555AB5]"></div>
           </div>
           <span className="text-xs text-gray-400">More</span>
         </div>
