@@ -175,7 +175,7 @@ export default function Home() {
           </div>
 
           {/* Comparison Section: Brainrot vs FocusDot */}
-          <div className="mt-16 md:mt-40 space-y-6">
+          <div id="about" className="mt-24 md:mt-56 space-y-6">
             <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold leading-tight px-2 bg-gradient-to-r from-[#a78bfa] via-[#8ab4ff] to-[#60a5fa] bg-clip-text text-transparent text-center">
               Brainrot kills productivity. FocusDot fixes it.
             </h2>
@@ -261,94 +261,6 @@ export default function Home() {
       {/* Spacing between sections */}
       <div className="h-16 sm:h-20 md:h-24"></div>
 
-      {/* Features Section Part 2 */}
-      <section className="w-full flex justify-center bg-[#151515] px-4 sm:px-6 py-12 sm:py-16 md:py-20">
-        <div className="max-w-6xl w-full flex flex-col-reverse md:flex-row items-center md:items-start gap-8 sm:gap-12">
-          
-          {/* Left: Heatmap Image */}
-          <div className="flex-1 max-w-2xl sm:max-w-4xl md:max-w-6xl">
-            <img
-              src="/heatmap.jpg"
-              alt="Deep Work Heatmap"
-              className="rounded-2xl sm:rounded-3xl shadow-xl border-2 border-gray-700 w-full"
-            />
-          </div>
-
-          {/* Right: Text */}
-          <div className="flex-1 text-center md:text-left">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-4 sm:mb-6 leading-snug">
-             Build momentum
-            </h2>
-            <p className="text-gray-400 text-base sm:text-lg max-w-md mx-auto md:mx-0">
-              Your year of focus, visualized
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Spacing between sections */}
-      <div className="h-16 sm:h-20 md:h-24"></div>
-
-      {/* Features Section Part 3 */}
-      <section id="featuresp3" className="w-full flex justify-center px-4 sm:px-6 py-12 sm:py-16 md:py-20 bg-[#151515]">
-        <div className="max-w-6xl w-full flex flex-col md:flex-row items-center md:items-start gap-8 sm:gap-12">
-          
-          {/* Left: Text */}
-          <div className="flex-1 text-center md:text-left">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-4 sm:mb-6 leading-snug">
-            Personal Focus Goals
-            </h2>
-            <p className="text-gray-400 text-base sm:text-lg max-w-md mx-auto md:mx-0">
-            Set a goal and track your growth 
-            </p>
-          </div>
-
-          {/* Right: Profile Image */}
-          <div className="flex-1 max-w-xl">
-            <img
-              src="/profile.jpg"
-              alt="Personal Focus Goals"
-              className="rounded-2xl sm:rounded-3xl shadow-xl border-2 border-gray-700 w-full"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Spacing between sections */}
-      <div className="h-16 sm:h-20 md:h-24"></div>
-
-      {/* Features Section Part 4 - Focus Score */}
-      <section className="w-full flex justify-center bg-[#151515] px-4 sm:px-6 py-12 sm:py-16 md:py-20">
-        <div className="max-w-6xl w-full flex flex-col-reverse md:flex-row items-center md:items-start gap-8 sm:gap-12">
-          
-          {/* Left: Focus Score Image */}
-          <div className="flex-1 max-w-2xl sm:max-w-4xl md:max-w-6xl">
-            <img
-              src="/focusscore.jpg"
-              alt="Focus Score Analytics"
-              className="rounded-2xl sm:rounded-3xl shadow-xl border-2 border-gray-700 w-full"
-            />
-          </div>
-
-          {/* Right: Text */}
-          <div className="flex-1 text-center md:text-left">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-4 sm:mb-6 leading-snug">
-              Focus Score
-            </h2>
-            <p className="text-gray-400 text-base sm:text-lg max-w-md mx-auto md:mx-0">
-              Focus Score shows your progress as you build stronger attention skills through longer focus sessions and consistent practice.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Spacing between sections */}
-      <div className="h-16 sm:h-20 md:h-24"></div>
-
-
-      {/* Spacing between sections */}
-      <div className="h-16 sm:h-20 md:h-24"></div>
-
       {/* Pricing Section */}
       <section id="pricing" className="w-full px-4 sm:px-6 md:px-40 py-12 sm:py-16 md:py-20 bg-[#151515]">
         <div className="text-center mb-12 sm:mb-16">
@@ -418,8 +330,11 @@ export default function Home() {
                 Up to 1 focus category
               </li>
             </ul>
-            <button className="w-full border border-gray-600 text-gray-300 font-medium py-2 rounded-md hover:border-gray-500 hover:text-white transition cursor-not-allowed">
-              Current Plan
+            <button 
+              onClick={() => router.push('/login')}
+              className="w-full border border-white text-white font-medium py-2 rounded-md hover:bg-white hover:text-black transition"
+            >
+              Free forever
             </button>
           </div>
 
@@ -452,6 +367,12 @@ export default function Home() {
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
                 Unlimited focus categories
+              </li>
+              <li className="flex items-center">
+                <svg className="w-4 h-4 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                Focus Score
               </li>
               <li className="flex items-center">
                 <svg className="w-4 h-4 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">

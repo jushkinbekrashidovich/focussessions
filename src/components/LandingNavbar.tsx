@@ -28,22 +28,22 @@ export default function LandingNavbar({ user }: LandingNavbarProps) {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8 lg:gap-10">
           <Link
+            href="#about"
+            className="text-[0.94rem] font-bold text-[#5F5F5F] hover:text-white transition"
+          >
+            About
+          </Link>
+          <Link
+            href="#demo"
+            className="text-[0.94rem] font-bold text-[#5F5F5F] hover:text-white transition"
+          >
+            Get Focus Score
+          </Link>
+          <Link
             href="#pricing"
             className="text-[0.94rem] font-bold text-[#5F5F5F] hover:text-white transition"
           >
             Pricing
-          </Link>
-          <Link
-            href="#faq"
-            className="text-[0.94rem] font-bold text-[#5F5F5F] hover:text-white transition"
-          >
-            FAQ
-          </Link>
-          <Link
-            href="#testimonials"
-            className="text-[0.94rem] font-bold text-[#5F5F5F] hover:text-white transition"
-          >
-            Testimonials
           </Link>
         </nav>
 
@@ -82,25 +82,25 @@ export default function LandingNavbar({ user }: LandingNavbarProps) {
       <div className={`md:hidden absolute top-full left-0 right-0 bg-[#151515] border-t border-gray-700 transition-all duration-300 ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
         <nav className="flex flex-col py-4">
           <Link
+            href="#about"
+            className="px-6 py-3 text-[0.94rem] font-bold text-[#5F5F5F] hover:text-white transition hover:bg-gray-800"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            About
+          </Link>
+          <Link
+            href="#demo"
+            className="px-6 py-3 text-[0.94rem] font-bold text-[#5F5F5F] hover:text-white transition hover:bg-gray-800"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Get Focus Score
+          </Link>
+          <Link
             href="#pricing"
             className="px-6 py-3 text-[0.94rem] font-bold text-[#5F5F5F] hover:text-white transition hover:bg-gray-800"
             onClick={() => setIsMenuOpen(false)}
           >
             Pricing
-          </Link>
-          <Link
-            href="#faq"
-            className="px-6 py-3 text-[0.94rem] font-bold text-[#5F5F5F] hover:text-white transition hover:bg-gray-800"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            FAQ
-          </Link>
-          <Link
-            href="#testimonials"
-            className="px-6 py-3 text-[0.94rem] font-bold text-[#5F5F5F] hover:text-white transition hover:bg-gray-800"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Testimonials
           </Link>
           <div className="border-t border-gray-700 mt-2 pt-2">
             {user ? (
