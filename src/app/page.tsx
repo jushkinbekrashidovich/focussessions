@@ -23,9 +23,9 @@ export default function Home() {
   if (typeof window !== 'undefined') {
     // lightweight interval without useEffect to avoid SSR mismatch warnings in simple client page
     // ensure one interval only
-    // @ts-ignore attach on window for simplicity
+    // @ts-expect-error attach on window for simplicity
     if (!window.__focusdot_carousel_interval__) {
-      // @ts-ignore
+      // @ts-expect-error
       window.__focusdot_carousel_interval__ = setInterval(() => {
         setActiveSlide((prev) => (prev + 1) % slides.length)
       }, 3500)
@@ -92,7 +92,7 @@ export default function Home() {
       </Head>
       <LandingNavbar user={userData} />
       {/* Spacing between navbar and first section */}
-      <div className="h-40 sm:h-44 md:h-48"></div>
+      <div className="h-24 sm:h-28 md:h-28"></div>
       
       {/* Hero Section */}
       <section className="w-full text-white flex flex-col justify-center items-center px-4 py-8 sm:py-12 md:py-16 bg-gradient-to-b from-black via-[#0f0f14] to-[#151515]">

@@ -17,11 +17,12 @@ export default function LandingNavbar({ user }: LandingNavbarProps) {
   }
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full px-4 sm:px-6 md:px-10 py-2 sm:py-3 bg-[#151515]">
+    <header className="fixed top-0 left-0 right-0 z-50 w-full px-4 sm:px-6 md:px-10 py-1.5 sm:py-2 bg-[#151515]">
       <div className="max-w-6xl mx-auto flex items-center justify-between">
         {/* Logo */}
-        <span className="flex items-center gap-2 text-lg font-semibold text-gray-400 select-none">
-          <Image src="/logo.svg" alt="Logo" width={80} height={80} className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28" priority />
+        <span className="flex items-center gap-2 text-lg font-semibold text-gray-200 select-none">
+          <Image src="/logo.svg" alt="Logo" width={40} height={40} className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10" priority />
+          <span className="tracking-tight">FocusDot</span>
         </span>
 
         {/* Desktop Navigation */}
