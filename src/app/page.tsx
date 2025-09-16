@@ -23,9 +23,9 @@ export default function Home() {
   if (typeof window !== 'undefined') {
     // lightweight interval without useEffect to avoid SSR mismatch warnings in simple client page
     // ensure one interval only
-    // @ts-expect-error attach on window for simplicity
+    // @ts-expect-error - augment window to store a singleton interval id
     if (!window.__focusdot_carousel_interval__) {
-      // @ts-expect-error
+      // @ts-expect-error - define custom property to avoid multiple intervals
       window.__focusdot_carousel_interval__ = setInterval(() => {
         setActiveSlide((prev) => (prev + 1) % slides.length)
       }, 3500)
@@ -142,6 +142,9 @@ export default function Home() {
             )}
           </div>
 
+          {/* Plan note */}
+          <p className="text-gray-400 text-sm pt-1">Free Forever. Upgrade anytime.</p>
+
           {/* Carousel */}
           <div className="relative mt-6 sm:mt-8">
             <div className="mx-auto max-w-5xl rounded-2xl sm:rounded-3xl border border-[#2b2b2b] bg-[#0c0c0f]/80 backdrop-blur-md shadow-[0_10px_40px_rgba(0,0,0,0.6)] overflow-hidden">
@@ -188,6 +191,9 @@ export default function Home() {
         <p className="text-gray-400 text-base sm:text-lg text-center mb-8 sm:mb-10 max-w-2xl px-4">
           Master focus in a distracted world. Boost your deep work hours.
         </p>
+        <div className="mb-6 text-center">
+          <span className="inline-block text-xs sm:text-sm text-gray-400 bg-[#0f0f14] border border-gray-700 rounded-full px-3 py-1">Free Forever. Upgrade anytime.</span>
+        </div>
         <div className="w-full max-w-4xl flex justify-center px-4">
           <div className="w-full max-w-4xl rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 border-gray-700">
             <img
