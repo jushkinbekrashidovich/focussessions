@@ -230,10 +230,10 @@ export default function Home() {
       {/* Main Value Proposition Section */}
       <section id="demo" className="w-full flex flex-col items-center justify-center bg-[#151515] px-4 py-12 sm:py-16 md:py-20">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight text-center mb-4 sm:mb-6 px-4 bg-gradient-to-r from-[#a78bfa] via-[#8ab4ff] to-[#60a5fa] bg-clip-text text-transparent">
-          Find out your Focus Score in 30 seconds
+          Find out your Focus Score in 15 seconds
         </h2>
         <p className="text-gray-400 text-base sm:text-lg text-center mb-6 sm:mb-8 max-w-2xl px-4">
-          Answer a few quick questions to see your Focus Score. Get a personalized suggestion to improve your deep work sessions.
+          Answer 3 quick questions to see your Focus Score.
         </p>
         <div className="mb-8">
           <button

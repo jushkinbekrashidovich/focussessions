@@ -43,17 +43,13 @@ export default function GetFocusScorePage() {
         <div className="w-full max-w-xl">
           <div className="rounded-3xl border border-gray-800 bg-[#0e0e12] p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-center mb-6 bg-gradient-to-r from-[#a78bfa] via-[#8ab4ff] to-[#60a5fa] bg-clip-text text-transparent">
-              {step === 3 ? 'Your Focus Score' : 'Find your Focus Score in 30 seconds'}
+              {step === 3 ? 'Your Focus Score' : 'Find your Focus Score in 15 seconds'}
             </h1>
-
-            {step < 3 && (
-              <p className="text-gray-400 text-center mb-8">We score based on longest session × consistency × completion rate.</p>
-            )}
 
             {/* Steps */}
             {step === 0 && (
               <div className="space-y-4">
-                <label className="block text-gray-300">What is your longest uninterrupted focus session (minutes)?</label>
+                <label className="block text-gray-300">What is your longest focus session (mins)?</label>
                 <input
                   type="number"
                   min={1}
@@ -61,14 +57,13 @@ export default function GetFocusScorePage() {
                   value={longestSessionMin}
                   onChange={(e) => setLongestSessionMin(e.target.value === '' ? '' : Number(e.target.value))}
                   className="w-full rounded-xl bg-black border border-gray-800 px-4 py-3 outline-none focus:border-gray-600"
-                  placeholder="e.g., 50"
                 />
               </div>
             )}
 
             {step === 1 && (
               <div className="space-y-4">
-                <label className="block text-gray-300">On average, how many days per week do you do deep work?</label>
+                <label className="block text-gray-300">How many days a week do you deep work?</label>
                 <input
                   type="number"
                   min={0}
@@ -76,14 +71,13 @@ export default function GetFocusScorePage() {
                   value={consistentDays}
                   onChange={(e) => setConsistentDays(e.target.value === '' ? '' : Number(e.target.value))}
                   className="w-full rounded-xl bg-black border border-gray-800 px-4 py-3 outline-none focus:border-gray-600"
-                  placeholder="0 - 7"
                 />
               </div>
             )}
 
             {step === 2 && (
               <div className="space-y-4">
-                <label className="block text-gray-300">What percentage of planned focus sessions do you complete?</label>
+                <label className="block text-gray-300">What % of planned sessions do you complete?</label>
                 <input
                   type="number"
                   min={0}
@@ -91,7 +85,6 @@ export default function GetFocusScorePage() {
                   value={completionRate}
                   onChange={(e) => setCompletionRate(e.target.value === '' ? '' : Number(e.target.value))}
                   className="w-full rounded-xl bg-black border border-gray-800 px-4 py-3 outline-none focus:border-gray-600"
-                  placeholder="e.g., 70"
                 />
               </div>
             )}
@@ -124,7 +117,7 @@ export default function GetFocusScorePage() {
                     </div>
                   </div>
                 </div>
-                <p className="text-center text-gray-300 mb-6">{score >= 75 ? 'Great momentum — keep the streak alive.' : score >= 50 ? 'You are building the habit — add one more session this week.' : 'Start small. One 25-minute deep work session today.'}</p>
+                <p className="text-center text-gray-300 mb-6">{score < 60 ? `Your Focus Score is ${score}/100 🙁. But you can push it higher with FocusDot` : `You scored ${score}/100 🚀. Great consistency — now keep building your progress with FocusDot`}</p>
                 <div className="flex justify-center">
                   <button
                     onClick={() => router.push('/login')}
