@@ -12,11 +12,8 @@ export default function AppNavbar() {
   return (
     <header className="flex justify-between items-center px-4 sm:px-6 md:px-10 py-4 border-b border-[#2a2a58] bg-[#13133c] transition-colors duration-200">
       <div className="flex items-center gap-4 sm:gap-6 md:gap-8">
-        {/* Logo */}
-        <span className="flex items-center gap-2 text-lg font-semibold text-white">
-          <Image src="/logo.svg" alt="Logo" width={80} height={80} priority />
-          
-        </span>
+        {/* App title placeholder to maintain layout without logo */}
+        <span className="flex items-center gap-2 text-lg font-semibold text-white"></span>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">

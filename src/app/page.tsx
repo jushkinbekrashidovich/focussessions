@@ -135,7 +135,7 @@ export default function Home() {
                   console.log('Try Now clicked')
                   router.push('/login')
                 }}
-                className="bg-gradient-to-r from-[#6d5cf6] to-[#a78bfa] hover:from-[#5b4cf0] hover:to-[#947cf7] text-white text-sm font-semibold px-6 py-3 sm:py-2 rounded-full transition w-full sm:w-auto shadow-lg shadow-purple-800/30"
+                className="bg-gradient-to-r from-[#6d5cf6] to-[#a78bfa] hover:from-[#5b4cf0] hover:to-[#947cf7] text-white text-base md:text-lg font-semibold px-7 md:px-8 py-3 md:py-3.5 rounded-full transition w-full sm:w-auto shadow-xl shadow-purple-800/40"
               >
                 Boost your productivity for free ✨
               </button>
@@ -175,7 +175,7 @@ export default function Home() {
           </div>
 
           {/* Comparison Section: Brainrot vs FocusDot */}
-          <div className="mt-10 sm:mt-12 md:mt-14 space-y-6">
+          <div className="mt-8 md:mt-20 space-y-6">
             <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold leading-tight px-2 bg-gradient-to-r from-[#a78bfa] via-[#8ab4ff] to-[#60a5fa] bg-clip-text text-transparent text-center">
               Brainrot kills productivity. FocusDot fixes it.
             </h2>
