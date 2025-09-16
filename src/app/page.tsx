@@ -15,6 +15,22 @@ export default function Home() {
   const { openCheckout, isLoading: isPaddleLoading } = usePaddle()
   const userData = user || null
   const [isYearly, setIsYearly] = useState(true)
+  const [activeSlide, setActiveSlide] = useState(0)
+
+  const slides = ['/focusscore.jpg', '/deepwork.jpg', '/dashboard.jpg', '/profile.png']
+
+  // Auto-advance carousel
+  if (typeof window !== 'undefined') {
+    // lightweight interval without useEffect to avoid SSR mismatch warnings in simple client page
+    // ensure one interval only
+    // @ts-ignore attach on window for simplicity
+    if (!window.__focusdot_carousel_interval__) {
+      // @ts-ignore
+      window.__focusdot_carousel_interval__ = setInterval(() => {
+        setActiveSlide((prev) => (prev + 1) % slides.length)
+      }, 3500)
+    }
+  }
 
   return (
     <>
@@ -125,30 +141,33 @@ export default function Home() {
               </button>
             )}
           </div>
-        </div>
-      </section>
 
-      {/* Testimonials Section */}
-      <section id="testimonials" className="w-full flex flex-col items-center justify-center bg-[#151515] px-4 py-10 sm:py-14 md:py-16">
-        <div className="max-w-5xl w-full">
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-2 text-yellow-400">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.802-2.034a1 1 0 00-1.175 0l-2.802 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-              <span className="text-white font-medium">4.8/5</span>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 text-gray-300">
-              <p className="mb-4">“The streaks and heatmap finally made focus stick for me.”</p>
-              <div className="text-sm text-gray-400">Alex — indie dev</div>
-            </div>
-            <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 text-gray-300">
-              <p className="mb-4">“Way more motivating than a plain timer. I actually look forward to sessions.”</p>
-              <div className="text-sm text-gray-400">Sam — student</div>
-            </div>
-            <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 text-gray-300">
-              <p className="mb-4">“Simple, clean, and the focus score keeps me accountable.”</p>
-              <div className="text-sm text-gray-400">Taylor — product designer</div>
+          {/* Carousel */}
+          <div className="relative mt-6 sm:mt-8">
+            <div className="mx-auto max-w-5xl rounded-2xl sm:rounded-3xl border border-[#2b2b2b] bg-[#0c0c0f]/80 backdrop-blur-md shadow-[0_10px_40px_rgba(0,0,0,0.6)] overflow-hidden">
+              <div className="relative w-full h-[260px] sm:h-[360px] md:h-[420px] overflow-hidden">
+                <div
+                  className="flex h-full transition-transform duration-700 ease-out"
+                  style={{ transform: `translateX(-${activeSlide * 100}%)` }}
+                >
+                  {slides.map((src, idx) => (
+                    <div key={idx} className="min-w-full h-full flex items-center justify-center bg-gradient-to-b from-black via-[#0b0b10] to-[#1a1525]">
+                      <img src={src} alt={`Slide ${idx + 1}`} className="w-full h-full object-cover" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Dots */}
+              <div className="flex items-center justify-center gap-2 py-4">
+                {slides.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveSlide(idx)}
+                    className={`h-2 w-2 rounded-full transition-all ${activeSlide === idx ? 'bg-white w-6' : 'bg-gray-500'}`}
+                    aria-label={`Go to slide ${idx + 1}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
