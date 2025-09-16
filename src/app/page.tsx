@@ -175,7 +175,7 @@ export default function Home() {
           </div>
 
           {/* Comparison Section: Brainrot vs FocusDot */}
-          <div className="mt-8 md:mt-20 space-y-6">
+          <div className="mt-12 md:mt-28 space-y-6">
             <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold leading-tight px-2 bg-gradient-to-r from-[#a78bfa] via-[#8ab4ff] to-[#60a5fa] bg-clip-text text-transparent text-center">
               Brainrot kills productivity. FocusDot fixes it.
             </h2>
@@ -211,6 +211,15 @@ export default function Home() {
                 </ul>
               </div>
             </div>
+          </div>
+          {/* Post-comparison CTA */}
+          <div className="mt-10 md:mt-14 flex justify-center">
+            <button
+              onClick={() => router.push('/login')}
+              className="bg-gradient-to-r from-[#6d5cf6] to-[#a78bfa] hover:from-[#5b4cf0] hover:to-[#947cf7] text-white text-base md:text-lg font-semibold px-7 md:px-8 py-3 md:py-3.5 rounded-full transition shadow-xl shadow-purple-800/40"
+            >
+              Start your first focus session for free
+            </button>
           </div>
         </div>
       </section>
