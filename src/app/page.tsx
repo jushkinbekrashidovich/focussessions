@@ -175,7 +175,7 @@ export default function Home() {
           </div>
 
           {/* Comparison Section: Brainrot vs FocusDot */}
-          <div className="mt-12 md:mt-28 space-y-6">
+          <div className="mt-16 md:mt-40 space-y-6">
             <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold leading-tight px-2 bg-gradient-to-r from-[#a78bfa] via-[#8ab4ff] to-[#60a5fa] bg-clip-text text-transparent text-center">
               Brainrot kills productivity. FocusDot fixes it.
             </h2>
