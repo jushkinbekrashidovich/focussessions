@@ -34,7 +34,7 @@ export default function Footer() {
               <a href="https://www.youtube.com/@focusdot_app" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center hover:bg-gray-600 transition">
                 <Image src="/globe.svg" alt="YouTube" width={16} height={16} />
               </a>
-              <a href="#" className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center hover:bg-gray-600 transition opacity-50 cursor-not-allowed" title="TikTok coming soon">
+              <a href="https://tiktok.com/@focusdot.app" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center hover:bg-gray-600 transition" title="TikTok">
                 <Image src="/tiktok.svg" alt="TikTok" width={16} height={16} />
               </a>
             </div>

@@ -88,13 +88,10 @@ export const metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.svg?v=2', type: 'image/svg+xml' },
-      { url: '/favicon-16x16.png?v=2', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png?v=2', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon.ico?v=2', sizes: 'any' },
+      { url: '/favicon.svg?v=3', type: 'image/svg+xml' },
     ],
     apple: [
-      { url: '/apple-touch-icon.png?v=2', sizes: '180x180', type: 'image/png' },
+      { url: '/favicon.svg?v=3', type: 'image/svg+xml' },
     ],
   },
   verification: {
@@ -123,9 +120,8 @@ export default function RootLayout({
             `,
           }}
         />
-        <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
-        <link rel="icon" href="/favicon.ico?v=2" sizes="any" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="icon" href="/favicon.svg?v=3" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/favicon.svg?v=3" />
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className={inter.className} suppressHydrationWarning={true}>
