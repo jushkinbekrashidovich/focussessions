@@ -82,10 +82,10 @@ export default function Home() {
       <section className="w-full text-white flex flex-col justify-center items-center px-4 py-8 sm:py-12 md:py-16">
         <div className="max-w-4xl w-full text-center space-y-4 sm:space-y-6">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight px-2">
-            Pomodoro timer alternative
+            Beat brainrot. Build focus with deep work sessions.
           </h1>
           <p className="text-gray-400 text-base sm:text-lg md:text-xl px-4 max-w-2xl mx-auto">
-            More than a study timer — with streaks, scores, and a visual focus journey.
+            FocusDot makes focus fun — track your progress with streaks, scores, and a visual heatmap.
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4">
@@ -111,9 +111,35 @@ export default function Home() {
                 }}
                 className="bg-white hover:bg-gray-100 active:bg-gray-200 text-black text-sm font-medium px-6 py-3 sm:py-2 rounded-full transition w-full sm:w-auto"
               >
-                Try now for free
+                Boost your productivity for free
               </button>
             )}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section id="testimonials" className="w-full flex flex-col items-center justify-center bg-[#151515] px-4 py-10 sm:py-14 md:py-16">
+        <div className="max-w-5xl w-full">
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center gap-2 text-yellow-400">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.802-2.034a1 1 0 00-1.175 0l-2.802 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <span className="text-white font-medium">4.8/5</span>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 text-gray-300">
+              <p className="mb-4">“The streaks and heatmap finally made focus stick for me.”</p>
+              <div className="text-sm text-gray-400">Alex — indie dev</div>
+            </div>
+            <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 text-gray-300">
+              <p className="mb-4">“Way more motivating than a plain timer. I actually look forward to sessions.”</p>
+              <div className="text-sm text-gray-400">Sam — student</div>
+            </div>
+            <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6 text-gray-300">
+              <p className="mb-4">“Simple, clean, and the focus score keeps me accountable.”</p>
+              <div className="text-sm text-gray-400">Taylor — product designer</div>
+            </div>
           </div>
         </div>
       </section>
@@ -371,6 +397,23 @@ export default function Home() {
             </button>
           </div>
 
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section id="faq" className="w-full flex justify-center px-4 sm:px-6 py-12 sm:py-16 md:py-20 bg-[#151515]">
+        <div className="max-w-4xl w-full">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-6 text-center">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6">
+              <h3 className="text-white font-semibold mb-2">Is FocusDot free?</h3>
+              <p className="text-gray-400">Yes. You can start for free and upgrade anytime for advanced insights.</p>
+            </div>
+            <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6">
+              <h3 className="text-white font-semibold mb-2">What makes it different from a timer?</h3>
+              <p className="text-gray-400">Visual progress with streaks, scores, and a yearly heatmap keeps you motivated.</p>
+            </div>
+          </div>
         </div>
       </section>
       
