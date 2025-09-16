@@ -411,13 +411,6 @@ export default function Home() {
 
         </div>
 
-        {/* Section-level CTAs */}
-        <div className="mt-10 text-center">
-          <div className="inline-flex gap-3">
-            <button onClick={() => router.push('/login')} className="bg-gradient-to-r from-[#6d5cf6] to-[#a78bfa] text-white font-semibold px-6 py-2.5 rounded-full hover:from-[#5b4cf0] hover:to-[#947cf7]">Start free</button>
-            <button onClick={() => router.push('#pricing')} className="border border-white text-white px-6 py-2.5 rounded-full hover:bg-white hover:text-black">See Pro options</button>
-          </div>
-        </div>
       </section>
       
       {/* FAQ Section */}
