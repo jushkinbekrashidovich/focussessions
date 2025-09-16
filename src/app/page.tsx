@@ -174,8 +174,11 @@ export default function Home() {
             </div>
           </div>
 
+          {/* Spacer between carousel and comparison */}
+          <div className="h-24 md:h-56"></div>
+
           {/* Comparison Section: Brainrot vs FocusDot */}
-          <div id="about" className="h-40 sm:h-44 md:h-48">
+          <div id="about" className="space-y-6">
             <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold leading-tight px-2 bg-gradient-to-r from-[#a78bfa] via-[#8ab4ff] to-[#60a5fa] bg-clip-text text-transparent text-center">
               Brainrot kills productivity. FocusDot fixes it.
             </h2>

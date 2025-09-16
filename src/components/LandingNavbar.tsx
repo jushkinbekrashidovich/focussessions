@@ -37,7 +37,7 @@ export default function LandingNavbar({ user }: LandingNavbarProps) {
             href="#demo"
             className="text-[0.94rem] font-bold text-[#5F5F5F] hover:text-white transition"
           >
-            Get Focus Score
+            Focus Score
           </Link>
           <Link
             href="#pricing"
@@ -93,7 +93,7 @@ export default function LandingNavbar({ user }: LandingNavbarProps) {
             className="px-6 py-3 text-[0.94rem] font-bold text-[#5F5F5F] hover:text-white transition hover:bg-gray-800"
             onClick={() => setIsMenuOpen(false)}
           >
-            Get Focus Score
+            Focus Score
           </Link>
           <Link
             href="#pricing"
