@@ -237,7 +237,7 @@ export default function Home() {
         </p>
         <div className="mb-8">
           <button
-            onClick={() => router.push('/focus-score')}
+            onClick={() => router.push('/get-focusscore')}
             className="bg-gradient-to-r from-[#6d5cf6] to-[#a78bfa] hover:from-[#5b4cf0] hover:to-[#947cf7] text-white text-sm sm:text-base font-semibold px-6 sm:px-7 py-2.5 sm:py-3 rounded-full transition shadow-xl shadow-purple-800/40"
           >
             Get Focus Score for free
