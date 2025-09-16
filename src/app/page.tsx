@@ -180,7 +180,7 @@ export default function Home() {
           {/* Comparison Section: Brainrot vs FocusDot */}
           <div id="about" className="space-y-6">
             <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold leading-tight px-2 bg-gradient-to-r from-[#a78bfa] via-[#8ab4ff] to-[#60a5fa] bg-clip-text text-transparent text-center">
-              Brainrot kills productivity. FocusDot fixes it.
+              🧠 Brainrot kills productivity. FocusDot fixes it 🚀
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
@@ -190,12 +190,12 @@ export default function Home() {
                   <h3 className="text-xl sm:text-2xl font-extrabold text-[#ffb3ba]">Living with Brainrot</h3>
                   <span className="text-[#ff7a87] text-lg">❌</span>
                 </div>
-                <ul className="space-y-3 text-gray-300">
-                  <li>• Mindless scrolling for hours</li>
-                  <li>• Constant dopamine hits, no deep work</li>
-                  <li>• Start 10 things, finish none</li>
-                  <li>• Feel guilty at the end of the day</li>
-                  <li>• Lose track of time and energy</li>
+                <ul className="list-disc pl-6 marker:text-[#ffb3ba] space-y-3 text-gray-300 leading-relaxed">
+                  <li>Mindless scrolling for hours</li>
+                  <li>Constant dopamine hits, no deep work</li>
+                  <li>Start 10 things, finish none</li>
+                  <li>Feel guilty at the end of the day</li>
+                  <li>Lose track of time and energy</li>
                 </ul>
               </div>
 
@@ -205,12 +205,12 @@ export default function Home() {
                   <h3 className="text-xl sm:text-2xl font-extrabold text-[#9af0be]">Focusing with FocusDot</h3>
                   <span className="text-[#89f0b2] text-lg">✅</span>
                 </div>
-                <ul className="space-y-3 text-gray-300">
-                  <li>• Structured deep work sessions</li>
-                  <li>• Build streaks and see your progress</li>
-                  <li>• Focus Score shows your growth</li>
-                  <li>• Visual heatmap makes consistency fun</li>
-                  <li>• End the day proud of real progress</li>
+                <ul className="list-disc pl-6 marker:text-[#9af0be] space-y-3 text-gray-300 leading-relaxed">
+                  <li>Structured deep work sessions</li>
+                  <li>Build streaks and see your progress</li>
+                  <li>Focus Score shows your growth</li>
+                  <li>Visual heatmap makes consistency fun</li>
+                  <li>End the day proud of real progress</li>
                 </ul>
               </div>
             </div>
@@ -221,7 +221,7 @@ export default function Home() {
               onClick={() => router.push('/login')}
               className="bg-gradient-to-r from-[#6d5cf6] to-[#a78bfa] hover:from-[#5b4cf0] hover:to-[#947cf7] text-white text-base md:text-lg font-semibold px-7 md:px-8 py-3 md:py-3.5 rounded-full transition shadow-xl shadow-purple-800/40"
             >
-              Start your first focus session for free
+              Start your focus sessions for free 🚀
             </button>
           </div>
         </div>
@@ -233,7 +233,7 @@ export default function Home() {
       {/* Main Value Proposition Section */}
       <section id="demo" className="w-full flex flex-col items-center justify-center bg-[#151515] px-4 py-12 sm:py-16 md:py-20">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight text-center mb-4 sm:mb-6 px-4 bg-gradient-to-r from-[#a78bfa] via-[#8ab4ff] to-[#60a5fa] bg-clip-text text-transparent">
-          Find out your Focus Score in 15 seconds
+          Find out your Focus Score in 15 seconds 💡
         </h2>
         <p className="text-gray-400 text-base sm:text-lg text-center mb-6 sm:mb-8 max-w-2xl px-4">
           Answer 3 quick questions to see your Focus Score.
