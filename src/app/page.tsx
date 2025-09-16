@@ -229,24 +229,25 @@ export default function Home() {
 
       {/* Main Value Proposition Section */}
       <section id="demo" className="w-full flex flex-col items-center justify-center bg-[#151515] px-4 py-12 sm:py-16 md:py-20">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white text-center mb-6 sm:mb-8 px-4">
-          <span className="relative inline-block">
-            <span className="bg-yellow-400 text-black px-1 pt-1 pb-0 -mx-1">Focus</span>
-          </span> better, <span className="relative inline-block">
-            <span className="bg-yellow-400 text-black px-1 pt-1 pb-0 -mx-1">Achieve</span>
-          </span> more
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight text-center mb-4 sm:mb-6 px-4 bg-gradient-to-r from-[#a78bfa] via-[#8ab4ff] to-[#60a5fa] bg-clip-text text-transparent">
+          Find out your Focus Score in 30 seconds
         </h2>
-        <p className="text-gray-400 text-base sm:text-lg text-center mb-8 sm:mb-10 max-w-2xl px-4">
-          Master focus in a distracted world. Boost your deep work hours.
+        <p className="text-gray-400 text-base sm:text-lg text-center mb-6 sm:mb-8 max-w-2xl px-4">
+          Answer a few quick questions to see your Focus Score. Get a personalized suggestion to improve your deep work sessions.
         </p>
-        <div className="mb-6 text-center">
-          <span className="inline-block text-xs sm:text-sm text-gray-400 bg-[#0f0f14] border border-gray-700 rounded-full px-3 py-1">Free Forever. Upgrade anytime.</span>
+        <div className="mb-8">
+          <button
+            onClick={() => router.push('/focus-score')}
+            className="bg-gradient-to-r from-[#6d5cf6] to-[#a78bfa] hover:from-[#5b4cf0] hover:to-[#947cf7] text-white text-sm sm:text-base font-semibold px-6 sm:px-7 py-2.5 sm:py-3 rounded-full transition shadow-xl shadow-purple-800/40"
+          >
+            Get Focus Score for free
+          </button>
         </div>
         <div className="w-full max-w-4xl flex justify-center px-4">
           <div className="w-full max-w-4xl rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 border-gray-700">
             <img
-              src="/dashboard.jpg"
-              alt="Dashboard Preview"
+              src="/focuscorecal.jpg"
+              alt="Focus Score Calculator Preview"
               className="w-full h-auto object-cover"
             />
           </div>
