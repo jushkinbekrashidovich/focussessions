@@ -236,8 +236,9 @@ export default function Home() {
 
       {/* Main Value Proposition Section */}
       <section id="demo" className="w-full flex flex-col items-center justify-center bg-[#151515] px-4 py-12 sm:py-16 md:py-20">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight text-center mb-4 sm:mb-6 px-4 bg-gradient-to-r from-[#a78bfa] via-[#8ab4ff] to-[#60a5fa] bg-clip-text text-transparent">
-          Find out your Focus Score in 15 seconds 💡
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight text-center mb-4 sm:mb-6 px-4">
+          <span className="bg-gradient-to-r from-[#a78bfa] via-[#8ab4ff] to-[#60a5fa] bg-clip-text text-transparent">Find out your Focus Score in 15 seconds</span>
+          <span className="text-white"> 💡</span>
         </h2>
         <p className="text-gray-400 text-base sm:text-lg text-center mb-6 sm:mb-8 max-w-2xl px-4">
           Answer 3 quick questions to see your Focus Score.
@@ -271,11 +272,10 @@ export default function Home() {
       {/* Pricing Section */}
       <section id="pricing" className="w-full px-4 sm:px-6 md:px-40 py-12 sm:py-16 md:py-20 bg-[#151515]">
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 px-4">
-            Build <span className="relative inline-block">
-              <span className="bg-yellow-400 text-black px-1 pt-1 pb-0 -mx-1">Focus</span>
-            </span> Habits
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-center mb-3 sm:mb-4 px-4 bg-gradient-to-r from-[#a78bfa] via-[#8ab4ff] to-[#60a5fa] bg-clip-text text-transparent">
+            Build Focus Habits
           </h2>
+          <div className="mx-auto h-1 w-24 rounded-full bg-gradient-to-r from-[#a78bfa] via-[#8ab4ff] to-[#60a5fa] mb-4"></div>
 
           <p className="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto px-4 mb-8">
             Build discipline, stay consistent, and track your progress visually.
@@ -283,12 +283,12 @@ export default function Home() {
 
           {/* Toggle Switch */}
           <div className="flex justify-center mb-8">
-            <div className="bg-gray-700 rounded-lg p-1 flex">
+            <div className="bg-[#1f1f1f] rounded-full p-1 flex border border-gray-700">
               <button 
                 onClick={() => setIsYearly(true)}
-                className={`px-4 py-2 text-sm font-medium rounded-md transition ${
+                className={`px-4 py-2 text-sm font-semibold rounded-full transition ${
                   isYearly 
-                    ? 'text-white bg-purple-600' 
+                    ? 'text-white bg-gradient-to-r from-[#6d5cf6] to-[#a78bfa]' 
                     : 'text-gray-400 hover:text-white'
                 }`}
               >
@@ -296,9 +296,9 @@ export default function Home() {
               </button>
               <button 
                 onClick={() => setIsYearly(false)}
-                className={`px-4 py-2 text-sm font-medium rounded-md transition ${
+                className={`px-4 py-2 text-sm font-semibold rounded-full transition ${
                   !isYearly 
-                    ? 'text-white bg-purple-600' 
+                    ? 'text-white bg-gradient-to-r from-[#6d5cf6] to-[#a78bfa]' 
                     : 'text-gray-400 hover:text-white'
                 }`}
               >
@@ -410,8 +410,16 @@ export default function Home() {
           </div>
 
         </div>
-      </section>
 
+        {/* Section-level CTAs */}
+        <div className="mt-10 text-center">
+          <div className="inline-flex gap-3">
+            <button onClick={() => router.push('/login')} className="bg-gradient-to-r from-[#6d5cf6] to-[#a78bfa] text-white font-semibold px-6 py-2.5 rounded-full hover:from-[#5b4cf0] hover:to-[#947cf7]">Start free</button>
+            <button onClick={() => router.push('#pricing')} className="border border-white text-white px-6 py-2.5 rounded-full hover:bg-white hover:text-black">See Pro options</button>
+          </div>
+        </div>
+      </section>
+      
       {/* FAQ Section */}
       <section id="faq" className="w-full flex justify-center px-4 sm:px-6 py-12 sm:py-16 md:py-20 bg-[#151515]">
         <div className="max-w-4xl w-full">
