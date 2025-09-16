@@ -17,7 +17,7 @@ export default function LandingNavbar({ user }: LandingNavbarProps) {
   }
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full px-4 sm:px-6 md:px-10 py-1.5 sm:py-2 bg-[#151515]">
+    <header className="fixed top-0 left-0 right-0 z-50 w-full px-4 sm:px-6 md:px-10 py-2 bg-[#151515] h-16">
       <div className="max-w-6xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <span className="flex items-center gap-2 text-lg font-semibold text-gray-200 select-none">

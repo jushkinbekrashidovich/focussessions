@@ -92,7 +92,7 @@ export default function Home() {
       </Head>
       <LandingNavbar user={userData} />
       {/* Spacing between navbar and first section */}
-      <div className="h-24 sm:h-28 md:h-28"></div>
+      <div className="h-16"></div>
       
       {/* Hero Section */}
       <section className="w-full text-white flex flex-col justify-center items-center px-4 py-8 sm:py-12 md:py-16 bg-gradient-to-b from-black via-[#0f0f14] to-[#151515]">
@@ -170,6 +170,45 @@ export default function Home() {
                     aria-label={`Go to slide ${idx + 1}`}
                   />
                 ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Comparison Section: Brainrot vs FocusDot */}
+          <div className="mt-10 sm:mt-12 md:mt-14 space-y-6">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold leading-tight px-2 bg-gradient-to-r from-[#a78bfa] via-[#8ab4ff] to-[#60a5fa] bg-clip-text text-transparent text-center">
+              Brainrot kills productivity. FocusDot fixes it.
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
+              {/* Left - Brainrot */}
+              <div className="rounded-3xl border border-[#f29aa3]/40 bg-[#2a1518]/40 p-6 sm:p-8">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xl sm:text-2xl font-extrabold text-[#ffb3ba]">Living with Brainrot</h3>
+                  <span className="text-[#ff7a87] text-lg">❌</span>
+                </div>
+                <ul className="space-y-3 text-gray-300">
+                  <li>• Mindless scrolling for hours</li>
+                  <li>• Constant dopamine hits, no deep work</li>
+                  <li>• Start 10 things, finish none</li>
+                  <li>• Feel guilty at the end of the day</li>
+                  <li>• Lose track of time and energy</li>
+                </ul>
+              </div>
+
+              {/* Right - FocusDot */}
+              <div className="rounded-3xl border border-[#8ff0b5]/40 bg-[#10231a]/40 p-6 sm:p-8">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xl sm:text-2xl font-extrabold text-[#9af0be]">Focusing with FocusDot</h3>
+                  <span className="text-[#89f0b2] text-lg">✅</span>
+                </div>
+                <ul className="space-y-3 text-gray-300">
+                  <li>• Structured deep work sessions</li>
+                  <li>• Build streaks and see your progress</li>
+                  <li>• Focus Score shows your growth</li>
+                  <li>• Visual heatmap makes consistency fun</li>
+                  <li>• End the day proud of real progress</li>
+                </ul>
               </div>
             </div>
           </div>
