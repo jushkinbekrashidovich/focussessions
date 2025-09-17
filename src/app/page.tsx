@@ -257,7 +257,14 @@ export default function Home() {
 
               {/* Step 2 */}
               <div className="flex flex-col items-center text-center">
-                <div className="text-5xl sm:text-6xl select-none">⏱</div>
+                <div className="select-none">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-14 h-14 sm:w-16 sm:h-16" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M10 2h4" />
+                    <path d="M12 14V8" />
+                    <path d="M19.03 7.39l1.41-1.41" />
+                    <circle cx="12" cy="14" r="8" />
+                  </svg>
+                </div>
                 <div className="mt-6 h-3 w-3 rounded-full bg-white/80 border border-white/50" aria-hidden="true"></div>
                 <div className="mt-6">
                   <p className="text-base sm:text-lg font-extrabold text-white">Track Focus Sessions</p>
