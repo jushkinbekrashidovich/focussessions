@@ -40,9 +40,11 @@ export default function DeepWorkStats({ refreshTrigger }: DeepWorkStatsProps) {
     return (
       <div className="grid grid-cols-3 gap-3 sm:gap-6">
         {[...Array(3)].map((_, i) => (
-          <div key={i} className="bg-[#1d1d4e] p-3 sm:p-6 rounded-xl animate-pulse">
-            <div className="h-3 sm:h-4 bg-gray-600 rounded w-3/4 mb-1 sm:mb-2"></div>
-            <div className="h-6 sm:h-8 bg-gray-600 rounded w-1/2 mb-1 sm:mb-2"></div>
+          <div key={i} className="bg-[#1d1d4e] p-2 sm:p-6 rounded-xl border border-[#6d5cf6]/40 aspect-square flex flex-col justify-between animate-pulse">
+            <div>
+              <div className="h-3 sm:h-4 bg-gray-600 rounded w-3/4 mb-1 sm:mb-2"></div>
+              <div className="h-6 sm:h-8 bg-gray-600 rounded w-1/2 mb-1 sm:mb-2"></div>
+            </div>
             <div className="h-1.5 sm:h-2 bg-gray-600 rounded-full"></div>
           </div>
         ))}
@@ -53,7 +55,7 @@ export default function DeepWorkStats({ refreshTrigger }: DeepWorkStatsProps) {
   if (!stats) {
     return (
       <div className="grid grid-cols-3 gap-3 sm:gap-6">
-        <div className="bg-[#1d1d4e] p-3 sm:p-6 rounded-xl text-center text-gray-400 text-xs sm:text-sm">
+        <div className="bg-[#1d1d4e] p-2 sm:p-6 rounded-xl border border-gray-600/40 aspect-square flex items-center justify-center text-center text-gray-400 text-[10px] sm:text-sm">
           Failed to load stats
         </div>
       </div>
@@ -63,37 +65,43 @@ export default function DeepWorkStats({ refreshTrigger }: DeepWorkStatsProps) {
   return (
     <div className="grid grid-cols-3 gap-3 sm:gap-6">
       {/* Deep Work This Month */}
-      <div className="bg-[#1d1d4e] p-3 sm:p-6 rounded-xl">
-        <div className="flex items-center space-x-3 mb-2">
-          <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-            <span className="text-purple-600">⏱️</span>
+      <div className="bg-[#1d1d4e] p-2 sm:p-6 rounded-xl border border-[#6d5cf6]/40 aspect-square flex flex-col justify-between">
+        <div>
+          <div className="flex items-center space-x-2 sm:space-x-3 mb-1.5 sm:mb-2">
+            <div className="w-6 h-6 sm:w-8 sm:h-8 bg-purple-100/90 rounded-lg flex items-center justify-center">
+              <span className="text-[12px] sm:text-base text-purple-600">⏱️</span>
+            </div>
+            <p className="text-[10px] sm:text-sm text-gray-300">Deep Work This Month</p>
           </div>
-          <p className="text-xs sm:text-sm text-gray-300">Deep Work This Month</p>
+          <h3 className="text-base sm:text-2xl font-bold">
+            {formatMonthlyTime(stats.monthlyHours, stats.monthlyMinutes)}
+          </h3>
         </div>
-        <h3 className="text-lg sm:text-2xl font-bold">
-          {formatMonthlyTime(stats.monthlyHours, stats.monthlyMinutes)}
-        </h3>
-        <div className="h-1.5 sm:h-2 mt-1 sm:mt-2 bg-[#37378a] rounded-full overflow-hidden">
-          <div 
-            className="h-full bg-[#4A42E4] transition-all duration-500"
-            style={{ width: `${stats.currentMonthProgress}%` }}
-          />
+        <div>
+          <div className="h-1.5 sm:h-2 bg-[#37378a] rounded-full overflow-hidden">
+            <div 
+              className="h-full bg-[#4A42E4] transition-all duration-500"
+              style={{ width: `${stats.currentMonthProgress}%` }}
+            />
+          </div>
+          <p className="text-[10px] sm:text-xs text-gray-400 mt-1">
+            {stats.currentMonthPassedDays}/{stats.currentMonthTotalDays} 
+          </p>
         </div>
-        <p className="text-xs text-gray-400 mt-1">
-          {stats.currentMonthPassedDays}/{stats.currentMonthTotalDays} 
-        </p>
       </div>
 
       {/* Deep Work Streak */}
-      <div className="bg-[#1d1d4e] p-3 sm:p-6 rounded-xl">
-        <div className="flex items-center space-x-3 mb-2">
-          <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-            <span className="text-blue-600">🔥</span>
+      <div className="bg-[#1d1d4e] p-2 sm:p-6 rounded-xl border border-[#60a5fa]/40 aspect-square flex flex-col justify-between">
+        <div>
+          <div className="flex items-center space-x-2 sm:space-x-3 mb-1.5 sm:mb-2">
+            <div className="w-6 h-6 sm:w-8 sm:h-8 bg-blue-100/90 rounded-lg flex items-center justify-center">
+              <span className="text-[12px] sm:text-base text-blue-600">🔥</span>
+            </div>
+            <p className="text-[10px] sm:text-sm text-gray-300">Deep Work Streak</p>
           </div>
-          <p className="text-xs sm:text-sm text-gray-300">Deep Work Streak</p>
+          <h3 className="text-base sm:text-2xl font-bold">{stats.streak} days</h3>
         </div>
-        <h3 className="text-lg sm:text-2xl font-bold">{stats.streak} days</h3>
-        <p className="text-xs text-gray-400 mt-1">
+        <p className="text-[10px] sm:text-xs text-gray-400">
           {stats.streak === 0 ? 'Start your streak today!' : 
            stats.streak === 1 ? 'Great start!' : 
            stats.streak < 7 ? 'Building momentum!' :
@@ -103,29 +111,30 @@ export default function DeepWorkStats({ refreshTrigger }: DeepWorkStatsProps) {
       </div>
 
       {/* Longest Focus Session */}
-      <div className="bg-[#1d1d4e] p-3 sm:p-6 rounded-xl">
-        <div className="flex items-center space-x-3 mb-2">
-          <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-            <span className="text-green-600">🏆</span>
+      <div className="bg-[#1d1d4e] p-2 sm:p-6 rounded-xl border border-[#34d399]/40 aspect-square flex flex-col justify-between">
+        <div>
+          <div className="flex items-center space-x-2 sm:space-x-3 mb-1.5 sm:mb-2">
+            <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-100/90 rounded-lg flex items-center justify-center">
+              <span className="text-[12px] sm:text-base text-green-600">🏆</span>
+            </div>
+            <p className="text-[10px] sm:text-sm text-gray-300">Longest Focus Session</p>
           </div>
-          <p className="text-xs sm:text-sm text-gray-300">Longest Focus Session</p>
-        </div>
-        {stats.longestSession ? (
-          <>
-            <h3 className="text-lg sm:text-2xl font-bold">
+          {stats.longestSession ? (
+            <h3 className="text-base sm:text-2xl font-bold">
               {formatLongestSessionTime(stats.longestSession.duration_min)}
             </h3>
-            <p className="text-xs text-gray-400 mt-1">
-              {formatDate(stats.longestSession.created_at)}
-            </p>
-          </>
+          ) : (
+            <h3 className="text-base sm:text-2xl font-bold text-gray-400">No sessions yet</h3>
+          )}
+        </div>
+        {stats.longestSession ? (
+          <p className="text-[10px] sm:text-xs text-gray-400">
+            {formatDate(stats.longestSession.created_at)}
+          </p>
         ) : (
-          <>
-            <h3 className="text-lg sm:text-2xl font-bold text-gray-400">No sessions yet</h3>
-            <p className="text-xs text-gray-400 mt-1">
-              Complete your first session to see your record
-            </p>
-          </>
+          <p className="text-[10px] sm:text-xs text-gray-400">
+            Complete your first session to see your record
+          </p>
         )}
       </div>
     </div>
