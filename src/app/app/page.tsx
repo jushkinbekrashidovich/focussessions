@@ -112,7 +112,7 @@ export default function HomePage() {
                 See all
               </button>
             </div>
-            <ActivityFeed maxItems={10} refreshTrigger={refreshTrigger} />
+            <ActivityFeed maxItems={5} refreshTrigger={refreshTrigger} />
           </div>
         </div>
       </div>

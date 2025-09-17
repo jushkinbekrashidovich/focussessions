@@ -231,6 +231,64 @@ export default function Home() {
         </div>
       </section>
 
+      {/* How it works */}
+      <section id="how-it-works" className="w-full flex justify-center px-4 sm:px-6 py-16 sm:py-20 md:py-24 bg-[#151515]">
+        <div className="max-w-5xl w-full">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-center text-white mb-8 sm:mb-10">
+            How it works?
+          </h2>
+
+          {/* Timeline */}
+          <div className="relative">
+            {/* Horizontal line */}
+            <div className="absolute left-0 right-0 top-16 sm:top-20 h-0.5 bg-[#2b2b2b]" aria-hidden="true"></div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-6 md:gap-10">
+              {/* Step 1 */}
+              <div className="flex flex-col items-center text-center">
+                <div className="text-5xl sm:text-6xl select-none">🎯</div>
+                {/* Dot on line */}
+                <div className="mt-6 h-3 w-3 rounded-full bg-white/80 border border-white/50" aria-hidden="true"></div>
+                <div className="mt-6">
+                  <p className="text-base sm:text-lg font-extrabold text-white">Create Personal Goals</p>
+                  <p className="text-xs sm:text-sm text-gray-400 mt-2">Set your study or work target hours</p>
+                </div>
+              </div>
+
+              {/* Step 2 */}
+              <div className="flex flex-col items-center text-center">
+                <div className="text-5xl sm:text-6xl select-none">⏱</div>
+                <div className="mt-6 h-3 w-3 rounded-full bg-white/80 border border-white/50" aria-hidden="true"></div>
+                <div className="mt-6">
+                  <p className="text-base sm:text-lg font-extrabold text-white">Track Focus Sessions</p>
+                  <p className="text-xs sm:text-sm text-gray-400 mt-2">Timer automatically reduces your remaining goal hours</p>
+                </div>
+              </div>
+
+              {/* Step 3 */}
+              <div className="flex flex-col items-center text-center">
+                <div className="text-5xl sm:text-6xl select-none">🟩</div>
+                <div className="mt-6 h-3 w-3 rounded-full bg-white/80 border border-white/50" aria-hidden="true"></div>
+                <div className="mt-6">
+                  <p className="text-base sm:text-lg font-extrabold text-white">Deep Work Heatmap</p>
+                  <p className="text-xs sm:text-sm text-gray-400 mt-2">Visualize your daily focus streaks like GitHub commits</p>
+                </div>
+              </div>
+
+              {/* Step 4 */}
+              <div className="flex flex-col items-center text-center">
+                <div className="text-5xl sm:text-6xl select-none">📊</div>
+                <div className="mt-6 h-3 w-3 rounded-full bg-white/80 border border-white/50" aria-hidden="true"></div>
+                <div className="mt-6">
+                  <p className="text-base sm:text-lg font-extrabold text-white">Focus Score & Stats</p>
+                  <p className="text-xs sm:text-sm text-gray-400 mt-2">See streaks, longest sessions, and your Focus Score</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Spacing between sections */}
       <div className="h-40 sm:h-44 md:h-48"></div>
 

@@ -251,7 +251,7 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
 
   if (isLoading) {
     return (
-      <div className="bg-[#1d1d4e] rounded-xl p-3 sm:p-6 h-[150px] sm:h-[200px] animate-pulse transition-colors duration-200">
+      <div className="bg-[#1d1d4e] rounded-xl p-3 sm:p-6 h-[150px] sm:h-[200px] animate-pulse transition-colors duration-200 border border-[#6d5cf6]/40">
         <div className="h-3 sm:h-4 bg-gray-600 rounded w-1/3 mb-2 sm:mb-4"></div>
         <div className="h-24 sm:h-32 bg-gray-600 rounded"></div>
       </div>
@@ -259,7 +259,7 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
   }
 
     return (
-    <div>
+    <div className="bg-[#1d1d4e] rounded-xl p-3 sm:p-6 border border-[#6d5cf6]/40">
       <div className="flex justify-between items-center mb-3 sm:mb-4">
         <h2 className="text-lg sm:text-xl font-semibold text-white transition-colors duration-200">My Deep Work</h2>
         
