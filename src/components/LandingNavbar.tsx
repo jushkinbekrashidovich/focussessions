@@ -28,7 +28,7 @@ export default function LandingNavbar({ user }: LandingNavbarProps) {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8 lg:gap-10">
           <Link
-            href="#about"
+            href="#how-it-works"
             className="text-[0.94rem] font-bold text-[#5F5F5F] hover:text-white transition"
           >
             About
@@ -82,7 +82,7 @@ export default function LandingNavbar({ user }: LandingNavbarProps) {
       <div className={`md:hidden absolute top-full left-0 right-0 bg-[#151515] border-t border-gray-700 transition-all duration-300 ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
         <nav className="flex flex-col py-4">
           <Link
-            href="#about"
+            href="#how-it-works"
             className="px-6 py-3 text-[0.94rem] font-bold text-[#5F5F5F] hover:text-white transition hover:bg-gray-800"
             onClick={() => setIsMenuOpen(false)}
           >

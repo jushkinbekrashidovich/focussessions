@@ -268,7 +268,7 @@ export default function Home() {
                 <div className="mt-6 h-3 w-3 rounded-full bg-white/80 border border-white/50" aria-hidden="true"></div>
                 <div className="mt-6">
                   <p className="text-base sm:text-lg font-extrabold text-white">Track Focus Sessions</p>
-                  <p className="text-xs sm:text-sm text-gray-400 mt-2">Timer automatically reduces your remaining goal hours</p>
+                  <p className="text-xs sm:text-sm text-gray-400 mt-2">Select your goal and dive into a deep work session.</p>
                 </div>
               </div>
 
@@ -278,7 +278,7 @@ export default function Home() {
                 <div className="mt-6 h-3 w-3 rounded-full bg-white/80 border border-white/50" aria-hidden="true"></div>
                 <div className="mt-6">
                   <p className="text-base sm:text-lg font-extrabold text-white">Deep Work Heatmap</p>
-                  <p className="text-xs sm:text-sm text-gray-400 mt-2">Visualize your daily focus streaks like GitHub commits</p>
+                  <p className="text-xs sm:text-sm text-gray-400 mt-2">Track progress with beautiful visualization</p>
                 </div>
               </div>
 
