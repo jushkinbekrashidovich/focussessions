@@ -158,17 +158,17 @@ export default function FocusScorePage() {
     <div className="min-h-screen bg-[#191847]">
       <AppNavbar />
       
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto px-4 py-6 sm:py-8">
         {/* Focus Score Card */}
-        <div className="relative bg-[#1e1e1e] border border-gray-700 rounded-2xl p-8 shadow-lg">
+        <div className="relative bg-[#1e1e1e] border border-gray-700 rounded-2xl p-4 sm:p-6 md:p-8 shadow-lg">
           {/* Header */}
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-2xl font-bold text-white uppercase tracking-wider">
+          <div className="flex justify-between items-center mb-4 sm:mb-6 md:mb-8">
+            <h1 className="text-xl sm:text-2xl font-bold text-white uppercase tracking-wider">
               Focus Score
             </h1>
             <button
               onClick={() => setShowHelp(!showHelp)}
-              className="w-8 h-8 rounded-full bg-gray-700 hover:bg-gray-600 flex items-center justify-center text-gray-300 hover:text-white transition-colors"
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-700 hover:bg-gray-600 flex items-center justify-center text-gray-300 hover:text-white transition-colors"
               title="How Focus Score works"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -179,7 +179,7 @@ export default function FocusScorePage() {
 
           {/* Help Information */}
           {showHelp && (
-            <div className="mb-8 p-6 bg-[#2a2a3a] rounded-lg border border-gray-600">
+            <div className="mb-6 sm:mb-8 p-4 sm:p-6 bg-[#2a2a3a] rounded-lg border border-gray-600">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <h3 className="text-lg font-semibold text-green-400 mb-3">📈 What Makes Focus Score Higher</h3>
@@ -204,19 +204,19 @@ export default function FocusScorePage() {
           )}
 
           {/* Main Content */}
-          <div className={`grid grid-cols-1 md:grid-cols-2 gap-8 ${!isSubscriptionLoading && !isPro ? 'blur-md' : ''}`}>
+          <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 ${!isSubscriptionLoading && !isPro ? 'blur-md' : ''}`}>
             {/* Left Side - Concentration Power Score */}
             <div className="space-y-4">
-              <div className="text-gray-400 text-sm uppercase tracking-wider">
+              <div className="text-gray-400 text-xs sm:text-sm uppercase tracking-wider">
                 Concentration Power Score
               </div>
-              <div className="text-6xl font-bold text-white">
+              <div className="text-4xl sm:text-5xl md:text-6xl font-bold text-white">
                 {focusScoreData?.concentrationPowerScore || 0}
               </div>
-              <div className="text-gray-300 text-sm">
+              <div className="text-gray-300 text-xs sm:text-sm">
                 Based on: Longest session × consistency × completion rate
               </div>
-              <div className="text-xs text-gray-400 space-y-1">
+              <div className="text-[11px] sm:text-xs text-gray-400 space-y-1">
                 <div>100 = Elite focus ability (90+ min sessions, daily practice)</div>
                 <div>0 = Severe attention issues</div>
               </div>
@@ -226,13 +226,13 @@ export default function FocusScorePage() {
             <div className="flex items-center justify-center">
               <div className="relative">
                 {/* Glowing circle background */}
-                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 opacity-20 blur-xl"></div>
+                <div className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 opacity-20 blur-xl"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="text-4xl font-bold text-white mb-2">
+                    <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-1 sm:mb-2">
                       {(focusScoreData?.changeFromLastWeek || 0) > 0 ? '+' : ''}{(focusScoreData?.changeFromLastWeek || 0).toFixed(1)}
                     </div>
-                    <div className="text-sm text-gray-300">
+                    <div className="text-xs sm:text-sm text-gray-300">
                       vs. last week
                     </div>
                   </div>
@@ -242,25 +242,25 @@ export default function FocusScorePage() {
           </div>
 
           {/* Footer - Additional Stats */}
-          <div className={`mt-8 pt-6 border-t border-gray-700 ${!isSubscriptionLoading && !isPro ? 'blur-md' : ''}`}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+          <div className={`mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-700 ${!isSubscriptionLoading && !isPro ? 'blur-md' : ''}`}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 text-center">
               <div>
-                <div className="text-2xl font-bold text-purple-400">
+                <div className="text-xl sm:text-2xl font-bold text-purple-400">
                   {focusScoreData?.longestSessionMinutes || 0}m
                 </div>
-                <div className="text-sm text-gray-400">Longest Session</div>
+                <div className="text-xs sm:text-sm text-gray-400">Longest Session</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-purple-400">
+                <div className="text-xl sm:text-2xl font-bold text-purple-400">
                   {focusScoreData?.consistencyDays || 0}/7
                 </div>
-                <div className="text-sm text-gray-400">Days Active</div>
+                <div className="text-xs sm:text-sm text-gray-400">Days Active</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-purple-400">
+                <div className="text-xl sm:text-2xl font-bold text-purple-400">
                   {focusScoreData?.completionRate || 0}%
                 </div>
-                <div className="text-sm text-gray-400">Completion Rate</div>
+                <div className="text-xs sm:text-sm text-gray-400">Completion Rate</div>
               </div>
             </div>
           </div>
