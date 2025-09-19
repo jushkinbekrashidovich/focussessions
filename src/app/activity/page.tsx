@@ -130,17 +130,17 @@ export default function ActivityPage() {
         <div className="mb-8">
           <button 
             onClick={handleAddGoalClick}
-            className="bg-[#4A42E4] hover:bg-[#3b35c6] active:bg-[#2d1b69] px-6 py-3 rounded-lg text-sm font-semibold transition-colors flex items-center space-x-2"
+            className="bg-[#80e8c8] hover:bg-[#6dd4b8] active:bg-[#5ac0a8] text-[#2d5a4a] px-6 py-3 rounded-full text-sm font-semibold transition-colors flex items-center space-x-2"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <span>Create Goal</span>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
             </svg>
-            <span>Add new goal</span>
           </button>
         </div>
 
         {/* Skills Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {isLoadingSkills ? (
             <div className="col-span-full">
               <div className="bg-[#1d1d4e] rounded-xl p-8 text-center">
