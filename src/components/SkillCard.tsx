@@ -198,24 +198,24 @@ export default function SkillCard({ skill, onEdit, onDelete }: SkillCardProps) {
         <p className="text-gray-400 text-sm">{skill.description || 'No description provided'}</p>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-2 gap-4 mb-6">
-        {/* Number of completed focus sessions */}
-        <div>
-          <p className="text-2xl font-bold text-white">
-            {isLoading ? '...' : progress?.completedSessions || 0}
-          </p>
-          <p className="text-sm text-gray-400">Number of completed focus sessions</p>
-        </div>
+       {/* Stats Grid */}
+       <div className="grid grid-cols-2 gap-4 mb-6">
+         {/* Focus Sessions */}
+         <div>
+           <p className="text-2xl font-bold text-white">
+             {isLoading ? '...' : progress?.completedSessions || 0}
+           </p>
+           <p className="text-sm text-gray-400">Focus Sessions</p>
+         </div>
 
-        {/* Finished hours out of target hours */}
-        <div>
-          <p className="text-2xl font-bold text-white">
-            {isLoading ? '...' : progress ? `${progress.completedHours.toFixed(1)}/${progress.targetHours}` : '0/0'}
-          </p>
-          <p className="text-sm text-gray-400">Finished hours out of target hours</p>
-        </div>
-      </div>
+         {/* Hours */}
+         <div>
+           <p className="text-2xl font-bold text-white">
+             {isLoading ? '...' : progress ? `${progress.completedHours.toFixed(1)}/${progress.targetHours}` : '0/0'}
+           </p>
+           <p className="text-sm text-gray-400">Hours</p>
+         </div>
+       </div>
 
       {/* Current milestone */}
       <div className="mb-4">
@@ -225,13 +225,6 @@ export default function SkillCard({ skill, onEdit, onDelete }: SkillCardProps) {
         </p>
       </div>
 
-      {/* Completion prediction */}
-      <div className="mb-4">
-        <p className="text-sm text-gray-400 mb-1">Completion prediction</p>
-        <p className="text-lg font-semibold text-white">
-          {isLoading ? '...' : progress?.completionPrediction || '🌱 Growing Steadily'}
-        </p>
-      </div>
 
       {/* Overall completeness progress bar */}
       <div className="mb-2">

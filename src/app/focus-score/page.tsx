@@ -1,147 +1,17 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import AppNavbar from '@/components/AppNavbar'
-import { useUser } from '@/lib/hooks'
+import { useUser, useFocusScore } from '@/lib/hooks'
 import { useSubscriptionStatus } from '@/lib/subscriptionUtils'
-import { supabase } from '@/lib/supabaseClient'
-
-interface FocusScoreData {
-  concentrationPowerScore: number
-  changeFromLastWeek: number
-  longestSessionMinutes: number
-  consistencyDays: number
-  completionRate: number
-}
 
 export default function FocusScorePage() {
   const { data: user } = useUser()
   const { isPro, isSubscriptionLoading } = useSubscriptionStatus()
-  const [focusScoreData, setFocusScoreData] = useState<FocusScoreData | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const { data: focusScoreData, isLoading } = useFocusScore()
   const [showHelp, setShowHelp] = useState(false)
   const router = useRouter()
-
-  useEffect(() => {
-    if (user?.id) {
-      calculateFocusScore(user.id)
-    }
-  }, [user?.id])
-
-  const calculateFocusScore = async (userId: string) => {
-    try {
-      setIsLoading(true)
-      
-      // Get sessions from last 7 days
-      const sevenDaysAgo = new Date()
-      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
-      
-      const { data: currentWeekSessions, error: currentError } = await supabase
-        .from('sessions')
-        .select('duration_min, created_at')
-        .eq('user_id', userId)
-        .gte('created_at', sevenDaysAgo.toISOString())
-        .order('created_at', { ascending: false })
-
-      if (currentError) {
-        console.error('Error fetching current week sessions:', currentError)
-        return
-      }
-
-      // Get sessions from previous 7 days
-      const fourteenDaysAgo = new Date()
-      fourteenDaysAgo.setDate(fourteenDaysAgo.getDate() - 14)
-      
-      const { data: previousWeekSessions, error: previousError } = await supabase
-        .from('sessions')
-        .select('duration_min, created_at')
-        .eq('user_id', userId)
-        .gte('created_at', fourteenDaysAgo.toISOString())
-        .lt('created_at', sevenDaysAgo.toISOString())
-        .order('created_at', { ascending: false })
-
-      if (previousError) {
-        console.error('Error fetching previous week sessions:', previousError)
-        return
-      }
-
-      // Calculate current week score
-      const currentScore = calculateConcentrationPowerScore(currentWeekSessions || [])
-      
-      // Calculate previous week score
-      const previousScore = calculateConcentrationPowerScore(previousWeekSessions || [])
-      
-      // Calculate change
-      const change = currentScore.concentrationPowerScore - previousScore.concentrationPowerScore
-
-      setFocusScoreData({
-        ...currentScore,
-        changeFromLastWeek: change
-      })
-    } catch (error) {
-      console.error('Error calculating focus score:', error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  const calculateConcentrationPowerScore = (sessions: { duration_min: number | null; created_at: string }[]) => {
-    if (!sessions || sessions.length === 0) {
-      return {
-        concentrationPowerScore: 0,
-        longestSessionMinutes: 0,
-        consistencyDays: 0,
-        completionRate: 0
-      }
-    }
-
-    // 1. Longest Session Score (0-100)
-    const longestSessionMinutes = Math.max(...sessions.map(s => s.duration_min || 0))
-    const longestSessionScore = longestSessionMinutes < 10 
-      ? 0 
-      : Math.min((longestSessionMinutes / 90) * 100, 100)
-
-    // 2. Consistency Score (0-100)
-    const uniqueDays = new Set(sessions.map(s => new Date(s.created_at).toDateString())).size
-    const consistencyScore = (uniqueDays / 7) * 100
-
-    // 3. Completion Rate Score (0-100)
-    // Assume common timer values: 30min, 60min, 120min
-    const commonDurations = [30, 60, 120]
-    let totalCompletionRate = 0
-    let validSessions = 0
-
-    sessions.forEach(session => {
-      const actualDuration = session.duration_min || 0
-      if (actualDuration > 0) {
-        // Find closest intended duration
-        const intendedDuration = commonDurations.reduce((prev, curr) => 
-          Math.abs(curr - actualDuration) < Math.abs(prev - actualDuration) ? curr : prev
-        )
-        
-        const completionRate = Math.min((actualDuration / intendedDuration) * 100, 100)
-        totalCompletionRate += completionRate
-        validSessions++
-      }
-    })
-
-    const completionScore = validSessions > 0 ? totalCompletionRate / validSessions : 0
-
-    // 4. Final Score - Weighted Average
-    const concentrationPowerScore = Math.round(
-      (longestSessionScore * 0.4) + 
-      (consistencyScore * 0.3) + 
-      (completionScore * 0.3)
-    )
-
-    return {
-      concentrationPowerScore: Math.min(concentrationPowerScore, 100),
-      longestSessionMinutes,
-      consistencyDays: uniqueDays,
-      completionRate: Math.round(completionScore)
-    }
-  }
 
   if (isLoading) {
     return (

@@ -136,7 +136,7 @@ export default function ActivityPage() {
         </div>
 
         {/* Skills Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {isLoadingSkills ? (
             <div className="col-span-full">
               <div className="bg-[#1d1d4e] rounded-xl p-8 text-center">
