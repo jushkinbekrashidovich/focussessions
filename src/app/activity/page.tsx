@@ -96,35 +96,31 @@ export default function ActivityPage() {
     <div className="min-h-screen bg-[#13133c] text-white flex flex-col">
       <AppNavbar />
       <div className="flex-1 px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">My Goals</h1>
-          <p className="text-gray-400 text-lg">Create and manage your focus goals to track progress</p>
-          {!isSubscriptionLoading && !isPro && (
-            <div className="mt-4 p-4 bg-[#1d1d4e] rounded-lg border border-gray-700">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-white">
-                    Free plan: {skills.length}/1 goal used
-                  </p>
-                  {skills.length >= 1 && (
-                    <p className="text-xs text-gray-400 mt-1">
-                      Upgrade to Pro to add unlimited goals
-                    </p>
-                  )}
-                </div>
+        {/* Subscription Info */}
+        {!isSubscriptionLoading && !isPro && (
+          <div className="mb-8 p-4 bg-[#1d1d4e] rounded-lg border border-gray-700">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-white">
+                  Free plan: {skills.length}/1 goal used
+                </p>
                 {skills.length >= 1 && (
-                  <button
-                    onClick={() => router.push('/pricing')}
-                    className="px-4 py-2 bg-[#4A42E4] hover:bg-[#3b35c6] active:bg-[#2d1b69] text-white rounded-lg text-sm font-medium transition-colors"
-                  >
-                    Upgrade to Pro
-                  </button>
+                  <p className="text-xs text-gray-400 mt-1">
+                    Upgrade to Pro to add unlimited goals
+                  </p>
                 )}
               </div>
+              {skills.length >= 1 && (
+                <button
+                  onClick={() => router.push('/pricing')}
+                  className="px-4 py-2 bg-[#4A42E4] hover:bg-[#3b35c6] active:bg-[#2d1b69] text-white rounded-lg text-sm font-medium transition-colors"
+                >
+                  Upgrade to Pro
+                </button>
+              )}
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Add Goal Button */}
         <div className="mb-8">

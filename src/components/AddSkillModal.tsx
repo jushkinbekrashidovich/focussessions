@@ -64,7 +64,7 @@ export default function AddSkillModal({ isOpen, onClose, onAddSkill, isLoading =
 
           <div>
             <label htmlFor="targetHours" className="block text-sm font-medium text-gray-300 mb-3">
-              Target Total Hours
+              Target Hours
             </label>
             <input
               type="number"
@@ -72,7 +72,7 @@ export default function AddSkillModal({ isOpen, onClose, onAddSkill, isLoading =
               value={targetHours}
               onChange={(e) => setTargetHours(e.target.value)}
               className="w-full px-4 py-3 bg-[#2a2a2a] border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#4A42E4] focus:border-transparent text-base"
-              placeholder="Enter target total hours"
+              placeholder="Enter target hours"
               min="1"
               disabled={isLoading}
             />
