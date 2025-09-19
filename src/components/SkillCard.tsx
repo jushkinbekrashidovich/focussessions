@@ -205,7 +205,7 @@ export default function SkillCard({ skill, onEdit, onDelete }: SkillCardProps) {
            <p className="text-2xl font-bold text-white">
              {isLoading ? '...' : progress?.completedSessions || 0}
            </p>
-           <p className="text-sm text-gray-400">Focus Sessions</p>
+           <p className="text-sm text-gray-400">📊 Focus Sessions</p>
          </div>
 
          {/* Hours */}
@@ -213,13 +213,13 @@ export default function SkillCard({ skill, onEdit, onDelete }: SkillCardProps) {
            <p className="text-2xl font-bold text-white">
              {isLoading ? '...' : progress ? `${progress.completedHours.toFixed(1)}/${progress.targetHours}` : '0/0'}
            </p>
-           <p className="text-sm text-gray-400">Hours</p>
+           <p className="text-sm text-gray-400">🎯 Hours</p>
          </div>
        </div>
 
       {/* Current milestone */}
       <div className="mb-4">
-        <p className="text-sm text-gray-400 mb-1">Current milestone</p>
+        <p className="text-sm text-gray-400 mb-1">🏁 Current milestone</p>
         <p className="text-lg font-semibold text-white">
           {isLoading ? '...' : progress && computed ? `Level ${computed.level}` : 'Level 1'}
         </p>
@@ -229,7 +229,7 @@ export default function SkillCard({ skill, onEdit, onDelete }: SkillCardProps) {
       {/* Overall completeness progress bar */}
       <div className="mb-2">
         <div className="flex justify-between items-center mb-2">
-          <span className="text-sm text-gray-400">Overall completeness</span>
+          <span className="text-sm text-gray-400">🌱 Overall completeness</span>
           <span className="text-sm text-white font-medium">
             {isLoading ? '...' : progress ? `${progress.progressPercentage.toFixed(1)}%` : '0%'}
           </span>
