@@ -14,8 +14,6 @@ interface ProgressData {
   targetHours: number
   progressPercentage: number
   completedSessions: number
-  recentProgress: number // hours in last 7 days
-  completionPrediction: string
 }
 
 export default function SkillCard({ skill, onEdit, onDelete }: SkillCardProps) {
@@ -26,43 +24,18 @@ export default function SkillCard({ skill, onEdit, onDelete }: SkillCardProps) {
   const previousLevelRef = useRef<number>(1)
   const [showCelebrate, setShowCelebrate] = useState(false)
 
-  const getCompletionPrediction = (recentHours: number, targetHours: number, completedHours: number): string => {
-    const remainingHours = targetHours - completedHours
-    const dailyTarget = remainingHours / 30 // Assuming 30 days to complete
-    const recentDailyAverage = recentHours / 7
-    
-    if (recentDailyAverage >= dailyTarget * 1.5) return '🔥 Momentum Strong'
-    if (recentDailyAverage >= dailyTarget * 1.2) return '⚡ Full Energy'
-    if (recentDailyAverage >= dailyTarget * 0.8) return '🌱 Growing Steadily'
-    if (recentDailyAverage >= dailyTarget * 0.5) return '⏳ Tight Timing'
-    return '🚧 Danger Zone'
-  }
-
   const fetchProgress = useCallback(async () => {
     try {
       setIsLoading(true)
       const progressData = await skillsService.getSkillProgress(skill.id)
       
-      // Get sessions for this skill to calculate completed sessions and recent progress
+      // Get sessions for this skill to calculate completed sessions
       const sessions = await sessionsService.getSkillSessions(skill.id)
       const completedSessions = sessions.length
       
-      // Calculate recent progress (last 7 days)
-      const sevenDaysAgo = new Date()
-      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
-      
-      const recentSessions = sessions.filter(session => 
-        new Date(session.created_at) >= sevenDaysAgo
-      )
-      const recentProgress = recentSessions.reduce((sum, session) => sum + session.duration_min, 0) / 60
-      
-      const completionPrediction = getCompletionPrediction(recentProgress, progressData.targetHours, progressData.completedHours)
-      
       setProgress({
         ...progressData,
-        completedSessions,
-        recentProgress,
-        completionPrediction
+        completedSessions
       })
     } catch (error) {
       console.error('Error fetching progress:', error)
@@ -158,6 +131,13 @@ export default function SkillCard({ skill, onEdit, onDelete }: SkillCardProps) {
 
   return (
     <div className="bg-[#1d1d4e] rounded-xl p-6 border border-[#6d5cf6]/40 relative">
+      {/* Category Tag */}
+      <div className="absolute top-4 left-4">
+        <span className="bg-[#80e8c8] text-[#2d5a4a] text-xs font-medium px-3 py-1 rounded-full">
+          Focus Goal
+        </span>
+      </div>
+
       {/* Three-dot menu - top right corner */}
       <div className="absolute top-4 right-4">
         <button
@@ -193,57 +173,69 @@ export default function SkillCard({ skill, onEdit, onDelete }: SkillCardProps) {
       </div>
 
       {/* Goal Title and Description */}
-      <div className="mb-6">
+      <div className="mt-8 mb-6">
         <h3 className="text-xl font-bold text-white mb-2">{skill.name}</h3>
-        <p className="text-gray-400 text-sm">{skill.description || 'No description provided'}</p>
+        <p className="text-gray-400 text-sm leading-relaxed">{skill.description || 'No description provided'}</p>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-2 gap-4 mb-6">
-        {/* Number of completed focus sessions */}
-        <div>
-          <p className="text-2xl font-bold text-white">
-            {isLoading ? '...' : progress?.completedSessions || 0}
-          </p>
-          <p className="text-sm text-gray-400">Number of completed focus sessions</p>
+      {/* Progress Metrics */}
+      <div className="space-y-4 mb-6">
+        {/* Tasks Completed */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+            </svg>
+            <span className="text-sm text-gray-400 font-medium">TASKS COMPLETED</span>
+          </div>
+          <div className="text-right">
+            <span className="text-sm font-bold text-white">
+              {isLoading ? '...' : progress?.completedSessions || 0} of {progress?.completedSessions || 0}
+            </span>
+            <span className="text-xs text-gray-400 ml-2">
+              {isLoading ? '...' : '100%'}
+            </span>
+          </div>
         </div>
 
-        {/* Finished hours out of target hours */}
-        <div>
-          <p className="text-2xl font-bold text-white">
-            {isLoading ? '...' : progress ? `${progress.completedHours.toFixed(1)}/${progress.targetHours}` : '0/0'}
-          </p>
-          <p className="text-sm text-gray-400">Finished hours out of target hours</p>
+        {/* Milestones Completed */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            <span className="text-sm text-gray-400 font-medium">MILESTONES COMPLETED</span>
+          </div>
+          <div className="text-right">
+            <span className="text-sm font-bold text-white">
+              {isLoading ? '...' : progress && computed ? `${computed.level - 1} of ${Math.ceil(progress.targetHours / 10)}` : '0 of 0'}
+            </span>
+            <span className="text-xs text-gray-400 ml-2">
+              {isLoading ? '...' : progress && computed ? `${Math.round(((computed.level - 1) / Math.ceil(progress.targetHours / 10)) * 100)}%` : '0%'}
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Current milestone */}
+      {/* Current Milestone */}
       <div className="mb-4">
-        <p className="text-sm text-gray-400 mb-1">Current milestone</p>
-        <p className="text-lg font-semibold text-white">
+        <p className="text-sm text-gray-400 mb-1">Current Milestone</p>
+        <p className="text-sm font-medium text-[#80e8c8]">
           {isLoading ? '...' : progress && computed ? `Level ${computed.level}` : 'Level 1'}
         </p>
       </div>
 
-      {/* Completion prediction */}
-      <div className="mb-4">
-        <p className="text-sm text-gray-400 mb-1">Completion prediction</p>
-        <p className="text-lg font-semibold text-white">
-          {isLoading ? '...' : progress?.completionPrediction || '🌱 Growing Steadily'}
-        </p>
-      </div>
-
-      {/* Overall completeness progress bar */}
+      {/* Overall Completeness */}
       <div className="mb-2">
         <div className="flex justify-between items-center mb-2">
-          <span className="text-sm text-gray-400">Overall completeness</span>
+          <span className="text-sm text-gray-400">Overall Completeness</span>
           <span className="text-sm text-white font-medium">
-            {isLoading ? '...' : progress ? `${progress.progressPercentage.toFixed(1)}%` : '0%'}
+            {isLoading ? '...' : progress ? `${Math.round(progress.progressPercentage)}%` : '0%'}
           </span>
         </div>
-        <div className="w-full bg-[#2c2c66] rounded-full h-3">
+        <div className="w-full bg-[#2c2c66] rounded-full h-2">
           <div 
-            className="bg-gradient-to-r from-[#6d5cf6] via-[#8ab4ff] to-[#60a5fa] h-3 rounded-full transition-all duration-700"
+            className="bg-[#80e8c8] h-2 rounded-full transition-all duration-700"
             style={{ width: `${progress?.progressPercentage || 0}%` }}
           />
         </div>
