@@ -489,7 +489,10 @@ export default function Home() {
             </div>
             <div className="bg-[#1e1e1e] border border-gray-700 rounded-2xl p-6">
               <h3 className="text-white font-semibold mb-2">What makes it different from a timer?</h3>
-              <p className="text-gray-400">Visual progress with streaks, scores, and a yearly heatmap keeps you motivated.</p>
+              <p className="text-gray-400">Unlike a regular timer, Focusdot is goal-driven.
+Other timer apps just measure time. Focusdot connects your hours to a specific skill or goal.
+
+Timer → Progress → Skill.</p>
             </div>
           </div>
         </div>
