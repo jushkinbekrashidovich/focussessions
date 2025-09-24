@@ -98,7 +98,7 @@ export default function Home() {
       <section className="w-full text-white flex flex-col justify-center items-center px-4 py-8 sm:py-12 md:py-16 bg-gradient-to-b from-black via-[#0f0f14] to-[#151515]">
         <div className="max-w-4xl w-full text-center space-y-4 sm:space-y-6">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight px-2 bg-gradient-to-r from-[#a78bfa] via-[#8ab4ff] to-[#60a5fa] bg-clip-text text-transparent">
-          Focusdot makes your learning journey visible
+          FocusDot makes your learning journey visible
           </h1>
           <p className="text-gray-400 text-base sm:text-lg md:text-xl px-4 max-w-2xl mx-auto">
           Set a goal, log your hours, and see your progress grow day by day
@@ -191,7 +191,7 @@ export default function Home() {
               {/* Left - Brainrot */}
               <div className="rounded-3xl border border-[#f29aa3]/40 bg-[#2a1518]/40 p-6 sm:p-8">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-xl sm:text-2xl font-extrabold text-[#ffb3ba]">Living with Brainrot</h3>
+                  <h3 className="text-xl sm:text-2xl font-extrabold text-[#ffb3ba]">Regular study timers</h3>
                   <span className="text-[#ff7a87] text-lg">❌</span>
                 </div>
                 <ul className="list-disc pl-6 marker:text-[#ffb3ba] space-y-3 text-gray-300 leading-relaxed">
