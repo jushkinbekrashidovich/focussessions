@@ -194,19 +194,19 @@ export default function DeepWorkHeatmap({ refreshTrigger }: DeepWorkHeatmapProps
             <div className="h-3 sm:h-4"></div>
             {/* Tue - row 2 */}
             <div className="h-3 sm:h-4 text-xs text-gray-400 w-8 sm:w-10 text-right leading-none flex items-center justify-end">
-              Tue
+              Mon
             </div>
             {/* Empty space for row 3 (Wed) */}
             <div className="h-3 sm:h-4"></div>
             {/* Thu - row 4 */}
             <div className="h-3 sm:h-4 text-xs text-gray-400 w-8 sm:w-10 text-right leading-none flex items-center justify-end">
-              Thu
+              Wed
             </div>
             {/* Empty space for row 5 (Fri) */}
             <div className="h-3 sm:h-4"></div>
             {/* Sat - row 6 */}
             <div className="h-3 sm:h-4 text-xs text-gray-400 w-8 sm:w-10 text-right leading-none flex items-center justify-end">
-              Sat
+              Fri
             </div>
             {/* Empty space for row 7 (Sun) */}
             <div className="h-3 sm:h-4"></div>

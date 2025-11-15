@@ -124,9 +124,11 @@ export default function TimerBox({ onSessionCompleted }: TimerBoxProps) {
     }
     
     if (!selectedSkill) return
+    const startTime = Date.now()
     setSessionStart(new Date())
     // For Long deep work (value 0), start from 00:00, otherwise use the selected duration
     setSecondsLeft(minutes === 0 ? 0 : minutes * 60)
+    setLastUpdateTime(startTime) // Set the start time immediately to prevent delay
     setRunning(true)
     setShowFlipMode(true)
   }
