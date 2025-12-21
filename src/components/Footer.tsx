@@ -13,7 +13,7 @@ export default function Footer() {
           {/* Left Column - Brand Information */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <Image src="/logo.svg" alt="FocusDot" width={40} height={40} />
+              <Image src="/new_logo.png" alt="FocusDot" width={40} height={40} />
               <span className="text-xl font-bold text-white">FocusDot</span>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">

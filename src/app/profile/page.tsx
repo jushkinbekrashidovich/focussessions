@@ -117,7 +117,7 @@ export default function ProfilePage() {
                 {/* Goal Icon */}
                 <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-md overflow-hidden flex-shrink-0">
                   <img 
-                    src="/logo.svg" 
+                    src="/new_logo.png" 
                     alt="Goal Icon"
                     className="w-full h-full object-contain p-0.5"
                   />

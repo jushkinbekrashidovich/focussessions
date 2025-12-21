@@ -21,7 +21,7 @@ export default function LandingNavbar({ user }: LandingNavbarProps) {
       <div className="max-w-6xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <span className="flex items-center gap-2 text-lg font-semibold text-gray-200 select-none">
-          <Image src="/logo.svg" alt="Logo" width={40} height={40} className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10" priority />
+          <Image src="/new_logo.png" alt="Logo" width={40} height={40} className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10" priority />
           <span className="tracking-tight">FocusDot</span>
         </span>
 
