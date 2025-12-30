@@ -7,13 +7,13 @@ export default function PricingPage() {
     <>
       <Head>
         <title>Pricing - FocusDot Pro Plans | Focus Timer & Deep Work App</title>
-        <meta name="description" content="Choose the perfect FocusDot plan for your productivity needs. Free tier available with Pro plans starting at $1.99/month. Advanced analytics, unlimited categories, and priority support." />
+        <meta name="description" content="Choose the perfect FocusDot plan for your productivity needs. Free tier available with Pro plans starting at $2.99/month. Advanced analytics, unlimited categories, and priority support." />
         <meta name="keywords" content="focus app pricing, productivity app cost, deep work timer price, focus tracker subscription, pomodoro timer plans, study app pricing, concentration app cost" />
         <link rel="canonical" href="https://focusdot.app/pricing" />
         
         {/* Open Graph */}
         <meta property="og:title" content="FocusDot Pricing - Pro Plans for Deep Work" />
-        <meta property="og:description" content="Choose the perfect FocusDot plan for your productivity needs. Free tier available with Pro plans starting at $1.99/month." />
+        <meta property="og:description" content="Choose the perfect FocusDot plan for your productivity needs. Free tier available with Pro plans starting at $2.99/month." />
         <meta property="og:url" content="https://focusdot.app/pricing" />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="https://focusdot.app/dashboard.jpg" />
@@ -21,7 +21,7 @@ export default function PricingPage() {
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="FocusDot Pricing - Pro Plans for Deep Work" />
-        <meta name="twitter:description" content="Choose the perfect FocusDot plan for your productivity needs. Free tier available with Pro plans starting at $1.99/month." />
+        <meta name="twitter:description" content="Choose the perfect FocusDot plan for your productivity needs. Free tier available with Pro plans starting at $2.99/month." />
         <meta name="twitter:image" content="https://focusdot.app/dashboard.jpg" />
         
         {/* Structured Data */}
@@ -46,7 +46,7 @@ export default function PricingPage() {
                 {
                   "@type": "Offer",
                   "name": "Pro Monthly",
-                  "price": "1.99",
+                  "price": "2.99",
                   "priceCurrency": "USD",
                   "description": "Advanced analytics and unlimited categories"
                 },

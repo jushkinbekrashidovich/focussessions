@@ -35,7 +35,7 @@ export default function SettingsPage() {
 
   const getPlanPrice = (planType: string) => {
     switch (planType) {
-      case 'pro_monthly': return '$1.99/month'
+      case 'pro_monthly': return '$2.99/month'
       case 'pro_yearly': return '$9.99/year'
       default: return 'Free'
     }

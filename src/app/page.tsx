@@ -17,7 +17,7 @@ export default function Home() {
   const [isYearly, setIsYearly] = useState(true)
   const [activeSlide, setActiveSlide] = useState(0)
 
-  const slides = ['/focusscore.jpg', '/deepwork.jpg', '/dashboard.jpg', '/profile.png']
+  const slides = ['/focusscore.jpg', '/deepwork.jpg', '/dashboard.jpg', '/profile.png', '/habits.jpg']
 
   // Auto-advance carousel
   if (typeof window !== 'undefined') {
@@ -69,7 +69,7 @@ export default function Home() {
                 "@type": "Offer",
                 "price": "0",
                 "priceCurrency": "USD",
-                "description": "Free tier available with Pro plans starting at $1.99/month"
+                "description": "Free tier available with Pro plans starting at $2.99/month"
               },
               "aggregateRating": {
                 "@type": "AggregateRating",
@@ -416,7 +416,7 @@ export default function Home() {
               {isYearly ? 'Pro Yearly' : 'Pro Monthly'}
             </h3>
             <p className="text-2xl sm:text-3xl font-bold text-white mb-1 text-center">
-              {isYearly ? '$9.99' : '$1.99'}
+              {isYearly ? '$9.99' : '$2.99'}
             </p>
             <p className="text-sm text-gray-400 mb-4 sm:mb-6 text-center">
               {isYearly ? 'per year' : 'per month'}
@@ -451,6 +451,12 @@ export default function Home() {
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
                 Early access to new features
+              </li>
+              <li className="flex items-center">
+                <svg className="w-4 h-4 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                Habit Tracker
               </li>
               <li className="flex items-center">
                 <svg className="w-4 h-4 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
