@@ -34,14 +34,15 @@ export function getFirstDayOfMonth(year: number, month: number): number {
 
 /**
  * Get all dates in a month as YYYY-MM-DD strings
+ * Uses manual formatting to avoid timezone issues with toISOString()
  */
 export function getDatesInMonth(year: number, month: number): string[] {
   const daysInMonth = getDaysInMonth(year, month)
   const dates: string[] = []
   
   for (let day = 1; day <= daysInMonth; day++) {
-    const date = new Date(year, month - 1, day)
-    const dateStr = date.toISOString().split('T')[0]
+    // Manually format to avoid timezone issues
+    const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
     dates.push(dateStr)
   }
   
@@ -68,7 +69,9 @@ export function calculateDailyStats(
     // Return empty stats for all days
     const dates = getDatesInMonth(year, month)
     return dates.map(date => {
-      const dateObj = new Date(date)
+      // Parse date manually to avoid timezone issues
+      const [y, m, d] = date.split('-').map(Number)
+      const dateObj = new Date(y, m - 1, d)
       return {
         date,
         dayOfWeek: dateObj.getDay(),
@@ -92,7 +95,9 @@ export function calculateDailyStats(
   const dates = getDatesInMonth(year, month)
   
   return dates.map(date => {
-    const dateObj = new Date(date)
+    // Parse date manually to avoid timezone issues
+    const [y, m, d] = date.split('-').map(Number)
+    const dateObj = new Date(y, m - 1, d)
     let done = 0
     
     // Count how many active habits were completed on this day
