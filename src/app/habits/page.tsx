@@ -21,6 +21,7 @@ export default function HabitsPage() {
   const [newHabitName, setNewHabitName] = useState('')
   const [editingHabitId, setEditingHabitId] = useState<string | null>(null)
   const [editingHabitName, setEditingHabitName] = useState('')
+  const [togglingCompletion, setTogglingCompletion] = useState<{ habitId: string; date: string } | null>(null)
 
   // Fetch data
   const { data: habits = [], isLoading: habitsLoading } = useHabits()
@@ -135,10 +136,13 @@ export default function HabitsPage() {
 
   // Toggle completion
   const handleToggleCompletion = async (habitId: string, date: string) => {
+    setTogglingCompletion({ habitId, date })
     try {
       await toggleCompletion.mutateAsync({ habitId, date })
     } catch (error) {
       console.error('Error toggling completion:', error)
+    } finally {
+      setTogglingCompletion(null)
     }
   }
 
@@ -258,29 +262,42 @@ export default function HabitsPage() {
                     value={newHabitName}
                     onChange={(e) => setNewHabitName(e.target.value)}
                     onKeyDown={(e) => {
-                      if (e.key === 'Enter') handleAddHabit()
+                      if (e.key === 'Enter' && !createHabit.isPending) handleAddHabit()
                       if (e.key === 'Escape') {
                         setIsAddingHabit(false)
                         setNewHabitName('')
                       }
                     }}
                     placeholder="Habit name..."
-                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white placeholder-gray-400 focus:outline-none focus:border-gray-500 mb-2"
+                    disabled={createHabit.isPending}
+                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white placeholder-gray-400 focus:outline-none focus:border-gray-500 mb-2 disabled:opacity-50 disabled:cursor-not-allowed"
                     autoFocus
                   />
                   <div className="flex gap-2">
                     <button
                       onClick={handleAddHabit}
-                      className="flex-1 px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-sm rounded transition-colors"
+                      disabled={createHabit.isPending}
+                      className="flex-1 px-3 py-1.5 bg-green-600 hover:bg-green-700 disabled:bg-green-700 disabled:opacity-70 text-white text-sm rounded transition-colors flex items-center justify-center gap-2"
                     >
-                      Add
+                      {createHabit.isPending ? (
+                        <>
+                          <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          <span>Adding...</span>
+                        </>
+                      ) : (
+                        'Add'
+                      )}
                     </button>
                     <button
                       onClick={() => {
                         setIsAddingHabit(false)
                         setNewHabitName('')
                       }}
-                      className="flex-1 px-3 py-1.5 bg-gray-600 hover:bg-gray-700 text-white text-sm rounded transition-colors"
+                      disabled={createHabit.isPending}
+                      className="flex-1 px-3 py-1.5 bg-gray-600 hover:bg-gray-700 disabled:opacity-50 text-white text-sm rounded transition-colors"
                     >
                       Cancel
                     </button>
@@ -308,20 +325,29 @@ export default function HabitsPage() {
                           value={editingHabitName}
                           onChange={(e) => setEditingHabitName(e.target.value)}
                           onKeyDown={(e) => {
-                            if (e.key === 'Enter') handleSaveEdit()
+                            if (e.key === 'Enter' && !updateHabit.isPending) handleSaveEdit()
                             if (e.key === 'Escape') handleCancelEdit()
                           }}
-                          className="flex-1 px-2 py-1 bg-gray-700 border border-gray-600 rounded text-white text-sm focus:outline-none focus:border-gray-500"
+                          disabled={updateHabit.isPending}
+                          className="flex-1 px-2 py-1 bg-gray-700 border border-gray-600 rounded text-white text-sm focus:outline-none focus:border-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
                           autoFocus
                         />
                         <button
                           onClick={handleSaveEdit}
-                          className="p-1 text-green-400 hover:text-green-300"
+                          disabled={updateHabit.isPending}
+                          className="p-1 text-green-400 hover:text-green-300 disabled:opacity-50"
                           title="Save"
                         >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                          </svg>
+                          {updateHabit.isPending ? (
+                            <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                          ) : (
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                          )}
                         </button>
                         <button
                           onClick={handleCancelEdit}
@@ -349,10 +375,16 @@ export default function HabitsPage() {
                         </button>
                         <button
                           onClick={() => handleToggleActive(habit.id, habit.is_active)}
-                          className="opacity-0 group-hover:opacity-100 p-1 text-gray-400 hover:text-yellow-400 transition-opacity"
+                          disabled={updateHabit.isPending}
+                          className="opacity-0 group-hover:opacity-100 p-1 text-gray-400 hover:text-yellow-400 disabled:opacity-50 transition-opacity"
                           title={habit.is_active ? "Deactivate" : "Activate"}
                         >
-                          {habit.is_active ? (
+                          {updateHabit.isPending ? (
+                            <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                          ) : habit.is_active ? (
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
                             </svg>
@@ -364,12 +396,20 @@ export default function HabitsPage() {
                         </button>
                         <button
                           onClick={() => handleDeleteHabit(habit.id)}
-                          className="opacity-0 group-hover:opacity-100 p-1 text-red-400 hover:text-red-300 transition-opacity"
+                          disabled={deleteHabit.isPending}
+                          className="opacity-0 group-hover:opacity-100 p-1 text-red-400 hover:text-red-300 disabled:opacity-50 transition-opacity"
                           title="Delete"
                         >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                          </svg>
+                          {deleteHabit.isPending ? (
+                            <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                          ) : (
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                          )}
                         </button>
                       </>
                 )}
@@ -432,17 +472,28 @@ export default function HabitsPage() {
                             <div className="flex gap-0.5 justify-center">
                               {week.map((day) => {
                                 const isCompleted = isHabitCompleted(habit.id, day.date)
+                                const isToggling = togglingCompletion?.habitId === habit.id && togglingCompletion?.date === day.date
                                 return (
                                   <button
                                     key={day.date}
                                     onClick={() => handleToggleCompletion(habit.id, day.date)}
-                                    className={`w-6 h-6 rounded border-2 transition-all duration-200 ${
-                                      isCompleted
+                                    disabled={isToggling || toggleCompletion.isPending}
+                                    className={`w-6 h-6 rounded border-2 transition-all duration-200 flex items-center justify-center ${
+                                      isToggling
+                                        ? 'bg-gray-700 border-gray-500 cursor-wait'
+                                        : isCompleted
                                         ? 'bg-green-500 border-green-400 hover:bg-green-600'
                                         : 'bg-gray-800 border-gray-600 hover:border-gray-500'
                                     }`}
                                     title={`${day.date} - ${isCompleted ? 'Completed' : 'Not completed'}`}
-                                  />
+                                  >
+                                    {isToggling && (
+                                      <svg className="animate-spin h-3 w-3 text-gray-300" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                      </svg>
+                                    )}
+                                  </button>
                                 )
                               })}
                             </div>
