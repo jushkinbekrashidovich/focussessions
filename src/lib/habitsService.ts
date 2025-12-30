@@ -47,9 +47,11 @@ export async function getHabitCompletionsForMonth(
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error('User not authenticated')
 
-  // Calculate date range for the month
+  // Calculate date range for the month - manually format to avoid timezone issues
   const startDate = `${year}-${String(month).padStart(2, '0')}-01`
-  const endDate = new Date(year, month, 0).toISOString().split('T')[0] // Last day of month
+  // Get last day of month manually
+  const daysInMonth = new Date(year, month, 0).getDate()
+  const endDate = `${year}-${String(month).padStart(2, '0')}-${String(daysInMonth).padStart(2, '0')}`
 
   const { data, error } = await supabase
     .from('habit_completions')
