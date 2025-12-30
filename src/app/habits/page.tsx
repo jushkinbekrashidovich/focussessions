@@ -1,8 +1,10 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import { useRouter } from 'next/navigation'
 import AppNavbar from '@/components/AppNavbar'
 import { useHabits, useHabitCompletions, useCreateHabit, useUpdateHabit, useDeleteHabit, useToggleHabitCompletion } from '@/lib/hooks'
+import { useSubscriptionStatus } from '@/lib/subscriptionUtils'
 import {
   calculateDailyStats,
   calculateMonthlyStats,
@@ -15,6 +17,8 @@ import {
 import HabitProgressChart from '@/components/HabitProgressChart'
 
 export default function HabitsPage() {
+  const router = useRouter()
+  const { isPro, isSubscriptionLoading } = useSubscriptionStatus()
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1)
   const [isAddingHabit, setIsAddingHabit] = useState(false)
@@ -50,6 +54,12 @@ export default function HabitsPage() {
     return habits.filter(h => h.is_active)
   }, [habits])
 
+  // Check if free user has reached habit limit
+  const canCreateHabit = useMemo(() => {
+    if (isPro) return true // Pro users can create unlimited habits
+    return habits.length < 1 // Free users can only have 1 habit
+  }, [isPro, habits.length])
+
   // Navigation
   const goToPreviousMonth = () => {
     if (currentMonth === 1) {
@@ -79,6 +89,12 @@ export default function HabitsPage() {
   const handleAddHabit = async () => {
     if (!newHabitName.trim()) return
     
+    // Check if free user is trying to create a second habit
+    if (!isPro && habits.length >= 1) {
+      router.push('/pricing')
+      return
+    }
+    
     try {
       await createHabit.mutateAsync(newHabitName.trim())
       setNewHabitName('')
@@ -86,6 +102,15 @@ export default function HabitsPage() {
     } catch (error) {
       console.error('Error adding habit:', error)
     }
+  }
+
+  const handleAddHabitClick = () => {
+    // Check if free user is trying to create a second habit
+    if (!isPro && habits.length >= 1) {
+      router.push('/pricing')
+      return
+    }
+    setIsAddingHabit(true)
   }
 
   const handleStartEdit = (habitId: string, currentName: string) => {
@@ -242,11 +267,18 @@ export default function HabitsPage() {
           <div className="space-y-4">
             <div className="bg-[#1e1e1e] border border-gray-700 rounded-xl p-4">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="text-lg font-semibold text-white">My Habits</h2>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-lg font-semibold text-white">My Habits</h2>
+                  {!isPro && (
+                    <span className="text-xs text-gray-400 bg-gray-700 px-2 py-0.5 rounded">
+                      {habits.length}/1
+                    </span>
+                  )}
+                </div>
                 <button
-                  onClick={() => setIsAddingHabit(true)}
+                  onClick={handleAddHabitClick}
                   className="p-1.5 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors"
-                  title="Add habit"
+                  title={!isPro && habits.length >= 1 ? "Upgrade to Pro for unlimited habits" : "Add habit"}
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -254,54 +286,102 @@ export default function HabitsPage() {
                 </button>
               </div>
 
+              {/* Free user limit message */}
+              {!isPro && habits.length >= 1 && (
+                <div className="mb-4 p-3 bg-yellow-900/20 border border-yellow-700/50 rounded-lg">
+                  <div className="flex items-start gap-2">
+                    <svg className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div className="flex-1">
+                      <p className="text-sm text-yellow-200 font-medium mb-1">Free Plan Limit Reached</p>
+                      <p className="text-xs text-yellow-300/80 mb-2">
+                        Free users can track 1 habit. Upgrade to Pro for unlimited habits and advanced features.
+                      </p>
+                      <button
+                        onClick={() => router.push('/pricing')}
+                        className="text-xs bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-1.5 rounded transition-colors font-medium"
+                      >
+                        Upgrade to Pro
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Add Habit Form */}
               {isAddingHabit && (
                 <div className="mb-4 p-3 bg-gray-800 rounded-lg">
-                  <input
-                    type="text"
-                    value={newHabitName}
-                    onChange={(e) => setNewHabitName(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' && !createHabit.isPending) handleAddHabit()
-                      if (e.key === 'Escape') {
-                        setIsAddingHabit(false)
-                        setNewHabitName('')
-                      }
-                    }}
-                    placeholder="Habit name..."
-                    disabled={createHabit.isPending}
-                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white placeholder-gray-400 focus:outline-none focus:border-gray-500 mb-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                    autoFocus
-                  />
-                  <div className="flex gap-2">
-                    <button
-                      onClick={handleAddHabit}
-                      disabled={createHabit.isPending}
-                      className="flex-1 px-3 py-1.5 bg-green-600 hover:bg-green-700 disabled:bg-green-700 disabled:opacity-70 text-white text-sm rounded transition-colors flex items-center justify-center gap-2"
-                    >
-                      {createHabit.isPending ? (
-                        <>
-                          <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                          </svg>
-                          <span>Adding...</span>
-                        </>
-                      ) : (
-                        'Add'
-                      )}
-                    </button>
-                    <button
-                      onClick={() => {
-                        setIsAddingHabit(false)
-                        setNewHabitName('')
-                      }}
-                      disabled={createHabit.isPending}
-                      className="flex-1 px-3 py-1.5 bg-gray-600 hover:bg-gray-700 disabled:opacity-50 text-white text-sm rounded transition-colors"
-                    >
-                      Cancel
-                    </button>
-                  </div>
+                  {!canCreateHabit ? (
+                    <div className="text-center py-4">
+                      <p className="text-sm text-yellow-200 mb-3">
+                        You've reached the free plan limit (1 habit)
+                      </p>
+                      <button
+                        onClick={() => router.push('/pricing')}
+                        className="w-full px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white text-sm rounded transition-colors font-medium"
+                      >
+                        Upgrade to Pro
+                      </button>
+                      <button
+                        onClick={() => {
+                          setIsAddingHabit(false)
+                          setNewHabitName('')
+                        }}
+                        className="w-full mt-2 px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white text-sm rounded transition-colors"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      <input
+                        type="text"
+                        value={newHabitName}
+                        onChange={(e) => setNewHabitName(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' && !createHabit.isPending) handleAddHabit()
+                          if (e.key === 'Escape') {
+                            setIsAddingHabit(false)
+                            setNewHabitName('')
+                          }
+                        }}
+                        placeholder="Habit name..."
+                        disabled={createHabit.isPending}
+                        className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white placeholder-gray-400 focus:outline-none focus:border-gray-500 mb-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        autoFocus
+                      />
+                      <div className="flex gap-2">
+                        <button
+                          onClick={handleAddHabit}
+                          disabled={createHabit.isPending}
+                          className="flex-1 px-3 py-1.5 bg-green-600 hover:bg-green-700 disabled:bg-green-700 disabled:opacity-70 text-white text-sm rounded transition-colors flex items-center justify-center gap-2"
+                        >
+                          {createHabit.isPending ? (
+                            <>
+                              <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                              </svg>
+                              <span>Adding...</span>
+                            </>
+                          ) : (
+                            'Add'
+                          )}
+                        </button>
+                        <button
+                          onClick={() => {
+                            setIsAddingHabit(false)
+                            setNewHabitName('')
+                          }}
+                          disabled={createHabit.isPending}
+                          className="flex-1 px-3 py-1.5 bg-gray-600 hover:bg-gray-700 disabled:opacity-50 text-white text-sm rounded transition-colors"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </>
+                  )}
                 </div>
               )}
 
