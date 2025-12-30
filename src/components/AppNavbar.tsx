@@ -26,6 +26,9 @@ export default function AppNavbar() {
           <Link href="/focus-score" className="hover:text-white transition">
             Focus Score
           </Link>
+          <Link href="/habits" className="hover:text-white transition">
+            Habit Tracker
+          </Link>
         </nav>
       </div>
 
@@ -84,6 +87,13 @@ export default function AppNavbar() {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Focus Score
+              </Link>
+              <Link
+                href="/habits"
+                className="block py-3 px-4 text-gray-300 hover:text-white hover:bg-[#2a2a58] rounded-lg transition"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Habit Tracker
               </Link>
               <Link
                 href="/profile"
