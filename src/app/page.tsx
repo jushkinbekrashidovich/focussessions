@@ -98,7 +98,7 @@ export default function Home() {
       <section className="w-full text-white flex flex-col justify-center items-center px-4 py-8 sm:py-12 md:py-16 bg-gradient-to-b from-black via-[#0f0f14] to-[#151515]">
         <div className="max-w-4xl w-full text-center space-y-4 sm:space-y-6">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight px-2 bg-gradient-to-r from-[#a78bfa] via-[#8ab4ff] to-[#60a5fa] bg-clip-text text-transparent">
-          FocusDot makes your learning journey visible
+          Build consistency with FocusDot
           </h1>
           <p className="text-gray-400 text-base sm:text-lg md:text-xl px-4 max-w-2xl mx-auto">
           Set a goal, log your hours, and see your progress grow day by day
@@ -198,7 +198,6 @@ export default function Home() {
                   <li>Just counts time</li>
                   <li>Session ends, progress lost</li>
                   <li>Good for short-term focus</li>
-                  <li>Focus only while the timer runs</li>
                 
                 </ul>
               </div>
@@ -210,7 +209,8 @@ export default function Home() {
                   <span className="text-[#89f0b2] text-lg">✅</span>
                 </div>
                 <ul className="list-disc pl-6 marker:text-[#9af0be] space-y-3 text-gray-300 leading-relaxed">
-                  <li>Connects time to your goals</li>
+                  <li>All in one Productivity tool</li>
+                  <li>Time is linked to your goals</li>
                   <li>Great for long-term growth</li>
                   <li>Measures real progress</li>
                   <li>Builds consistency and discipline</li>
